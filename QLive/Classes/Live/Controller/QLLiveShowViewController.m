@@ -181,7 +181,7 @@
     
     self.didBeginPlayingAction = ^(u_int64_t beginAtSecond, id obj) {
         @strongify(self);
-        [self updateRemainingTicketsWhenPlayingAtSecond:beginAtSecond];
+        [self updateRemainingTicketsWhenPlayingAtSecond:(NSUInteger)beginAtSecond];
     };
 }
 

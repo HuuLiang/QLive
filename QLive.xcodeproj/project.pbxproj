@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		BC0DE09F1E82645B00A20878 /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC0DE09E1E82645B00A20878 /* UMMobClick.framework */; };
 		BC0DE0A21E8265D400A20878 /* QLActivateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0DE0A11E8265D400A20878 /* QLActivateModel.m */; };
+		BC0DE0A51E82733000A20878 /* QLLivePrivateShowContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0DE0A41E82733000A20878 /* QLLivePrivateShowContactViewController.m */; };
 		BC185EE31E7074F4001CBF70 /* QLFollowingHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC185EE21E7074F4001CBF70 /* QLFollowingHeaderView.m */; };
 		BC185EE61E707C41001CBF70 /* QLFollowingPlaceholderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC185EE51E707C41001CBF70 /* QLFollowingPlaceholderCell.m */; };
 		BC185EE81E70819D001CBF70 /* following_placeholder_banner.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BC185EE71E70819D001CBF70 /* following_placeholder_banner.jpg */; };
@@ -67,7 +68,6 @@
 		BC2533B51E77D1A2005EA643 /* QLPaymentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2533B41E77D1A2005EA643 /* QLPaymentCell.m */; };
 		BC2533B81E77D270005EA643 /* QLPaymentUIElement.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2533B71E77D270005EA643 /* QLPaymentUIElement.m */; };
 		BC2533BB1E77E0AF005EA643 /* QLPaymentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2533BA1E77E0AF005EA643 /* QLPaymentManager.m */; };
-		BC2533BE1E77F19C005EA643 /* QLLivePrivateShowContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2533BD1E77F19C005EA643 /* QLLivePrivateShowContactViewController.m */; };
 		BC2533C11E780292005EA643 /* QLLiveGiftPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2533C01E780292005EA643 /* QLLiveGiftPanel.m */; };
 		BC2533C41E780306005EA643 /* QLLiveGift.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2533C31E780306005EA643 /* QLLiveGift.m */; };
 		BC2533C71E78050C005EA643 /* QLLiveGiftCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2533C61E78050C005EA643 /* QLLiveGiftCell.m */; };
@@ -178,6 +178,8 @@
 		BC0DE09E1E82645B00A20878 /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
 		BC0DE0A01E8265D400A20878 /* QLActivateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLActivateModel.h; sourceTree = "<group>"; };
 		BC0DE0A11E8265D400A20878 /* QLActivateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLActivateModel.m; sourceTree = "<group>"; };
+		BC0DE0A31E82733000A20878 /* QLLivePrivateShowContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLLivePrivateShowContactViewController.h; sourceTree = "<group>"; };
+		BC0DE0A41E82733000A20878 /* QLLivePrivateShowContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLLivePrivateShowContactViewController.m; sourceTree = "<group>"; };
 		BC185EE11E7074F4001CBF70 /* QLFollowingHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLFollowingHeaderView.h; sourceTree = "<group>"; };
 		BC185EE21E7074F4001CBF70 /* QLFollowingHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLFollowingHeaderView.m; sourceTree = "<group>"; };
 		BC185EE41E707C41001CBF70 /* QLFollowingPlaceholderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLFollowingPlaceholderCell.h; sourceTree = "<group>"; };
@@ -259,8 +261,6 @@
 		BC2533B71E77D270005EA643 /* QLPaymentUIElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLPaymentUIElement.m; sourceTree = "<group>"; };
 		BC2533B91E77E0AF005EA643 /* QLPaymentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLPaymentManager.h; sourceTree = "<group>"; };
 		BC2533BA1E77E0AF005EA643 /* QLPaymentManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLPaymentManager.m; sourceTree = "<group>"; };
-		BC2533BC1E77F19C005EA643 /* QLLivePrivateShowContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLLivePrivateShowContactViewController.h; sourceTree = "<group>"; };
-		BC2533BD1E77F19C005EA643 /* QLLivePrivateShowContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLLivePrivateShowContactViewController.m; sourceTree = "<group>"; };
 		BC2533BF1E780292005EA643 /* QLLiveGiftPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLLiveGiftPanel.h; sourceTree = "<group>"; };
 		BC2533C01E780292005EA643 /* QLLiveGiftPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLLiveGiftPanel.m; sourceTree = "<group>"; };
 		BC2533C21E780306005EA643 /* QLLiveGift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLLiveGift.h; sourceTree = "<group>"; };
@@ -896,6 +896,8 @@
 				BC69B2911E7D2D17002D05B4 /* QLLiveCastViewController.m */,
 				BC69B2931E7D40A6002D05B4 /* QLLiveShowViewController.h */,
 				BC69B2941E7D40A6002D05B4 /* QLLiveShowViewController.m */,
+				BC0DE0A31E82733000A20878 /* QLLivePrivateShowContactViewController.h */,
+				BC0DE0A41E82733000A20878 /* QLLivePrivateShowContactViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -914,8 +916,6 @@
 			children = (
 				BC2724F31E7158E500C8D4E6 /* QLLiveAvatarPanel.h */,
 				BC2724F41E7158E500C8D4E6 /* QLLiveAvatarPanel.m */,
-				BC2533BC1E77F19C005EA643 /* QLLivePrivateShowContactViewController.h */,
-				BC2533BD1E77F19C005EA643 /* QLLivePrivateShowContactViewController.m */,
 				BC2533BF1E780292005EA643 /* QLLiveGiftPanel.h */,
 				BC2533C01E780292005EA643 /* QLLiveGiftPanel.m */,
 				BC2533C51E78050C005EA643 /* QLLiveGiftCell.h */,
@@ -1316,7 +1316,6 @@
 				BC22A0B41E6734E3005BAF65 /* QLMineZoneViewController.m in Sources */,
 				BC19752F1E6A002700907660 /* QLMineProfileViewController.m in Sources */,
 				BC267AF21E7BC06500DAC8D2 /* TAPageControl.m in Sources */,
-				BC2533BE1E77F19C005EA643 /* QLLivePrivateShowContactViewController.m in Sources */,
 				BC267B521E7BD92D00DAC8D2 /* TZProgressView.m in Sources */,
 				BC3961641E6EE5B400256FFF /* QLUtil.m in Sources */,
 				BC185EE61E707C41001CBF70 /* QLFollowingPlaceholderCell.m in Sources */,
@@ -1347,6 +1346,7 @@
 				BC2717C61E643ED20065E8F5 /* QLHomeViewController.m in Sources */,
 				BC1C95A81E64C40D006BDBD0 /* QLShowTimeViewController.m in Sources */,
 				BC331C161E66A525002D89F5 /* QLAlertManager.m in Sources */,
+				BC0DE0A51E82733000A20878 /* QLLivePrivateShowContactViewController.m in Sources */,
 				BC2B62931E729652001DC8C3 /* QLPayPoint.m in Sources */,
 				BC69B28C1E7D2582002D05B4 /* QLVideoPlayerViewController.m in Sources */,
 				BC2533B21E77C331005EA643 /* QLPaymentViewController.m in Sources */,

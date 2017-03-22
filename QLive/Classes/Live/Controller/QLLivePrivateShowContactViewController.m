@@ -50,7 +50,7 @@
         [_contentView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.center.equalTo(self.view);
             make.width.equalTo(self.view).multipliedBy(0.8);
-            make.height.equalTo(_contentView.mas_width).multipliedBy(0.5);
+            make.height.mas_equalTo(165);
         }];
     }
     

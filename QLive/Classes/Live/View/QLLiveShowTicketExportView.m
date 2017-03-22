@@ -68,7 +68,7 @@
                 make.top.equalTo(_exportImageView.mas_centerY);
                 make.centerX.equalTo(self);
                 make.width.equalTo(self).multipliedBy(0.9);
-                make.height.equalTo(_ticketBgImageView.mas_width).multipliedBy(_ticketBgImageView.image.size.height/_ticketBgImageView.image.size.width);
+                make.height.mas_equalTo(MIN(kScreenHeight * 0.46, 240));
             }];
         }
         
@@ -96,6 +96,8 @@
             }];
         }
         
+        const CGFloat interSpacing = kScreenHeight * 0.01;
+        
         _ticketNoLabel = [[UILabel alloc] init];
         _ticketNoLabel.textColor = [UIColor colorWithHexString:@"#333333"];
         _ticketNoLabel.font = kMediumFont;
@@ -103,8 +105,8 @@
         [contentView addSubview:_ticketNoLabel];
         {
             [_ticketNoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(contentView.mas_centerX).dividedBy(2);
-                make.top.equalTo(_successLabel.mas_bottom).offset(10);
+                make.left.equalTo(contentView.mas_centerX).dividedBy(2).offset(-10);
+                make.top.equalTo(_successLabel.mas_bottom).offset(interSpacing);
             }];
         }
         
@@ -115,7 +117,7 @@
         {
             [_feeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(_ticketNoLabel);
-                make.top.equalTo(_ticketNoLabel.mas_bottom).offset(10);
+                make.top.equalTo(_ticketNoLabel.mas_bottom).offset(interSpacing);
             }];
         }
         
@@ -126,7 +128,8 @@
         {
             [_nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(_feeLabel);
-                make.top.equalTo(_feeLabel.mas_bottom).offset(10);
+                make.top.equalTo(_feeLabel.mas_bottom).offset(interSpacing);
+                make.width.equalTo(contentView).multipliedBy(0.75);
             }];
         }
         
