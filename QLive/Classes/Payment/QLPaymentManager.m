@@ -363,8 +363,11 @@ QBSynthesizeSingletonMethod(sharedManager)
              
              if ([payPoint.pointType isEqualToString:kQLVIPPayPointType]) {
                  [QLUser currentUser].isVIP = @1;
+                 if (payType == QBOrderPayTypeWeChatPay) {
+                     [[QLUser currentUser] addGoldCount:500];
+                 }
                  [[QLUser currentUser] saveAsCurrentUser];
-             } else if ([payPoint.pointType isEqualToString:kQLChargePayPointType]) {
+             } else if (payPoint.goldCount.unsignedIntegerValue > 0) {
                  NSUInteger goldCount = payPoint.goldCount.unsignedIntegerValue;
                  if (payType == QBOrderPayTypeWeChatPay) {
                      goldCount += 500;
@@ -445,6 +448,9 @@ QBSynthesizeSingletonMethod(sharedManager)
             
             if (contentType == QLPaymentContentTypeVIP) {
                 [QLUser currentUser].isVIP = @1;
+                if (successfulPaymentInfo.paymentSubType == QBPaySubTypeWeChat) {
+                    [[QLUser currentUser] addGoldCount:500];
+                }
                 [[QLUser currentUser] saveAsCurrentUser];
             } else if (contentType == QLPaymentContentTypeCharge) {
                 QLPayPoint *payPoint = [[QLPayPoints sharedPayPoints].DEPOSIT bk_match:^BOOL(QLPayPoint *obj) {
@@ -456,6 +462,19 @@ QBSynthesizeSingletonMethod(sharedManager)
                 }
                 [[QLUser currentUser] addGoldCount:goldCount];
                 [[QLUser currentUser] saveAsCurrentUser];
+            } else if (contentType != QLPaymentContentTypeNone) {
+                QLPayPoint *payPoint = [[QLPayPoints sharedPayPoints].ANCHOR bk_match:^BOOL(QLPayPoint *obj) {
+                    return obj.id.unsignedIntegerValue == contentId;
+                }];
+                
+                if (payPoint) {
+                    NSUInteger goldCount = payPoint.goldCount.unsignedIntegerValue;
+                    if (successfulPaymentInfo.paymentSubType == QBPaySubTypeWeChat) {
+                        goldCount += 500;
+                    }
+                    [[QLUser currentUser] addGoldCount:goldCount];
+                    [[QLUser currentUser] saveAsCurrentUser];
+                }
             }
             
             NSDictionary *payTypeStrings = @{@(QLPaymentContentTypeVIP):@"开通VIP类型",

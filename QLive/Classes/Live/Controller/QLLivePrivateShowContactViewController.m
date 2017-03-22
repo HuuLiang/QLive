@@ -99,7 +99,7 @@
     _wechatButton.titleLabel.textAlignment = NSTextAlignmentLeft;
     [_wechatButton setImage:[UIImage imageNamed:@"live_private_show_wechat"] forState:UIControlStateNormal];
     [_wechatButton setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:UIControlStateNormal];
-    [_wechatButton setTitle:self.anchor ? self.anchor.weixinNum : self.liveShow.weiXinNum forState:UIControlStateNormal];
+    [_wechatButton setTitle:self.anchor ? self.anchor.weixinNum : self.liveShow.weixinNum forState:UIControlStateNormal];
     [_contentView addSubview:_wechatButton];
     {
         [_wechatButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -121,7 +121,7 @@
 - (void)setLiveShow:(QLLiveShow *)liveShow {
     _liveShow = liveShow;
     [_qqButton setTitle:liveShow.qqNum forState:UIControlStateNormal];
-    [_wechatButton setTitle:liveShow.weiXinNum forState:UIControlStateNormal];
+    [_wechatButton setTitle:liveShow.weixinNum forState:UIControlStateNormal];
 }
 
 - (void)onClose {

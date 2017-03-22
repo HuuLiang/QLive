@@ -42,7 +42,7 @@ static const CGFloat kAlipayButtonHeight = 50;
         if ([payTypes containsObject:@(QBOrderPayTypeWeChatPay)]) {
             UIImage *wechatImage = [UIImage imageNamed:@"pay_wx_icon"];
             _wechatButton = [[QLPaymentActionSheetButton alloc] initWithTitle:@"微信支付(官方活动指定渠道)"
-                                                                     subtitle:[payPoint.pointType isEqualToString:kQLChargePayPointType] ? @"(充值额外赠送500金币)" : nil
+                                                                     subtitle:@"(充值额外赠送500金币)"
                                                                         image:wechatImage];
             _wechatButton.layer.cornerRadius = 10;
             _wechatButton.layer.masksToBounds = YES;

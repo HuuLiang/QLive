@@ -22,7 +22,7 @@
 @property (nonatomic) NSNumber *ticketCounts;
 @property (nonatomic) NSString *anchorUrl2;
 @property (nonatomic) NSString *qqNum;
-@property (nonatomic) NSString *weiXinNum;
+@property (nonatomic) NSString *weixinNum;
 @property (nonatomic,retain) NSArray<QLLiveShowTicketInfo *> *ticketInfos;
 
 @property (nonatomic) NSNumber *lastCastSeconds;
