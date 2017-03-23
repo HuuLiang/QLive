@@ -46,6 +46,8 @@
     if ([self.liveShow.anchorType isEqualToString:kQLLiveShowAnchorTypeBigShow]) {
         self.loadingMessage = @"主播正在准备大秀中...";
         self.endMessage = @"大秀已结束，主播已下线！";
+    } else if ([self.liveShow.anchorType isEqualToString:kQLLiveShowAnchorTypePublic]) {
+        self.endMessage = @"主播已开车，您已被踢出房间";
     }
     
     _giftButton = [[UIButton alloc] init];
@@ -114,7 +116,7 @@
             @strongify(self);
             u_int64_t currentSeconds = [obj currentSeconds];
             [self showTicketAtSecond:currentSeconds];
-            [self updateRemainingTicketsWhenPlayingAtSecond:currentSeconds];
+            [self updateRemainingTicketsWhenPlayingAtSecond:(NSUInteger)currentSeconds];
         };
     }
     
@@ -160,10 +162,18 @@
                 self.liveShow.lastCastSeconds = nil;
                 [self.liveShow save];
                 
-                [self.navigationController popViewControllerAnimated:YES];
+                NSMutableArray *viewControllers = self.navigationController.viewControllers.mutableCopy;
+                if (viewControllers.lastObject == self) {
+                    [viewControllers removeLastObject];
+                }
                 
-                QLLiveShowViewController *liveShowVC = [[QLLiveShowViewController alloc] initWithLiveShow:self.liveShow];
-                [self.navigationController pushViewController:liveShowVC animated:YES];
+                [viewControllers addObject:[[QLLiveShowViewController alloc] initWithLiveShow:self.liveShow]];
+                [self.navigationController setViewControllers:viewControllers animated:NO];
+//                [self.navigationController popViewControllerAnimated:YES];
+//                
+//                QLLiveShowViewController *liveShowVC = [[QLLiveShowViewController alloc] initWithLiveShow:self.liveShow];
+//                [self.navigationController pushViewController:liveShowVC animated:YES];
+                
                 return NO;
             } else {
                 return YES;

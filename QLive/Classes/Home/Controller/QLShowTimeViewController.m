@@ -119,7 +119,9 @@ QBDefineLazyPropertyInitialization(NSMutableArray, currentLiveShows)
         __block NSUInteger numberOfPublicShows = 0;
         __block NSUInteger numberOfPrivateShows = 0;
         [self.currentLiveShows enumerateObjectsUsingBlock:^(QLLiveShow * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj.anchorType isEqualToString:kQLLiveShowAnchorTypePublic]) {
+            if ([obj.anchorType isEqualToString:kQLLiveShowAnchorTypePublic]
+                && ![[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(obj.liveId.integerValue) contentType:QLPaymentContentTypeBookThisTicket]
+                && ![[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(obj.liveId.integerValue) contentType:QLPaymentContentTypeBookMonthlyTicket]) {
                 ++numberOfPublicShows;
             } else if ([obj.anchorType isEqualToString:kQLLiveShowAnchorTypePrivate]) {
                 ++numberOfPrivateShows;
@@ -142,6 +144,10 @@ QBDefineLazyPropertyInitialization(NSMutableArray, currentLiveShows)
                 [self.privateShows removeObjectsInArray:privateShows];
             }
         }
+        
+        [self.currentLiveShows sortUsingComparator:^NSComparisonResult(QLLiveShow * _Nonnull obj1, QLLiveShow * _Nonnull obj2) {
+            return [obj2.anchorType compare:obj1.anchorType];
+        }];
         [_layoutTableView reloadData];
     }
 }

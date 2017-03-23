@@ -303,10 +303,14 @@
             
             self.anchor.lastCastSeconds = nil;
             [self.anchor save];
-            [self.navigationController popViewControllerAnimated:YES];
             
-            QLLiveCastViewController *castVC = [[QLLiveCastViewController alloc] initWithAnchor:self.anchor];
-            [self.navigationController pushViewController:castVC animated:YES];
+            NSMutableArray *viewControllers = self.navigationController.viewControllers.mutableCopy;
+            if (viewControllers.lastObject == self) {
+                [viewControllers removeLastObject];
+            }
+            
+            [viewControllers addObject:[[QLLiveCastViewController alloc] initWithAnchor:self.anchor]];
+            [self.navigationController setViewControllers:viewControllers animated:NO];
         }
         
     }];

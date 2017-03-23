@@ -180,7 +180,12 @@
     self.city = liveShow.city;
     
     if ([liveShow.anchorType isEqualToString:kQLLiveShowAnchorTypePublic]) {
-        _statusImageView.image = [UIImage imageNamed:@"private_show_waiting"];
+        if ([[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(liveShow.liveId.integerValue) contentType:QLPaymentContentTypeBookThisTicket]
+            || [[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(liveShow.liveId.integerValue) contentType:QLPaymentContentTypeBookMonthlyTicket]) {
+            _statusImageView.image = [UIImage imageNamed:@"live_show_bought_ticket"];
+        } else {
+            _statusImageView.image = [UIImage imageNamed:@"private_show_waiting"];
+        }
     } else if ([liveShow.anchorType isEqualToString:kQLLiveShowAnchorTypePrivate]) {
         if ([[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(liveShow.liveId.integerValue) contentType:QLPaymentContentTypeJumpQueue]) {
             _statusImageView.image = [UIImage imageNamed:@"live_big_show"];
