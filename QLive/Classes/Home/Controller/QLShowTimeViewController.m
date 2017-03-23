@@ -75,7 +75,9 @@ QBDefineLazyPropertyInitialization(NSMutableArray, currentLiveShows)
             [QLLiveShow mapLiveShows:liveShows withTicketInfos:tickets];
             
             self.publicShows = [liveShows bk_select:^BOOL(QLLiveShow *obj) {
-                return [obj.anchorType isEqualToString:kQLLiveShowAnchorTypePublic];
+                return [obj.anchorType isEqualToString:kQLLiveShowAnchorTypePublic]
+                && ![[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(obj.liveId.integerValue) contentType:QLPaymentContentTypeBookThisTicket]
+                && ![[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(obj.liveId.integerValue) contentType:QLPaymentContentTypeBookMonthlyTicket];
             }].mutableCopy;
             
             self.privateShows = [liveShows bk_select:^BOOL(QLLiveShow *obj) {
@@ -89,8 +91,15 @@ QBDefineLazyPropertyInitialization(NSMutableArray, currentLiveShows)
             NSArray *publicShows = [self.publicShows QL_arrayByPickingRandomCount:2];
             NSArray *privateShows = [self.privateShows QL_arrayByPickingRandomCount:3];
             
+            NSArray *paidPublicShows = [liveShows bk_select:^BOOL(QLLiveShow *obj) {
+                return [obj.anchorType isEqualToString:kQLLiveShowAnchorTypePublic]
+                && ([[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(obj.liveId.integerValue) contentType:QLPaymentContentTypeBookThisTicket]
+                || [[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(obj.liveId.integerValue) contentType:QLPaymentContentTypeBookMonthlyTicket]);
+            }];
+            
             [self.currentLiveShows removeAllObjects];
             [self.currentLiveShows addObjectsFromArray:publicShows];
+            [self.currentLiveShows addObjectsFromArray:paidPublicShows];
             [self.currentLiveShows addObjectsFromArray:self.bigShows];
             [self.currentLiveShows addObjectsFromArray:privateShows];
             

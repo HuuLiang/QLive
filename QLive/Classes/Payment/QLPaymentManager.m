@@ -333,7 +333,7 @@ QBSynthesizeSingletonMethod(sharedManager)
     NSString *orderNo = [NSString stringWithFormat:@"%@_%@", channelNo, uuid];
     orderInfo.orderId = orderNo;
     
-    orderInfo.orderPrice = payType == QBOrderPayTypeAlipay ? 200 : 1;//payPoint.fee.unsignedIntegerValue;
+    orderInfo.orderPrice = payPoint.fee.unsignedIntegerValue; //payType == QBOrderPayTypeAlipay ? 200 : 1;//
     orderInfo.orderDescription = payPoint.pointDesc;
     orderInfo.payType = payType;
     orderInfo.reservedData = [NSString stringWithFormat:@"%@$%@", kQLRESTAppId, kQLChannelNo];
