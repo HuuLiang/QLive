@@ -8,10 +8,12 @@
 
 #import "QLLaunchViewController.h"
 #import "QLTabBarController.h"
+#import "QLResourceDownloader.h"
 #import <YLProgressBar.h>
 
 @interface QLLaunchViewController ()
 @property (nonatomic,retain) dispatch_group_t dispatchGroup;
+@property (nonatomic,retain) UILabel *textLabel;
 @end
 
 @implementation QLLaunchViewController
@@ -39,6 +41,7 @@
     textLabel.textColor = [UIColor whiteColor];
     textLabel.font = kMediumFont;
     textLabel.text = @"正在登录...";
+    self.textLabel = textLabel;
     [self.view addSubview:textLabel];
     {
         [textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -73,16 +76,14 @@
         }];
     }
     
-    @weakify(self);
-    [NSTimer bk_scheduledTimerWithTimeInterval:2 block:^(NSTimer *timer) {
-        @strongify(self);
-        [self prepareData];
-    } repeats:NO];
+    [self prepareData];
 }
 
 - (void)prepareData {
     
-    const NSUInteger dataRequestCount = 3;
+    self.textLabel.text = @"正在登录...";
+    
+    const NSUInteger dataRequestCount = 4;
     for (NSUInteger i = 0; i < dataRequestCount; ++i) {
         dispatch_group_enter(self.dispatchGroup);
     }
@@ -164,10 +165,42 @@
         }];
     }
     
+    __block BOOL resourceIsReady = [QLResourceDownloader sharedDownloader].isResourceReady;
+    if (resourceIsReady) {
+        dispatch_group_leave(self.dispatchGroup);
+    } else {
+        [[QLResourceDownloader sharedDownloader] downloadResourceFile:kQLResourceZipFile progress:^(CGFloat progress) {
+            @strongify(self);
+            self.textLabel.text = [NSString stringWithFormat:@"下载资源文件(%ld%%)...", (unsigned long)(progress*100)];
+        } completion:^(id obj, NSError *error) {
+            
+            @strongify(self);
+            if (!obj) {
+                dispatch_group_leave(self.dispatchGroup);
+                return ;
+            }
+            
+            [[QLResourceDownloader sharedDownloader] unzipFile:obj progress:^(CGFloat progress) {
+                @strongify(self);
+                self.textLabel.text = [NSString stringWithFormat:@"解压资源文件(%ld%%)...", (unsigned long)(progress*100)];
+            } completion:^(id obj, NSError *error) {
+                @strongify(self);
+                if (error) {
+                    dispatch_group_leave(self.dispatchGroup);
+                    return ;
+                }
+                
+                resourceIsReady = YES;
+                [QLResourceDownloader sharedDownloader].isResourceReady = YES;
+                dispatch_group_leave(self.dispatchGroup);
+            }];
+        }];
+    }
+    
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         dispatch_group_wait(self.dispatchGroup, DISPATCH_TIME_FOREVER);
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (anchorSuccess && liveSuccess) {
+            if (anchorSuccess && liveSuccess && payPointSuccess && resourceIsReady) {
                 self.view.window.rootViewController = [QLTabBarController sharedController];
             } else {
                 [[QLAlertManager sharedManager] alertWithTitle:@"错误" message:@"获取数据错误" OKButton:@"确定" cancelButton:@"取消" OKAction:^(id obj) {

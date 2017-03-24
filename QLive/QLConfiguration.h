@@ -18,5 +18,6 @@ static NSString *const kQLPaymentURLScheme = @"comqliveapppaymenturlscheme";
 static NSString *const kPackageCertificate = @"iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd.";
 
 static NSString *const kQLAvatarImage = @"qlive_avatar.jpg";
+static NSString *const kQLResourceZipFile = @"http://oiiw1v71t.bkt.clouddn.com/live/zy/Resources.zip";
 
 #endif /* QLConfiguration_h */

@@ -17,6 +17,8 @@ target 'QLive' do
   pod 'FLAnimatedImage', '~> 1.0'
   #pod 'SDCycleScrollView', '~> 1.65'
   pod 'JHChainableAnimations', '~> 1.3.0'
+  pod 'SSZipArchive', '~> 1.7'
+  
   pod 'QBExtensions'
   pod 'QBPayment', :subspecs => ['IappPay','VIAPay','HTPay','WJPay','MLYPay','DXTXPay','LSPay']
   
