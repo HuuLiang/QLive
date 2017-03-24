@@ -21,7 +21,7 @@ typedef NS_ENUM(NSUInteger, MineSection) {
     ZoneSection,
     PaymentSection,
     LatestVisitorSection,
-    CustomerServiceSection,
+    //CustomerServiceSection,
     DebugSection,
     MineSectionCount = DebugSection
 };
@@ -156,9 +156,11 @@ static NSString *const kMineCellReusableIdentifier = @"MineCellReusableIdentifie
             }
         } else if (indexPath.section == LatestVisitorSection) {
             cell.textLabel.text = @"最近访客";
-        } else if (indexPath.section == CustomerServiceSection) {
-            cell.textLabel.text = @"客服中心";
-        } else if (indexPath.section == DebugSection) {
+        }
+      //  else if (indexPath.section == CustomerServiceSection) {
+       //     cell.textLabel.text = @"客服中心";
+       // }
+        else if (indexPath.section == DebugSection) {
             cell.textLabel.text = @"调试模式";
         }
         return cell;
@@ -201,9 +203,11 @@ static NSString *const kMineCellReusableIdentifier = @"MineCellReusableIdentifie
     } else if (indexPath.section == LatestVisitorSection) {
         [[QLAlertManager sharedManager] alertWithTitle:nil message:@"最近没有访客..."];
 //        [self.navigationController pushViewController:[[QLMineLatestVisitorViewController alloc] init] animated:YES];
-    } else if (indexPath.section == CustomerServiceSection) {
-        [self.navigationController pushViewController:[[QLCustomerServiceViewController alloc] init] animated:YES];
-    } else if (indexPath.section == DebugSection) {
+    }
+   // else if (indexPath.section == CustomerServiceSection) {
+   //     [self.navigationController pushViewController:[[QLCustomerServiceViewController alloc] init] animated:YES];
+    //}
+    else if (indexPath.section == DebugSection) {
         [self.navigationController pushViewController:[[QLDebugViewController alloc] init] animated:YES];
     }
 }
