@@ -339,58 +339,9 @@
     
 }
 
-//- (void)onCharge {
-//    [self pause];
-//    
-//    QLMineVIPViewController *mineVIP = [[QLMineVIPViewController alloc] init];
-//    [self.navigationController pushViewController:mineVIP animated:YES];
-//}
-//
-//- (void)onGift:(QLLiveGift *)gift {
-//    if ([QLUser currentUser].goldCount.unsignedIntegerValue < gift.cost) {
-//        @weakify(self);
-//        [[QLAlertManager sharedManager] alertWithTitle:@"金币不足" message:@"您的金币不足，是否去充值？" OKButton:@"确定" cancelButton:@"取消" OKAction:^(id obj) {
-//            @strongify(self);
-//            [self onCharge];
-//        } cancelAction:nil];
-//    } else {
-//        [QLUser currentUser].goldCount = @([QLUser currentUser].goldCount.unsignedIntegerValue - gift.cost);
-//        [[QLUser currentUser] saveAsCurrentUser];
-//        
-//        self.giftPanel.goldCount = [QLUser currentUser].goldCount.unsignedIntegerValue;
-//        [self.giftPlayer showGift:gift byUser:[QLUser currentUser] inView:self.videoPlayerView];
-//    }
-//    
-//}
-//
 - (void)onLike {
     [self launchAppreciatedIconInCenterPoint:_likeButton.center];
 }
-//
-//    NSString *imageName = [NSString stringWithFormat:@"heart%ld", (unsigned long)arc4random_uniform(6)+1];
-//    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
-//    imageView.center = _likeButton.center;
-//    imageView.bounds = CGRectMake(0, 0, 35, 35);
-//    [self.view insertSubview:imageView belowSubview:_likeButton];
-//    
-//    
-//    UIBezierPath *bezierPath = imageView.bezierPathForAnimation;
-//    
-//    const CGFloat xRange = self.view.bounds.size.width /4;
-//    CGPoint finalPoint = CGPointMake(imageView.center.x + xRange/2-arc4random_uniform(xRange+1), self.view.bounds.size.height * 0.4);
-//    
-//    const CGFloat pathYLength = imageView.center.y - finalPoint.y;
-//    CGPoint controlPoint1 = CGPointMake(imageView.center.x + xRange/2-arc4random_uniform(xRange+1), imageView.center.y-pathYLength/3);
-//    CGPoint controlPoint2 = CGPointMake(imageView.center.x + xRange/2-arc4random_uniform(xRange+1), controlPoint1.y-pathYLength/3);
-//    
-//    [bezierPath addCurveToPoint:finalPoint controlPoint1:controlPoint1 controlPoint2:controlPoint2];
-//    
-//    @weakify(imageView);
-//    imageView.moveOnPath(bezierPath).makeOpacity(0.2).easeInExpo.animateWithCompletion(1.5, ^{
-//        @strongify(imageView);
-//        [imageView removeFromSuperview];
-//    });
-//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
