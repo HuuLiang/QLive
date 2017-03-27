@@ -64,6 +64,8 @@
 		BC22A0BA1E673533005BAF65 /* QLMineIncomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC22A0B91E673533005BAF65 /* QLMineIncomeViewController.m */; };
 		BC22A0BD1E673546005BAF65 /* QLMineLatestVisitorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC22A0BC1E673546005BAF65 /* QLMineLatestVisitorViewController.m */; };
 		BC22A0C01E673553005BAF65 /* QLCustomerServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC22A0BF1E673553005BAF65 /* QLCustomerServiceViewController.m */; };
+		BC23DE5A1E893D74000427E7 /* ChannelNo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BC23DE591E893D74000427E7 /* ChannelNo.plist */; };
+		BC23DE5D1E893DA8000427E7 /* QLChannelNo.m in Sources */ = {isa = PBXBuildFile; fileRef = BC23DE5C1E893DA8000427E7 /* QLChannelNo.m */; };
 		BC2533B21E77C331005EA643 /* QLPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2533B11E77C331005EA643 /* QLPaymentViewController.m */; };
 		BC2533B51E77D1A2005EA643 /* QLPaymentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2533B41E77D1A2005EA643 /* QLPaymentCell.m */; };
 		BC2533B81E77D270005EA643 /* QLPaymentUIElement.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2533B71E77D270005EA643 /* QLPaymentUIElement.m */; };
@@ -253,6 +255,9 @@
 		BC22A0BC1E673546005BAF65 /* QLMineLatestVisitorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLMineLatestVisitorViewController.m; sourceTree = "<group>"; };
 		BC22A0BE1E673553005BAF65 /* QLCustomerServiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLCustomerServiceViewController.h; sourceTree = "<group>"; };
 		BC22A0BF1E673553005BAF65 /* QLCustomerServiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLCustomerServiceViewController.m; sourceTree = "<group>"; };
+		BC23DE591E893D74000427E7 /* ChannelNo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ChannelNo.plist; sourceTree = "<group>"; };
+		BC23DE5B1E893DA8000427E7 /* QLChannelNo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLChannelNo.h; sourceTree = "<group>"; };
+		BC23DE5C1E893DA8000427E7 /* QLChannelNo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLChannelNo.m; sourceTree = "<group>"; };
 		BC2533B01E77C331005EA643 /* QLPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLPaymentViewController.h; sourceTree = "<group>"; };
 		BC2533B11E77C331005EA643 /* QLPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLPaymentViewController.m; sourceTree = "<group>"; };
 		BC2533B31E77D1A2005EA643 /* QLPaymentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLPaymentCell.h; sourceTree = "<group>"; };
@@ -642,6 +647,7 @@
 		BC2717961E642EAC0065E8F5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				BC23DE591E893D74000427E7 /* ChannelNo.plist */,
 				BC2717A71E642EAC0065E8F5 /* Info.plist */,
 				BC2717971E642EAC0065E8F5 /* main.m */,
 				BC2717D81E6444CF0065E8F5 /* QLPrefixHeader.pch */,
@@ -747,6 +753,8 @@
 				BC331C151E66A525002D89F5 /* QLAlertManager.m */,
 				BC3961621E6EE5B400256FFF /* QLUtil.h */,
 				BC3961631E6EE5B400256FFF /* QLUtil.m */,
+				BC23DE5B1E893DA8000427E7 /* QLChannelNo.h */,
+				BC23DE5C1E893DA8000427E7 /* QLChannelNo.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -1173,6 +1181,7 @@
 				BC194A221E81A99D003CC383 /* gift_heart_15.png in Resources */,
 				BCBC10B11E7A806F00BAFD23 /* applaud.mp3 in Resources */,
 				BC2717A31E642EAC0065E8F5 /* Assets.xcassets in Resources */,
+				BC23DE5A1E893D74000427E7 /* ChannelNo.plist in Resources */,
 				BC194A261E81A99D003CC383 /* gift_heart_19.png in Resources */,
 				BCBC10BA1E7ABB1F00BAFD23 /* hongbao.mp3 in Resources */,
 				BC194A441E81B30C003CC383 /* fireworks_3.png in Resources */,
@@ -1351,6 +1360,7 @@
 				BC69B28C1E7D2582002D05B4 /* QLVideoPlayerViewController.m in Sources */,
 				BC2533B21E77C331005EA643 /* QLPaymentViewController.m in Sources */,
 				BC2B3FEF1E8147E800EBF0A2 /* QLLiveShowJumpQueuePopView.m in Sources */,
+				BC23DE5D1E893DA8000427E7 /* QLChannelNo.m in Sources */,
 				BC2C37641E6D76AC006E435A /* QLHttpResponse.m in Sources */,
 				BC36BCE61E6FDC1700BE8982 /* QLCollectionHeaderFooterView.m in Sources */,
 				BC2717B91E643C320065E8F5 /* QLBaseViewController.m in Sources */,
@@ -1495,6 +1505,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 7VHT3KAS56;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1503,10 +1514,10 @@
 				INFOPLIST_FILE = QLive/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.qlive.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qlive.2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "cd30ad2c-5bf0-4940-b820-f3692dace33d";
-				PROVISIONING_PROFILE_SPECIFIER = QLive1DevProvisioningProfile;
+				PROVISIONING_PROFILE = "5c72940a-96b7-43d6-96f4-67177f0e7d5c";
+				PROVISIONING_PROFILE_SPECIFIER = QLive2DevProvisioningProfile;
 			};
 			name = Debug;
 		};
@@ -1525,10 +1536,10 @@
 				INFOPLIST_FILE = QLive/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.qlive.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qlive.2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a44009dc-2c97-42be-8062-864b2ab8960f";
-				PROVISIONING_PROFILE_SPECIFIER = QLive1InHouseProvisioningProfile;
+				PROVISIONING_PROFILE = "a3f76911-b63b-46cd-b61e-bd2e12294383";
+				PROVISIONING_PROFILE_SPECIFIER = QLive2InHouseProvisioningProfile;
 			};
 			name = Release;
 		};

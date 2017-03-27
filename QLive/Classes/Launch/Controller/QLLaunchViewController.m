@@ -170,7 +170,7 @@
             if (anchorSuccess && liveSuccess) {
                 self.view.window.rootViewController = [QLTabBarController sharedController];
             } else {
-                [[QLAlertManager sharedManager] alertWithTitle:@"错误" message:@"获取数据错误" OKButton:@"确定" cancelButton:@"取消" OKAction:^(id obj) {
+                [[QLAlertManager sharedManager] alertWithTitle:@"错误" message:@"获取数据错误，是否重新获取数据？" OKButton:@"确定" cancelButton:@"取消" OKAction:^(id obj) {
                     @strongify(self);
                     [self prepareData];
                 } cancelAction:^(id obj) {
