@@ -86,8 +86,15 @@ static NSString *const kQLHttpEncryptedPassword = @"wdnxs&*@#!*qb)*&qiang";
 
 - (id)decryptedResponse:(id)response {
     NSString *encryptedString = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
+    if (encryptedString.length == 0) {
+        return nil;
+    }
+    
     NSString *key = [kQLHttpEncryptedPassword.md5 substringToIndex:16];
     NSString *jsonString = [encryptedString decryptedStringWithPassword:key];
+    if (jsonString.length == 0) {
+        return nil;
+    }
     
     id jsonObject = [NSJSONSerialization JSONObjectWithData:[jsonString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
     return jsonObject;

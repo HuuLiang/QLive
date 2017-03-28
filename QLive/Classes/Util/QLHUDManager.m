@@ -36,7 +36,13 @@ QBSynthesizeSingletonMethod(sharedManager)
 
 - (void)showLoadingInfo:(NSString *)info withDuration:(NSTimeInterval)duration complete:(void (^)(void))complete {
     [SVProgressHUD showWithStatus:info];
-    [SVProgressHUD dismissWithDelay:duration completion:complete];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, duration * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+        if (complete) {
+            complete();
+        }
+    });
 }
 
 - (void)showLoadingInfo:(NSString *)info withDuration:(NSTimeInterval)duration isSucceeded:(BOOL)isSucceeded complete:(NSString *(^)(void))complete {
