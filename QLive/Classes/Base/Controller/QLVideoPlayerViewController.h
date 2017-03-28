@@ -23,7 +23,6 @@ typedef void (^QLVideoPlayerDidBeginPlayingAction)(u_int64_t beginAtSecond, id o
 @property (nonatomic,copy) QLVideoPlayerDidBeginPlayingAction didBeginPlayingAction;
 @property (nonatomic,copy) QBAction didEndPlayingAction;
 @property (nonatomic,copy) QLVideoPlayerShouldEndPlayingAction shouldEndPlayingAction;
-@property (nonatomic) BOOL shouldLoopPlayback;
 
 @property (nonatomic,retain,readonly) QLVideoPlayer *player;
 @property (nonatomic,retain,readonly) UIButton *closeButton;

@@ -131,7 +131,14 @@
 }
 
 - (void)onEndPlaying {
-    QBSafelyCallBlock(self.eventAction, QLVideoPlayerEventEndPlaying, self);
+    if ([NSThread currentThread].isMainThread) {
+        QBSafelyCallBlock(self.eventAction, QLVideoPlayerEventEndPlaying, self);
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            QBSafelyCallBlock(self.eventAction, QLVideoPlayerEventEndPlaying, self);
+        });
+    }
+    
 }
 
 - (void)audioHardwareRouteChanged:(NSNotification *)notification {

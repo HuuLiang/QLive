@@ -263,7 +263,9 @@
         return ;
     }
     
+    @weakify(self);
     [[QLPaymentManager sharedManager] showPaymnetViewControllerInViewController:self withContentType:QLPaymentContentTypeBookThisTicket userInfo:@{kQLPaymentLiveShowUserInfo:self.liveShow} completion:^(BOOL success, QLPayPoint *payPoint) {
+        @strongify(self);
         if (success) {
             [self onSuccessPaidWithPayPoint:payPoint];
         }
@@ -307,7 +309,9 @@
         return ;
     }
     
+    @weakify(self);
     [[QLPaymentManager sharedManager] showPaymnetViewControllerInViewController:self withContentType:QLPaymentContentTypePrivateShow userInfo:@{kQLPaymentLiveShowUserInfo:self.liveShow} completion:^(BOOL success, QLPayPoint *payPoint) {
+        @strongify(self);
         if (success) {
             [self onSuccessPaidWithPayPoint:payPoint];
         }

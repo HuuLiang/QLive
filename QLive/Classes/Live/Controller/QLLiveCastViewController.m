@@ -68,7 +68,6 @@
     if (self) {
         self.isLighted = isLighted;
         self.forwardSecondsOnReplaying = forwardSecondsOnReplaying;
-        self.shouldLoopPlayback = !isLighted;
         
         if (!self.isLighted && anchor.lastCastSeconds.unsignedIntegerValue > 300) {
             anchor.lastCastSeconds = nil;
@@ -102,8 +101,7 @@
     
     @weakify(self);
     self.shouldEndPlayingAction = ^BOOL(id obj) {
-        @strongify(self);
-        return self.isLighted;
+        return YES;
     };
     self.didEndPlayingAction = ^(id obj) {
         @strongify(self);
