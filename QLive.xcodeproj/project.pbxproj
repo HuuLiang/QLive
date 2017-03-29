@@ -10,6 +10,7 @@
 		BC0DE09F1E82645B00A20878 /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC0DE09E1E82645B00A20878 /* UMMobClick.framework */; };
 		BC0DE0A21E8265D400A20878 /* QLActivateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0DE0A11E8265D400A20878 /* QLActivateModel.m */; };
 		BC0DE0A51E82733000A20878 /* QLLivePrivateShowContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0DE0A41E82733000A20878 /* QLLivePrivateShowContactViewController.m */; };
+		BC1468DD1E8BB18F00C736E9 /* QLStatsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1468DC1E8BB18F00C736E9 /* QLStatsManager.m */; };
 		BC185EE31E7074F4001CBF70 /* QLFollowingHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC185EE21E7074F4001CBF70 /* QLFollowingHeaderView.m */; };
 		BC185EE61E707C41001CBF70 /* QLFollowingPlaceholderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC185EE51E707C41001CBF70 /* QLFollowingPlaceholderCell.m */; };
 		BC185EEE1E70A948001CBF70 /* QLLiveShow.m in Sources */ = {isa = PBXBuildFile; fileRef = BC185EED1E70A948001CBF70 /* QLLiveShow.m */; };
@@ -133,6 +134,8 @@
 		BC0DE0A11E8265D400A20878 /* QLActivateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLActivateModel.m; sourceTree = "<group>"; };
 		BC0DE0A31E82733000A20878 /* QLLivePrivateShowContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLLivePrivateShowContactViewController.h; sourceTree = "<group>"; };
 		BC0DE0A41E82733000A20878 /* QLLivePrivateShowContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLLivePrivateShowContactViewController.m; sourceTree = "<group>"; };
+		BC1468DB1E8BB18F00C736E9 /* QLStatsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLStatsManager.h; sourceTree = "<group>"; };
+		BC1468DC1E8BB18F00C736E9 /* QLStatsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLStatsManager.m; sourceTree = "<group>"; };
 		BC185EE11E7074F4001CBF70 /* QLFollowingHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLFollowingHeaderView.h; sourceTree = "<group>"; };
 		BC185EE21E7074F4001CBF70 /* QLFollowingHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLFollowingHeaderView.m; sourceTree = "<group>"; };
 		BC185EE41E707C41001CBF70 /* QLFollowingPlaceholderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLFollowingPlaceholderCell.h; sourceTree = "<group>"; };
@@ -613,6 +616,8 @@
 				BC3C3A201E842D490045C3F9 /* QLResourceDownloader.m */,
 				BC23DE5B1E893DA8000427E7 /* QLChannelNo.h */,
 				BC23DE5C1E893DA8000427E7 /* QLChannelNo.m */,
+				BC1468DB1E8BB18F00C736E9 /* QLStatsManager.h */,
+				BC1468DC1E8BB18F00C736E9 /* QLStatsManager.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -1010,45 +1015,6 @@
 				BC2717A61E642EAC0065E8F5 /* LaunchScreen.storyboard in Resources */,
 				BC2717A31E642EAC0065E8F5 /* Assets.xcassets in Resources */,
 				BC23DE5A1E893D74000427E7 /* ChannelNo.plist in Resources */,
-				BC194A261E81A99D003CC383 /* gift_heart_19.png in Resources */,
-				BCBC10BA1E7ABB1F00BAFD23 /* hongbao.mp3 in Resources */,
-				BC194A441E81B30C003CC383 /* fireworks_3.png in Resources */,
-				BCBC10C21E7ABEF000BAFD23 /* flower.mp3 in Resources */,
-				BC194A241E81A99D003CC383 /* gift_heart_17.png in Resources */,
-				BC194A281E81A99D003CC383 /* gift_heart_20.png in Resources */,
-				BCBC10BC1E7ABCD700BAFD23 /* diamond.mp3 in Resources */,
-				BC194A251E81A99D003CC383 /* gift_heart_18.png in Resources */,
-				BC194A1D1E81A99D003CC383 /* gift_heart_10.png in Resources */,
-				BC194A201E81A99D003CC383 /* gift_heart_13.png in Resources */,
-				BC2B3FEC1E813EEC00EBF0A2 /* live_private_show_banner.jpg in Resources */,
-				BC194A001E818BD9003CC383 /* live_show_jump_queue_banner.jpg in Resources */,
-				BC343F571E76C63D00FCEEC3 /* private_show_payment_banner.jpg in Resources */,
-				BC194A401E81B30C003CC383 /* fireworks_11.png in Resources */,
-				BC2B3FEA1E81230A00EBF0A2 /* live_show_ticket_banner.jpg in Resources */,
-				BC185EE81E70819D001CBF70 /* following_placeholder_banner.jpg in Resources */,
-				BC194A211E81A99D003CC383 /* gift_heart_14.png in Resources */,
-				BC194A471E81B30C003CC383 /* fireworks_6.png in Resources */,
-				BC194A491E81B30C003CC383 /* fireworks_8.png in Resources */,
-				BC194A481E81B30C003CC383 /* fireworks_7.png in Resources */,
-				BC194A4A1E81B30C003CC383 /* fireworks_9.png in Resources */,
-				BCBC10C11E7ABEF000BAFD23 /* cucumber.mp3 in Resources */,
-				BCBC10B81E7A928700BAFD23 /* launch_image.jpg in Resources */,
-				BC194A2A1E81A99D003CC383 /* gift_heart_4.png in Resources */,
-				BC194A2C1E81A99D003CC383 /* gift_heart_6.png in Resources */,
-				BC194A2D1E81A99D003CC383 /* gift_heart_7.png in Resources */,
-				BC194A461E81B30C003CC383 /* fireworks_5.png in Resources */,
-				BC194A291E81A99D003CC383 /* gift_heart_3.png in Resources */,
-				BC194A1E1E81A99D003CC383 /* gift_heart_11.png in Resources */,
-				BC194A3E1E81B30C003CC383 /* fireworks_1.png in Resources */,
-				BC194A2F1E81A99D003CC383 /* gift_heart_9.png in Resources */,
-				BC194A3F1E81B30C003CC383 /* fireworks_10.png in Resources */,
-				BCBC10B31E7A858600BAFD23 /* gift_car_anim.gif in Resources */,
-				BC194A1C1E81A99D003CC383 /* gift_heart_1.png in Resources */,
-				BCBC10AF1E7A7FAC00BAFD23 /* car.mp3 in Resources */,
-				BC194A431E81B30C003CC383 /* fireworks_2.png in Resources */,
-				BC194A271E81A99D003CC383 /* gift_heart_2.png in Resources */,
-				BC194A451E81B30C003CC383 /* fireworks_4.png in Resources */,
-				BCBDD7CE1E781AB000D2DFEA /* light_room_payment_banner.jpg in Resources */,
 				BC267B4D1E7BD92D00DAC8D2 /* TZImagePickerController.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1143,6 +1109,7 @@
 				BC2717981E642EAC0065E8F5 /* main.m in Sources */,
 				BC2717CD1E643F3D0065E8F5 /* QLMineViewController.m in Sources */,
 				BC1975251E69F1BB00907660 /* QLLayoutTableViewController.m in Sources */,
+				BC1468DD1E8BB18F00C736E9 /* QLStatsManager.m in Sources */,
 				BC2533B51E77D1A2005EA643 /* QLPaymentCell.m in Sources */,
 				BC2BBC121E7534D00012FF0C /* QLMineVIPChargeCell.m in Sources */,
 				BC2C37581E6D70B9006E435A /* NSError+QLError.m in Sources */,
