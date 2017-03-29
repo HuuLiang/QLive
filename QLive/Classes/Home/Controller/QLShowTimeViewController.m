@@ -19,17 +19,18 @@ static NSString *const kHeaderReusableIdentifier = @"HeaderReusableIdentifier";
 {
     UITableView *_layoutTableView;
 }
-@property (nonatomic,retain) NSMutableArray<QLLiveShow *> *publicShows;
-@property (nonatomic,retain) NSMutableArray<QLLiveShow *> *privateShows;
-@property (nonatomic,retain) NSMutableArray<QLLiveShow *> *bigShows;
+@property (nonatomic,retain) NSArray<QLLiveShow *> *allShows;
+//@property (nonatomic,retain) NSMutableArray<QLLiveShow *> *publicShows;
+//@property (nonatomic,retain) NSMutableArray<QLLiveShow *> *privateShows;
+//@property (nonatomic,retain) NSMutableArray<QLLiveShow *> *bigShows;
 @property (nonatomic,retain) NSMutableArray<QLLiveShow *> *currentLiveShows;
 @end
 
 @implementation QLShowTimeViewController
 
-QBDefineLazyPropertyInitialization(NSMutableArray, publicShows)
-QBDefineLazyPropertyInitialization(NSMutableArray, privateShows)
-QBDefineLazyPropertyInitialization(NSMutableArray, bigShows)
+//QBDefineLazyPropertyInitialization(NSMutableArray, publicShows)
+//QBDefineLazyPropertyInitialization(NSMutableArray, privateShows)
+//QBDefineLazyPropertyInitialization(NSMutableArray, bigShows)
 QBDefineLazyPropertyInitialization(NSMutableArray, currentLiveShows)
 
 - (void)viewDidLoad {
@@ -64,53 +65,73 @@ QBDefineLazyPropertyInitialization(NSMutableArray, currentLiveShows)
 
 - (void)loadLiveShows {
     
-    [[QLHUDManager sharedManager] showLoading];
-    
     [QLLiveShow objectsFromPersistenceAsync:^(NSArray *liveShows) {
         
         [QLLiveShowTicketInfo objectsFromPersistenceAsync:^(NSArray *tickets) {
             
-            [[QLHUDManager sharedManager] hide];
-            
             [QLLiveShow mapLiveShows:liveShows withTicketInfos:tickets];
             
-            self.publicShows = [liveShows bk_select:^BOOL(QLLiveShow *obj) {
-                return [obj.anchorType isEqualToString:kQLLiveShowAnchorTypePublic]
-                && ![[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(obj.liveId.integerValue) contentType:QLPaymentContentTypeBookThisTicket]
-                && ![[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(obj.liveId.integerValue) contentType:QLPaymentContentTypeBookMonthlyTicket];
-            }].mutableCopy;
+            self.allShows = liveShows;
             
-            self.privateShows = [liveShows bk_select:^BOOL(QLLiveShow *obj) {
-                return [obj.anchorType isEqualToString:kQLLiveShowAnchorTypePrivate];
-            }].mutableCopy;
-            
-            self.bigShows = [liveShows bk_select:^BOOL(QLLiveShow *obj) {
-                return [obj.anchorType isEqualToString:kQLLiveShowAnchorTypeBigShow];
-            }].mutableCopy;
-            
-            NSArray *publicShows = [self.publicShows QL_arrayByPickingRandomCount:2];
-            NSArray *privateShows = [self.privateShows QL_arrayByPickingRandomCount:3];
-            
-            NSArray *paidPublicShows = [liveShows bk_select:^BOOL(QLLiveShow *obj) {
-                return [obj.anchorType isEqualToString:kQLLiveShowAnchorTypePublic]
-                && ([[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(obj.liveId.integerValue) contentType:QLPaymentContentTypeBookThisTicket]
-                || [[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(obj.liveId.integerValue) contentType:QLPaymentContentTypeBookMonthlyTicket]);
-            }];
-            
-            [self.currentLiveShows removeAllObjects];
-            [self.currentLiveShows addObjectsFromArray:publicShows];
-            [self.currentLiveShows addObjectsFromArray:paidPublicShows];
-            [self.currentLiveShows addObjectsFromArray:self.bigShows];
-            [self.currentLiveShows addObjectsFromArray:privateShows];
-            
-            [self.privateShows removeObjectsInArray:privateShows];
-            [self.publicShows removeObjectsInArray:publicShows];
-            
-            [_layoutTableView reloadData];
+            [self updateShows];
         }];
         
     }];
     
+}
+
+- (void)updateShows {
+    NSMutableArray<QLLiveShow *> *unpaidPublicShows = [NSMutableArray array];
+    NSMutableArray<QLLiveShow *> *paidPublicShows = [NSMutableArray array];
+    NSMutableArray<QLLiveShow *> *privateShows = [NSMutableArray array];
+    NSMutableArray<QLLiveShow *> *bigShows = [NSMutableArray array];
+    
+    [self.allShows bk_each:^(QLLiveShow *obj) {
+        if ([obj.anchorType isEqualToString:kQLLiveShowAnchorTypePublic]) {
+            if ([[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(obj.liveId.integerValue) contentType:QLPaymentContentTypeBookThisTicket]
+                || [[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(obj.liveId.integerValue) contentType:QLPaymentContentTypeBookMonthlyTicket]) {
+                [paidPublicShows addObject:obj];
+            } else {
+                [unpaidPublicShows addObject:obj];
+            }
+        } else if ([obj.anchorType isEqualToString:kQLLiveShowAnchorTypePrivate]) {
+            [privateShows addObject:obj];
+        } else if ([obj.anchorType isEqualToString:kQLLiveShowAnchorTypeBigShow]) {
+            [bigShows addObject:obj];
+        }
+    }];
+//    
+//    NSArray<QLLiveShow *> *unpaidPublicShows = [self.allShows bk_select:^BOOL(QLLiveShow *obj) {
+//        return [obj.anchorType isEqualToString:kQLLiveShowAnchorTypePublic]
+//        && ![[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(obj.liveId.integerValue) contentType:QLPaymentContentTypeBookThisTicket]
+//        && ![[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(obj.liveId.integerValue) contentType:QLPaymentContentTypeBookMonthlyTicket];
+//    }];
+    
+
+//    self.privateShows = [self.allShows bk_select:^BOOL(QLLiveShow *obj) {
+//        return [obj.anchorType isEqualToString:kQLLiveShowAnchorTypePrivate];
+//    }].mutableCopy;
+//    
+//    self.bigShows = [self.allShows bk_select:^BOOL(QLLiveShow *obj) {
+//        return [obj.anchorType isEqualToString:kQLLiveShowAnchorTypeBigShow];
+//    }].mutableCopy;
+//    
+//    NSArray *publicShows = [self.publicShows QL_arrayByPickingRandomCount:2];
+//    NSArray *privateShows = [self.privateShows QL_arrayByPickingRandomCount:3];
+//    
+//    NSArray *paidPublicShows = [self.allShows bk_select:^BOOL(QLLiveShow *obj) {
+//        return [obj.anchorType isEqualToString:kQLLiveShowAnchorTypePublic]
+//        && ([[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(obj.liveId.integerValue) contentType:QLPaymentContentTypeBookThisTicket]
+//            || [[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(obj.liveId.integerValue) contentType:QLPaymentContentTypeBookMonthlyTicket]);
+//    }];
+    
+    [self.currentLiveShows removeAllObjects];
+    [self.currentLiveShows addObjectsFromArray:[unpaidPublicShows QL_arrayByPickingRandomCount:2]];
+    [self.currentLiveShows addObjectsFromArray:paidPublicShows];
+    [self.currentLiveShows addObjectsFromArray:bigShows];
+    [self.currentLiveShows addObjectsFromArray:[privateShows QL_arrayByPickingRandomCount:3]];
+    
+    [_layoutTableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -124,40 +145,40 @@ QBDefineLazyPropertyInitialization(NSMutableArray, currentLiveShows)
     if (operation == DBPersistenceOperationRemove) {
         [self loadLiveShows];
     } else {
-        
-        __block NSUInteger numberOfPublicShows = 0;
-        __block NSUInteger numberOfPrivateShows = 0;
-        [self.currentLiveShows enumerateObjectsUsingBlock:^(QLLiveShow * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj.anchorType isEqualToString:kQLLiveShowAnchorTypePublic]
-                && ![[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(obj.liveId.integerValue) contentType:QLPaymentContentTypeBookThisTicket]
-                && ![[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(obj.liveId.integerValue) contentType:QLPaymentContentTypeBookMonthlyTicket]) {
-                ++numberOfPublicShows;
-            } else if ([obj.anchorType isEqualToString:kQLLiveShowAnchorTypePrivate]) {
-                ++numberOfPrivateShows;
-            }
-        }];
-        
-        if (numberOfPublicShows < 2) {
-            NSArray *publicShows = [self.publicShows QL_arrayByPickingRandomCount:2-numberOfPublicShows];
-            if (publicShows.count > 0) {
-                [self.currentLiveShows insertObjects:publicShows atIndexes:[NSIndexSet indexSetWithIndex:0]];
-                [self.publicShows removeObjectsInArray:publicShows];
-            }
-            
-        }
-        
-        if (numberOfPrivateShows < 3) {
-            NSArray *privateShows = [self.privateShows QL_arrayByPickingRandomCount:3-numberOfPrivateShows];
-            if (privateShows.count > 0) {
-                [self.currentLiveShows insertObjects:privateShows atIndexes:[NSIndexSet indexSetWithIndex:self.currentLiveShows.count-numberOfPrivateShows]];
-                [self.privateShows removeObjectsInArray:privateShows];
-            }
-        }
-        
-        [self.currentLiveShows sortUsingComparator:^NSComparisonResult(QLLiveShow * _Nonnull obj1, QLLiveShow * _Nonnull obj2) {
-            return [obj2.anchorType compare:obj1.anchorType];
-        }];
-        [_layoutTableView reloadData];
+        [self updateShows];
+//        __block NSUInteger numberOfPublicShows = 0;
+//        __block NSUInteger numberOfPrivateShows = 0;
+//        [self.currentLiveShows enumerateObjectsUsingBlock:^(QLLiveShow * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//            if ([obj.anchorType isEqualToString:kQLLiveShowAnchorTypePublic]
+//                && ![[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(obj.liveId.integerValue) contentType:QLPaymentContentTypeBookThisTicket]
+//                && ![[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(obj.liveId.integerValue) contentType:QLPaymentContentTypeBookMonthlyTicket]) {
+//                ++numberOfPublicShows;
+//            } else if ([obj.anchorType isEqualToString:kQLLiveShowAnchorTypePrivate]) {
+//                ++numberOfPrivateShows;
+//            }
+//        }];
+//        
+//        if (numberOfPublicShows < 2) {
+//            NSArray *publicShows = [self.publicShows QL_arrayByPickingRandomCount:2-numberOfPublicShows];
+//            if (publicShows.count > 0) {
+//                [self.currentLiveShows insertObjects:publicShows atIndexes:[NSIndexSet indexSetWithIndex:0]];
+//                [self.publicShows removeObjectsInArray:publicShows];
+//            }
+//            
+//        }
+//        
+//        if (numberOfPrivateShows < 3) {
+//            NSArray *privateShows = [self.privateShows QL_arrayByPickingRandomCount:3-numberOfPrivateShows];
+//            if (privateShows.count > 0) {
+//                [self.currentLiveShows insertObjects:privateShows atIndexes:[NSIndexSet indexSetWithIndex:self.currentLiveShows.count-numberOfPrivateShows]];
+//                [self.privateShows removeObjectsInArray:privateShows];
+//            }
+//        }
+//        
+//        [self.currentLiveShows sortUsingComparator:^NSComparisonResult(QLLiveShow * _Nonnull obj1, QLLiveShow * _Nonnull obj2) {
+//            return [obj2.anchorType compare:obj1.anchorType];
+//        }];
+//        [_layoutTableView reloadData];
     }
 }
 
@@ -215,27 +236,31 @@ QBDefineLazyPropertyInitialization(NSMutableArray, currentLiveShows)
                 {
                     @strongify(self);
                     if (success) {
+                        liveShow.anchorType = kQLLiveShowAnchorTypeBigShow;
+                        liveShow.anchorUrl2 = liveShow.anchorUrl;
+                        [liveShow save];
+                        
                         QLLiveShowViewController *playerVC = [[QLLiveShowViewController alloc] initWithLiveShow:liveShow];
                         [self.navigationController pushViewController:playerVC animated:YES];
                     }
                 }];
             }];
         }
-    } else if ([liveShow.anchorType isEqualToString:kQLLiveShowAnchorTypeBigShow]) {
-        if ([[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(liveShow.liveId.integerValue) contentType:QLPaymentContentTypeBookThisTicket]
-            || [[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(liveShow.liveId.integerValue) contentType:QLPaymentContentTypeBookMonthlyTicket]) {
-            QLLiveShowViewController *playerVC = [[QLLiveShowViewController alloc] initWithLiveShow:liveShow];
-            [self.navigationController pushViewController:playerVC animated:YES];
-        } else {
-            @weakify(self);
-            [[QLPaymentManager sharedManager] showPaymnetViewControllerInViewController:self withContentType:QLPaymentContentTypeBookThisTicket userInfo:@{kQLPaymentLiveShowUserInfo:liveShow} completion:^(BOOL success, QLPayPoint *payPoint) {
-                if (success) {
-                    @strongify(self);
-                    QLLiveShowViewController *playerVC = [[QLLiveShowViewController alloc] initWithLiveShow:liveShow];
-                    [self.navigationController pushViewController:playerVC animated:YES];
-                }
-            }];
-        }
+//    } else if ([liveShow.anchorType isEqualToString:kQLLiveShowAnchorTypeBigShow]) {
+//        if ([[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(liveShow.liveId.integerValue) contentType:QLPaymentContentTypeBookThisTicket]
+//            || [[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(liveShow.liveId.integerValue) contentType:QLPaymentContentTypeBookMonthlyTicket]) {
+//            QLLiveShowViewController *playerVC = [[QLLiveShowViewController alloc] initWithLiveShow:liveShow];
+//            [self.navigationController pushViewController:playerVC animated:YES];
+//        } else {
+//            @weakify(self);
+//            [[QLPaymentManager sharedManager] showPaymnetViewControllerInViewController:self withContentType:QLPaymentContentTypeBookThisTicket userInfo:@{kQLPaymentLiveShowUserInfo:liveShow} completion:^(BOOL success, QLPayPoint *payPoint) {
+//                if (success) {
+//                    @strongify(self);
+//                    QLLiveShowViewController *playerVC = [[QLLiveShowViewController alloc] initWithLiveShow:liveShow];
+//                    [self.navigationController pushViewController:playerVC animated:YES];
+//                }
+//            }];
+//        }
     } else {
         QLLiveShowViewController *playerVC = [[QLLiveShowViewController alloc] initWithLiveShow:liveShow];
         [self.navigationController pushViewController:playerVC animated:YES];

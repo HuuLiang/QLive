@@ -187,11 +187,7 @@
             _statusImageView.image = [UIImage imageNamed:@"private_show_waiting"];
         }
     } else if ([liveShow.anchorType isEqualToString:kQLLiveShowAnchorTypePrivate]) {
-        if ([[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(liveShow.liveId.integerValue) contentType:QLPaymentContentTypeJumpQueue]) {
-            _statusImageView.image = [UIImage imageNamed:@"live_big_show"];
-        } else {
-            _statusImageView.image = [UIImage imageNamed:@"private_showing"];
-        }
+        _statusImageView.image = [UIImage imageNamed:@"private_showing"];
     } else if ([liveShow.anchorType isEqualToString:kQLLiveShowAnchorTypeBigShow]) {
         _statusImageView.image = [UIImage imageNamed:@"live_big_show"];
     } else {

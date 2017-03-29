@@ -57,16 +57,16 @@ static NSString *const kChargeCellReusableIdentifier = @"ChargeCellReusableIdent
     
     UIView *tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 44)];
     _layoutTableView.tableFooterView = tableFooterView;
-    
-    UIButton *footerButton = [[UIButton alloc] init];
-    [footerButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"联系我们" attributes:@{NSUnderlineStyleAttributeName:@1, NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"], NSFontAttributeName:kMediumFont}] forState:UIControlStateNormal];
-    [footerButton addTarget:self action:@selector(onContactUs) forControlEvents:UIControlEventTouchUpInside];
-    [tableFooterView addSubview:footerButton];
-    {
-        [footerButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.center.equalTo(tableFooterView);
-        }];
-    }
+//
+//    UIButton *footerButton = [[UIButton alloc] init];
+//    [footerButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"联系我们" attributes:@{NSUnderlineStyleAttributeName:@1, NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"], NSFontAttributeName:kMediumFont}] forState:UIControlStateNormal];
+//    [footerButton addTarget:self action:@selector(onContactUs) forControlEvents:UIControlEventTouchUpInside];
+//    [tableFooterView addSubview:footerButton];
+//    {
+//        [footerButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.center.equalTo(tableFooterView);
+//        }];
+//    }
     
 }
 

@@ -87,7 +87,7 @@ PODS:
   - SDWebImage/Core (4.0.0)
   - SIAlertView (1.3)
   - SSZipArchive (1.7)
-  - SVProgressHUD (2.1.2)
+  - SVProgressHUD (2.0.3)
   - XMLReader-Arc (1.1)
   - YLProgressBar (3.10.1)
 
@@ -112,7 +112,7 @@ DEPENDENCIES:
   - SDWebImage (~> 4.0.0)
   - SIAlertView (~> 1.3)
   - SSZipArchive (~> 1.7)
-  - SVProgressHUD (~> 2.1.2)
+  - SVProgressHUD (= 2.0.3)
   - YLProgressBar (~> 3.10.1)
 
 SPEC CHECKSUMS:
@@ -133,10 +133,10 @@ SPEC CHECKSUMS:
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SIAlertView: 20c794b55eaf44d888773ea51647cf8907723919
   SSZipArchive: 63f8e11cfcc33e03e4cd666b4359ea8bd6facd0c
-  SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
+  SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   XMLReader-Arc: 7832c527346fc26511fd6c05ebcee18008c34d6d
   YLProgressBar: 763ad9be70b8de5ab98a3fab27953f3771869e3d
 
-PODFILE CHECKSUM: c0bb34bdebcd5946e5af4a20d225d550e2a4d617
+PODFILE CHECKSUM: 556fa9e4119a930f221905bf104f54015ed5b1c0
 
 COCOAPODS: 1.2.0

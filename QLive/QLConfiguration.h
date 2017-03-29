@@ -9,12 +9,16 @@
 #ifndef QLConfiguration_h
 #define QLConfiguration_h
 
+#import "QLChannelNo.h"
+
+#define kQLChannelNo [QLChannelNo defaultChannelNo].channelNo
+
 static NSString *const kQLRESTBaseURL = @"http://sfs.dswtg.com";
 static NSString *const kQLRESTAppId = @"QUBA_2028";
 static const NSUInteger kQLPaymentPv = 209;
 static const NSUInteger kQLContentPv = 100;
-static NSString *const kQLChannelNo = @"IOS_L00000001";
-static NSString *const kQLPaymentURLScheme = @"comqliveapppaymenturlscheme";
+//static NSString *const kQLChannelNo = @"IOS_L00000001";
+static NSString *const kQLPaymentURLScheme = @"comhoneylive1paymenturlscheme";
 static NSString *const kPackageCertificate = @"iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd.";
 
 static NSString *const kQLAvatarImage = @"qlive_avatar.jpg";

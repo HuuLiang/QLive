@@ -43,7 +43,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    if ([self.liveShow.anchorType isEqualToString:kQLLiveShowAnchorTypeBigShow]) {
+    if ([self.liveShow.anchorType isEqualToString:kQLLiveShowAnchorTypeBigShow]
+        || [self.liveShow.anchorType isEqualToString:kQLLiveShowAnchorTypePrivate]) {
         self.loadingMessage = @"主播正在准备大秀中...";
         self.endMessage = @"大秀已结束，主播已下线！";
     } else if ([self.liveShow.anchorType isEqualToString:kQLLiveShowAnchorTypePublic]) {
@@ -262,7 +263,9 @@
         return ;
     }
     
+    @weakify(self);
     [[QLPaymentManager sharedManager] showPaymnetViewControllerInViewController:self withContentType:QLPaymentContentTypeBookThisTicket userInfo:@{kQLPaymentLiveShowUserInfo:self.liveShow} completion:^(BOOL success, QLPayPoint *payPoint) {
+        @strongify(self);
         if (success) {
             [self onSuccessPaidWithPayPoint:payPoint];
         }
@@ -306,7 +309,9 @@
         return ;
     }
     
+    @weakify(self);
     [[QLPaymentManager sharedManager] showPaymnetViewControllerInViewController:self withContentType:QLPaymentContentTypePrivateShow userInfo:@{kQLPaymentLiveShowUserInfo:self.liveShow} completion:^(BOOL success, QLPayPoint *payPoint) {
+        @strongify(self);
         if (success) {
             [self onSuccessPaidWithPayPoint:payPoint];
         }

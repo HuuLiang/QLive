@@ -6,7 +6,7 @@ target 'QLive' do
   pod 'Masonry', '~> 1.0.2'
   pod 'SDWebImage', '~> 4.0.0'
   pod 'MJRefresh', '~> 3.1.12'
-  pod 'SVProgressHUD', '~> 2.1.2'
+  pod 'SVProgressHUD', '2.0.3'
   pod 'Aspects', '~> 1.4.1'
   pod 'BlocksKit', '~> 2.2.5'
   pod 'SIAlertView', '~> 1.3'

@@ -623,10 +623,15 @@ static CGSize AssetGridThumbnailSize;
             TZAssetModel *assetModel;
             if (tzImagePickerVc.sortAscendingByModificationDate) {
                 assetModel = [models lastObject];
-                [_models addObject:assetModel];
+                if (assetModel) {
+                    [_models addObject:assetModel];
+                }
+                
             } else {
                 assetModel = [models firstObject];
-                [_models insertObject:assetModel atIndex:0];
+                if (assetModel) {
+                    [_models insertObject:assetModel atIndex:0];
+                }
             }
             
             if (tzImagePickerVc.maxImagesCount <= 1) {

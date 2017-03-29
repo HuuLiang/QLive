@@ -68,9 +68,6 @@ QBDefineLazyPropertyInitialization(QLLiveGiftPlayer, giftPlayer)
                     @strongify(self);
                     [self.navigationController popViewControllerAnimated:YES];
                 }];
-            } else if (self.shouldLoopPlayback) {
-                self.lastPausedAtSeconds = 0;
-                [self play];
             }
             
         }
