@@ -60,7 +60,7 @@
             }];
         }
         
-        NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"live_show_ticket" ofType:@"png"];
+        NSString *imagePath = [[QLResourceDownloader sharedDownloader] pathForResource:@"live_show_ticket" ofType:@"png"];
         _ticketBgImageView = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:imagePath]];
         [self addSubview:_ticketBgImageView];
         {

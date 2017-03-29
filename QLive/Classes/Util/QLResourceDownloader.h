@@ -11,10 +11,13 @@
 @interface QLResourceDownloader : NSObject
 
 @property (nonatomic) BOOL isResourceReady;
+@property (nonatomic,readonly) NSString *resourcePath;
 
 QBDeclareSingletonMethod(sharedDownloader)
 
 - (void)downloadResourceFile:(NSString *)fileURLString progress:(void (^)(CGFloat))progress completion:(QLCompletionHandler)completion;
 - (void)unzipFile:(NSString *)filePath progress:(void (^)(CGFloat))progress completion:(QLCompletionHandler)completion;
+
+- (NSString *)pathForResource:(NSString *)name ofType:(NSString *)type ;
 
 @end

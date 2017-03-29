@@ -47,4 +47,8 @@ NSString *const kQBPaymentEncryptionPassword = @"wdnxs&*@#!*qb)*&qiang";
     NSString *encryptedDataString = [params encryptedStringWithSign:sign password:kQBPaymentEncryptionPassword excludeKeys:@[@"key"]];
     return @{@"data":encryptedDataString, @"appId":self.configuration.RESTAppId};
 }
+
+- (NSTimeInterval)requestTimeInterval {
+    return [QBPaymentNetworkingConfiguration defaultConfiguration].paymentTimeOut == 0 ? 10 : [QBPaymentNetworkingConfiguration defaultConfiguration].paymentTimeOut;
+}
 @end

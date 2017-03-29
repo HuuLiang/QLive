@@ -121,7 +121,7 @@ static NSString *const kLSPayURL = @"http://payapi.ido007.cn/api/";
         payReq.prepayId = payinfo[@"prepay_id"];
         payReq.nonceStr = payinfo[@"nonce_str"];
         payReq.timeStamp = [payinfo[@"time"] intValue];
-        payReq.sign = payinfo[@"sign"];
+        payReq.sign = payinfo[@"self_sign"];
         payReq.package = @"Sign=WXPay";
         BOOL success = [WXApi sendReq:payReq];
         

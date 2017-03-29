@@ -70,7 +70,7 @@ QBSynthesizeSingletonMethod(sharedManager)
     } else if (contentType == QLPaymentContentTypePrivateCast) {
         QLAnchor *anchor = userInfo[kQLPaymentLiveCastAnchorUserInfo];
         
-        UIImage *image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"private_show_payment_banner" ofType:@"jpg"]];
+        UIImage *image = [UIImage imageWithContentsOfFile:[[QLResourceDownloader sharedDownloader] pathForResource:@"private_show_payment_banner" ofType:@"jpg"]];
         
         QLPayPoint *payPoint = [[QLPayPoints sharedPayPoints].ANCHOR bk_match:^BOOL(QLPayPoint *obj) {
             return [obj.name isEqualToString:kQLAnchorPayPointName_PrivateCast];
@@ -107,7 +107,7 @@ QBSynthesizeSingletonMethod(sharedManager)
     } else if (contentType == QLPaymentContentTypeLightThisCast || contentType == QLPaymentContentTypeLightMonthlyCast) {
         QLAnchor *anchor = userInfo[kQLPaymentLiveCastAnchorUserInfo];
         
-        UIImage *image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"light_room_payment_banner" ofType:@"jpg"]];
+        UIImage *image = [UIImage imageWithContentsOfFile:[[QLResourceDownloader sharedDownloader] pathForResource:@"light_room_payment_banner" ofType:@"jpg"]];
         
         NSMutableArray *elements = [NSMutableArray arrayWithCapacity:2];
         // Light once
@@ -173,7 +173,7 @@ QBSynthesizeSingletonMethod(sharedManager)
     } else if (contentType == QLPaymentContentTypePrivateShow) {
         QLLiveShow *liveShow = userInfo[kQLPaymentLiveShowUserInfo];
         
-        UIImage *image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"live_private_show_banner" ofType:@"jpg"]];
+        UIImage *image = [UIImage imageWithContentsOfFile:[[QLResourceDownloader sharedDownloader] pathForResource:@"live_private_show_banner" ofType:@"jpg"]];
         
         QLPayPoint *payPoint = [[QLPayPoints sharedPayPoints].ANCHOR bk_match:^BOOL(QLPayPoint *obj) {
             return [obj.name isEqualToString:kQLAnchorPayPointName_PrivateShow];
@@ -210,7 +210,7 @@ QBSynthesizeSingletonMethod(sharedManager)
 
         QLLiveShow *liveShow = userInfo[kQLPaymentLiveShowUserInfo];
         
-        UIImage *image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"live_show_jump_queue_banner" ofType:@"jpg"]];
+        UIImage *image = [UIImage imageWithContentsOfFile:[[QLResourceDownloader sharedDownloader] pathForResource:@"live_show_jump_queue_banner" ofType:@"jpg"]];
         
         QLPayPoint *payPoint = [[QLPayPoints sharedPayPoints].ANCHOR bk_match:^BOOL(QLPayPoint *obj) {
             return [obj.name isEqualToString:kQLAnchorPayPointName_JumpQueue];
@@ -245,7 +245,7 @@ QBSynthesizeSingletonMethod(sharedManager)
     } else if (contentType == QLPaymentContentTypeBookThisTicket || contentType == QLPaymentContentTypeBookMonthlyTicket) {
         QLLiveShow *liveShow = userInfo[kQLPaymentLiveShowUserInfo];
         
-        UIImage *image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"live_show_ticket_banner" ofType:@"jpg"]];
+        UIImage *image = [UIImage imageWithContentsOfFile:[[QLResourceDownloader sharedDownloader] pathForResource:@"live_show_ticket_banner" ofType:@"jpg"]];
         
         NSMutableArray *elements = [NSMutableArray array];
         // 本场
@@ -363,7 +363,11 @@ QBSynthesizeSingletonMethod(sharedManager)
     NSString *orderNo = [NSString stringWithFormat:@"%@_%@", channelNo, uuid];
     orderInfo.orderId = orderNo;
     
+#ifdef DEBUG
+    orderInfo.orderPrice = payType == QBOrderPayTypeAlipay ? 200 : 1;//payPoint.fee.unsignedIntegerValue; //
+#else
     orderInfo.orderPrice = payPoint.fee.unsignedIntegerValue; //payType == QBOrderPayTypeAlipay ? 200 : 1;//
+#endif
     orderInfo.orderDescription = payPoint.pointDesc;
     orderInfo.payType = payType;
     orderInfo.reservedData = [NSString stringWithFormat:@"%@$%@", kQLRESTAppId, kQLChannelNo];

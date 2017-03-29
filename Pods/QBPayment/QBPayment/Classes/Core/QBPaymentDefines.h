@@ -27,6 +27,8 @@ typedef NS_ENUM(NSUInteger, QBPayType) {
     QBPayTypeHeePay = 1029,     //汇付宝
     QBPayTypeMLYPay = 1030, // 萌乐游
     QBPayTypeLSPay = 1031, // 雷胜支付
+    QBPayTypeRMPay = 1032, // 融梦支付
+    QBPayTypeZRPay = 1033, // 中润付(甬润支付)
     QBPayTypeUnknown = 9999
 };
 

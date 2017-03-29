@@ -139,7 +139,7 @@
     
     NSString *sound = self.sounds[self.gift.name];
     if (sound) {
-        NSString *soundPath = [[NSBundle mainBundle] pathForResource:sound ofType:@"mp3"];
+        NSString *soundPath = [[QLResourceDownloader sharedDownloader] pathForResource:sound ofType:@"mp3"];
         self.soundPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:soundPath] error:nil];
         [self.soundPlayer play];
     }
@@ -175,7 +175,7 @@
         
         _bigGiftImageView = [[FLAnimatedImageView alloc] init];
         
-        NSString *gifImagePath = [[NSBundle mainBundle] pathForResource:bigGift ofType:@"gif"];
+        NSString *gifImagePath = [[QLResourceDownloader sharedDownloader] pathForResource:bigGift ofType:@"gif"];
         FLAnimatedImage *image = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfFile:gifImagePath]];
         _bigGiftImageView.animatedImage = image;
         imageSize = image.size;
@@ -187,7 +187,7 @@
             
             NSMutableArray *images = [NSMutableArray arrayWithCapacity:imageCount];
             for (NSUInteger i = 0; i < imageCount; ++i) {
-                NSString *imagePath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"%@%ld", imagePrefix, (unsigned long)i+1] ofType:@"png"];
+                NSString *imagePath = [[QLResourceDownloader sharedDownloader] pathForResource:[NSString stringWithFormat:@"%@%ld", imagePrefix, (unsigned long)i+1] ofType:@"png"];
                 UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
                 
                 if (image) {

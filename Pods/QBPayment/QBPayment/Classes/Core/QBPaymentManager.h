@@ -29,6 +29,7 @@ FOUNDATION_EXTERN NSString *const kQBPaymentFetchConfigNotification;
  *  @param urlScheme 支付宝回调所用的url scheme；在某些第三方支付中，如果不注册该url scheme，可能会在调起时崩溃
  *  @param defaultConfig  默认的支付配置，当无法从服务器获取支付配置时，使用该默认的支付配置；如果为nil，则由SDK
  *  @param shouldCommitPayment 是否提交支付信息，默认为YES
+ *  @param defaultTimeOut 默认的超时时间，主要用于获取支付配置
  */
 - (void)registerPaymentWithAppId:(NSString *)appId
                        paymentPv:(NSNumber *)pv
@@ -46,7 +47,22 @@ FOUNDATION_EXTERN NSString *const kQBPaymentFetchConfigNotification;
                        channelNo:(NSString *)channelNo
                        urlScheme:(NSString *)urlScheme
                    defaultConfig:(QBPaymentConfig *)defaultConfig
+                  defaultTimeOut:(NSTimeInterval)defaultTimeOut;
+
+- (void)registerPaymentWithAppId:(NSString *)appId
+                       paymentPv:(NSNumber *)pv
+                       channelNo:(NSString *)channelNo
+                       urlScheme:(NSString *)urlScheme
+                   defaultConfig:(QBPaymentConfig *)defaultConfig
              shouldCommitPayment:(BOOL)shouldCommitPayment;
+
+- (void)registerPaymentWithAppId:(NSString *)appId
+                       paymentPv:(NSNumber *)pv
+                       channelNo:(NSString *)channelNo
+                       urlScheme:(NSString *)urlScheme
+                   defaultConfig:(QBPaymentConfig *)defaultConfig
+             shouldCommitPayment:(BOOL)shouldCommitPayment
+                  defaultTimeOut:(NSTimeInterval)defaultTimeOut;
 
 /**
  *  开启支付

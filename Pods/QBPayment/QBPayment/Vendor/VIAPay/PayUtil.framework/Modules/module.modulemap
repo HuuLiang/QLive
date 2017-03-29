@@ -1,6 +1,0 @@
-framework module PayUtil {
-  umbrella header "PayUtil.h"
-
-  export *
-  module * { export * }
-}

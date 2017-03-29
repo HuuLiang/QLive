@@ -96,7 +96,7 @@ static NSString *const kPlaceholderReusableIdentifier = @"PlaceholderReusableIde
         cell.title = @"你的好友静悄悄\n此时还没有直播";
         cell.buttonTitle = @"去看看最新精彩直播";
         
-        NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"following_placeholder_banner" ofType:@"jpg"];
+        NSString *imagePath = [[QLResourceDownloader sharedDownloader] pathForResource:@"following_placeholder_banner" ofType:@"jpg"];
         UIImage *backgroundImage = [UIImage imageWithContentsOfFile:imagePath];
         cell.backgroundImage = backgroundImage;
         return cell;

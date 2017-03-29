@@ -49,5 +49,6 @@
 #import "QLPayPoint.h"
 #import "QLRESTManager.h"
 #import "QLPaymentManager.h"
+#import "QLResourceDownloader.h"
 
 #endif /* QLPrefixHeader_pch */

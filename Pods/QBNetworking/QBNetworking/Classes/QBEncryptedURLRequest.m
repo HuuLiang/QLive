@@ -64,6 +64,13 @@ static NSString *const kNewEncryptionPassword = @"wdnxs&*@#!*qb)*&qiang";
 }
 
 - (BOOL)requestURLPath:(NSString *)urlPath standbyURLPath:(NSString *)standbyUrlPath withParams:(NSDictionary *)params responseHandler:(QBURLResponseHandler)responseHandler {
+    if (standbyUrlPath) {
+        //备用静态文件链接后加时间戳
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyyMMdd"];
+        NSString *timeString = [dateFormatter stringFromDate:[NSDate date]];
+        standbyUrlPath = [NSString stringWithFormat:@"%@?t=%@",standbyUrlPath,timeString];
+    }
     return [super requestURLPath:urlPath standbyURLPath:standbyUrlPath withParams:[self encryptWithParams:params] responseHandler:responseHandler];
 }
 

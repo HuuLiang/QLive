@@ -95,7 +95,7 @@ QBDefineLazyPropertyInitialization(QLLiveGiftPlayer, giftPlayer)
     [[QLHUDManager sharedManager] showLoadingInfo:self.loadingMessage];
     
     if (!_placeholderImageView) {
-        NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"live_placeholder_image" ofType:@"jpg"];
+        NSString *imagePath = [[QLResourceDownloader sharedDownloader] pathForResource:@"live_placeholder_image" ofType:@"jpg"];
         _placeholderImageView = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:imagePath]];
         //    _placeholderImageView.contentMode = UIViewContentModeScaleAspectFill;
         //    _placeholderImageView.clipsToBounds = YES;

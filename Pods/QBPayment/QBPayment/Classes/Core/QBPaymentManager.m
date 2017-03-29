@@ -121,11 +121,14 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
                        channelNo:(NSString *)channelNo
                        urlScheme:(NSString *)urlScheme
                    defaultConfig:(QBPaymentConfig *)defaultConfig
-             shouldCommitPayment:(BOOL)shouldCommitPayment;
+             shouldCommitPayment:(BOOL)shouldCommitPayment
+                  defaultTimeOut:(NSTimeInterval)defaultTimeOut
 {
     [QBPaymentNetworkingConfiguration defaultConfiguration].RESTAppId = appId;
     [QBPaymentNetworkingConfiguration defaultConfiguration].RESTpV = pv;
     [QBPaymentNetworkingConfiguration defaultConfiguration].channelNo = channelNo;
+    [QBPaymentNetworkingConfiguration defaultConfiguration].paymentTimeOut = defaultTimeOut;
+    
     self.urlScheme = urlScheme;
     self.shouldCommitPayment = shouldCommitPayment;
     
@@ -147,7 +150,20 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     }
 }
 
-- (void)registerPaymentWithAppId:(NSString *)appId paymentPv:(NSNumber *)pv channelNo:(NSString *)channelNo urlScheme:(NSString *)urlScheme {
+- (void)registerPaymentWithAppId:(NSString *)appId
+                       paymentPv:(NSNumber *)pv
+                       channelNo:(NSString *)channelNo
+                       urlScheme:(NSString *)urlScheme
+                   defaultConfig:(QBPaymentConfig *)defaultConfig
+             shouldCommitPayment:(BOOL)shouldCommitPayment {
+    [self registerPaymentWithAppId:appId paymentPv:pv channelNo:channelNo urlScheme:urlScheme defaultConfig:defaultConfig shouldCommitPayment:shouldCommitPayment defaultTimeOut:0];
+}
+
+- (void)registerPaymentWithAppId:(NSString *)appId
+                       paymentPv:(NSNumber *)pv
+                       channelNo:(NSString *)channelNo
+                       urlScheme:(NSString *)urlScheme
+{
     [self registerPaymentWithAppId:appId paymentPv:pv channelNo:channelNo urlScheme:urlScheme defaultConfig:nil shouldCommitPayment:YES];
 }
 
@@ -157,6 +173,15 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
                        urlScheme:(NSString *)urlScheme
                    defaultConfig:(QBPaymentConfig *)defaultConfig {
     [self registerPaymentWithAppId:appId paymentPv:pv channelNo:channelNo urlScheme:urlScheme defaultConfig:defaultConfig shouldCommitPayment:YES];
+}
+
+- (void)registerPaymentWithAppId:(NSString *)appId
+                       paymentPv:(NSNumber *)pv
+                       channelNo:(NSString *)channelNo
+                       urlScheme:(NSString *)urlScheme
+                   defaultConfig:(QBPaymentConfig *)defaultConfig
+                  defaultTimeOut:(NSTimeInterval)defaultTimeOut {
+    [self registerPaymentWithAppId:appId paymentPv:pv channelNo:channelNo urlScheme:urlScheme defaultConfig:defaultConfig shouldCommitPayment:YES defaultTimeOut:defaultTimeOut];
 }
 
 - (void)refreshAvailablePaymentTypesWithCompletionHandler:(void (^)(void))completionHandler {
@@ -269,6 +294,23 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         }
 #endif
         
+#ifdef QBPAYMENT_RMPAY_ENABLED
+        QBRMPayConfig *rmPayConfig = [QBPaymentConfig sharedConfig].configDetails.rmPayConfig;
+        if (rmPayConfig) {
+            [QBRMPayManager sharedManager].appId = rmPayConfig.appId;
+            [QBRMPayManager sharedManager].mchId = rmPayConfig.mchId;
+            [QBRMPayManager sharedManager].key = rmPayConfig.key;
+            [QBRMPayManager sharedManager].notifyUrl = rmPayConfig.notifyUrl;
+        }
+#endif 
+        
+#ifdef QBPAYMENT_ZRPAY_ENABLED
+        QBZRPayConfig *zrPayConfig = [QBPaymentConfig sharedConfig].configDetails.zrPayConfig;
+        if (zrPayConfig) {
+            [ZRPayManager sharedManager].appId = zrPayConfig.appId;
+            [ZRPayManager sharedManager].key = zrPayConfig.key;
+        }
+#endif
         QBSafelyCallBlock(completionHandler);
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kQBPaymentFetchConfigNotification object:nil];
@@ -373,6 +415,18 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 #endif
     } else if (payType == QBPayTypeLSPay) {
 #ifdef QBPAYMENT_LSPAY_ENABLED
+        return YES;
+#else
+        return NO;
+#endif
+    } else if (payType == QBPayTypeRMPay) {
+#ifdef QBPAYMENT_RMPAY_ENABLED
+        return YES;
+#else
+        return NO;
+#endif
+    } else if (payType == QBPayTypeZRPay) {
+#ifdef QBPAYMENT_ZRPAY_ENABLED
         return YES;
 #else
         return NO;
@@ -716,6 +770,24 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     }
 #endif
     
+#ifdef QBPAYMENT_RMPAY_ENABLED
+    if (payType == QBPayTypeRMPay) {
+        QBSafelyCallBlock(beginAction, paymentInfo);
+        success = YES;
+        
+        [[QBRMPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:paymentHandler];
+    }
+#endif
+    
+#ifdef QBPAYMENT_ZRPAY_ENABLED
+    if (payType == QBPayTypeZRPay) {
+        QBSafelyCallBlock(beginAction, paymentInfo);
+        success = YES;
+        
+        [[ZRPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:paymentHandler];
+    }
+#endif
+    
     if (!success) {
         paymentHandler(QBPayResultFailure, paymentInfo);
     }
@@ -789,6 +861,14 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 #ifdef QBPAYMENT_LSPAY_ENABLED
         [[LSPayManager sharedManager] handleOpenURL:url];
 #endif
+    } else if (self.paymentInfo.paymentType == QBPayTypeRMPay) {
+#ifdef QBPAYMENT_RMPAY_ENABLED
+        [[QBRMPayManager sharedManager] handleOpenURL:url];
+#endif
+    } else if (self.paymentInfo.paymentType == QBPayTypeZRPay) {
+#ifdef QBPAYMENT_ZRPAY_ENABLED
+        [[ZRPayManager sharedManager] handleOpenURL:url];
+#endif
     }
     //    else if (self.paymentInfo.paymentType == QBPayTypeJSPay) {
     //#ifdef QBPAYMENT_JSPAY_ENABLED
@@ -835,6 +915,14 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     } else if (self.paymentInfo.paymentType == QBPayTypeLSPay) {
 #ifdef QBPAYMENT_LSPAY_ENABLED
         [[LSPayManager sharedManager] applicationWillEnterForeground:application];
+#endif
+    } else if (self.paymentInfo.paymentType == QBPayTypeRMPay) {
+#ifdef QBPAYMENT_RMPAY_ENABLED
+        [[QBRMPayManager sharedManager] applicationWillEnterForeground:application];
+#endif
+    } else if (self.paymentInfo.paymentType == QBPayTypeZRPay) {
+#ifdef QBPAYMENT_ZRPAY_ENABLED
+        [[ZRPayManager sharedManager] applicationWillEnterForeground:application];
 #endif
     }
 }

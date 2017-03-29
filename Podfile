@@ -20,6 +20,6 @@ target 'QLive' do
   pod 'SSZipArchive', '~> 1.7'
   
   pod 'QBExtensions'
-  pod 'QBPayment', :subspecs => ['IappPay','VIAPay','HTPay','WJPay','MLYPay','DXTXPay','LSPay']
+  pod 'QBPayment', :subspecs => ['IappPay','WJPay','DXTXPay','LSPay','RMPay']
   
 end

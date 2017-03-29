@@ -18,6 +18,7 @@ static NSString *const kQLResourceReadyUserDefaultsKey = @"com.qlive.userdefault
 @end
 
 @implementation QLResourceDownloader
+@synthesize resourcePath = _resourcePath;
 
 QBSynthesizeSingletonMethod(sharedDownloader)
 
@@ -31,6 +32,14 @@ QBSynthesizeSingletonMethod(sharedDownloader)
     return _sessionManager;
 }
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}
+
 - (BOOL)isResourceReady {
     NSNumber *value = [[NSUserDefaults standardUserDefaults] objectForKey:kQLResourceReadyUserDefaultsKey];
     return value.boolValue;
@@ -39,6 +48,31 @@ QBSynthesizeSingletonMethod(sharedDownloader)
 - (void)setIsResourceReady:(BOOL)isResourceReady {
     [[NSUserDefaults standardUserDefaults] setObject:@(isResourceReady) forKey:kQLResourceReadyUserDefaultsKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (NSString *)resourcePath {
+    if (_resourcePath) {
+        return _resourcePath;
+    }
+    
+    NSString *targetPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
+    _resourcePath = [targetPath stringByAppendingPathComponent:@"Resources"];
+    return _resourcePath;
+}
+
+- (NSString *)pathForResource:(NSString *)name ofType:(NSString *)type {
+    
+    NSString *resourcePath = self.resourcePath;
+    if (!resourcePath) {
+        return [[NSBundle mainBundle] pathForResource:name ofType:type];
+    }
+    
+    NSString *filePath = [resourcePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", name, type]];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+        return filePath;
+    } else {
+        return [[NSBundle mainBundle] pathForResource:name ofType:type];
+    }
 }
 
 - (void)downloadResourceFile:(NSString *)fileURLString
@@ -79,14 +113,14 @@ QBSynthesizeSingletonMethod(sharedDownloader)
 }
 
 - (void)unzipFile:(NSString *)filePath progress:(void (^)(CGFloat))progress completion:(QLCompletionHandler)completion {
-    NSString *targetPath = [NSBundle mainBundle].resourcePath;
-    [SSZipArchive unzipFileAtPath:filePath toDestination:targetPath progressHandler:^(NSString * _Nonnull entry, unz_file_info zipInfo, long entryNumber, long total) {
+    NSString *resourcePath = self.resourcePath;
+    [SSZipArchive unzipFileAtPath:filePath toDestination:resourcePath progressHandler:^(NSString * _Nonnull entry, unz_file_info zipInfo, long entryNumber, long total) {
         dispatch_async(dispatch_get_main_queue(), ^{
             QBSafelyCallBlock(progress, total > 0 ? (CGFloat)entryNumber / (CGFloat)total : 0);
         });
     } completionHandler:^(NSString * _Nonnull path, BOOL succeeded, NSError * _Nullable error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            QBSafelyCallBlock(completion, path, error);
+            QBSafelyCallBlock(completion, resourcePath, error);
         });
     }];
 }

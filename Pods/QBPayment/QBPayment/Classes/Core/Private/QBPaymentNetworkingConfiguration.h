@@ -10,4 +10,6 @@
 
 @interface QBPaymentNetworkingConfiguration : QBNetworkingConfiguration
 
+@property (nonatomic) NSTimeInterval paymentTimeOut;
+
 @end

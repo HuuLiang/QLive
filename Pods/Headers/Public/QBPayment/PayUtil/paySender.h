@@ -1,1 +1,0 @@
-../../../../QBPayment/QBPayment/Vendor/VIAPay/PayUtil.framework/Headers/paySender.h

@@ -1,1 +1,0 @@
-../../../QBPayment/QBPayment/Vendor/VIAPay/Util/config.h

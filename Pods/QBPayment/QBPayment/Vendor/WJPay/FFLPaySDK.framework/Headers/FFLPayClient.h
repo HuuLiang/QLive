@@ -42,8 +42,6 @@
 - (NSString*)SDKVersion;
 
 
-
-
 /**
  *  FFLPaySDK 版本类型
  *
@@ -51,6 +49,11 @@
 - (NSString*)SDKTypeName;
 
 
+/**
+ *  FFLPaySDK 设备ID
+ *
+ */
+- (NSString*)SDKDeviceID;
 
 /**
  *  是否输出debug日志信息
