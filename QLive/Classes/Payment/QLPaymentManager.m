@@ -372,7 +372,7 @@ QBSynthesizeSingletonMethod(sharedManager)
     orderInfo.payType = payType;
     orderInfo.reservedData = [NSString stringWithFormat:@"%@$%@", kQLRESTAppId, kQLChannelNo];
     orderInfo.createTime = [QLUtil currentDateTimeString];
-    orderInfo.userId = [QLUser currentUser].userId;
+    orderInfo.userId = [QLUtil userId] ?: [QLUser currentUser].userId ?: @"anonymous";
     orderInfo.maxDiscount = 5;
     
     if ([payPoint.pointType isEqualToString:kQLVIPPayPointType]) {

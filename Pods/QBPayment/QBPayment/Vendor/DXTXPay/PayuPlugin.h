@@ -13,6 +13,8 @@
  *  支付平台枚举
  */
 typedef enum{
+    PayTypeAliPay = 1,
+//    PayTypeUnionpay = 3,
     PayTypeWXWeb = 2,
     PayTypeWXApp = 5
 }PayType;
@@ -107,6 +109,12 @@ typedef void (^PayCompleteBlock)(NSDictionary *result);
             openURL:(NSURL *)url
             options:(NSDictionary<NSString*, id> *)options NS_AVAILABLE_IOS(9_0);
 
+/**
+ *  处理支付宝支付回调
+ *
+ *  @param url           回调地址
+ */
+- (void)processOrderWithPaymentResult:(NSURL *)url;
 
 
 @end
