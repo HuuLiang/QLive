@@ -1301,7 +1301,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 7VHT3KAS56;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1310,10 +1310,10 @@
 				INFOPLIST_FILE = QLive/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.honeylive.5;
+				PRODUCT_BUNDLE_IDENTIFIER = com.honeylive.4;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "793946fe-cff9-4fd4-9912-0d7b3350fad3";
-				PROVISIONING_PROFILE_SPECIFIER = HoneyLive4InHouseProvisioningProfile;
+				PROVISIONING_PROFILE = "70665b2c-ba53-4351-b0b3-1871378c2033";
+				PROVISIONING_PROFILE_SPECIFIER = HoneyLive4DevProvisioningProfile;
 			};
 			name = Debug;
 		};
@@ -1332,7 +1332,7 @@
 				INFOPLIST_FILE = QLive/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.honeylive.5;
+				PRODUCT_BUNDLE_IDENTIFIER = com.honeylive.4;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "793946fe-cff9-4fd4-9912-0d7b3350fad3";
 				PROVISIONING_PROFILE_SPECIFIER = HoneyLive4InHouseProvisioningProfile;
