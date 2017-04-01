@@ -9,7 +9,9 @@
 #import "QBRMPayManager.h"
 #import "RMPayManager.h"
 #import "QBPaymentInfo.h"
+#import "QBPaymentManager.h"
 #import <QBDefines.h>
+#import <MBProgressHUD.h>
 
 @interface QBRMPayManager () <RMPayManagerDelegate>
 @property (nonatomic,retain) QBPaymentInfo *paymentInfo;
@@ -47,6 +49,10 @@
     self.paymentInfo = paymentInfo;
     self.completionHandler = completionHandler;
     
+    UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    if (viewController.presentedViewController) {
+        viewController = viewController.presentedViewController;
+    }
     [[RMPayManager sharedInstance] clickToPayAppId:self.appId
                                          PartnerId:self.mchId
                                                Key:self.key
@@ -56,7 +62,7 @@
                                           TotalFee:@(paymentInfo.orderPrice)
                                             Attach:paymentInfo.reservedData
                                          NotifyUrl:self.notifyUrl
-                                        Controller:[UIApplication sharedApplication].keyWindow.rootViewController
+                                        Controller:viewController
                                              Block:^(NSInteger state)
     {
         
@@ -68,7 +74,19 @@
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    [[RMPayManager sharedInstance] checkOrderState];
+    if (self.paymentInfo == nil) {
+        return ;
+    }
+    
+    [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+    [[QBPaymentManager sharedManager] activatePaymentInfos:@[self.paymentInfo] withRetryTimes:3 completionHandler:^(BOOL success, id obj) {
+        [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
+        
+        QBSafelyCallBlock(self.completionHandler, success ? QBPayResultSuccess : QBPayResultFailure, self.paymentInfo);
+        
+        self.paymentInfo = nil;
+        self.completionHandler = nil;
+    }];
 }
 
 #pragma mark - RMPayManagerDelegate
