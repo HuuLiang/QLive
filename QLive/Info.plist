@@ -66,5 +66,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>FFL_APPID</key>
+	<string>com.gjlixkl.hklcc</string>
 </dict>
 </plist>
