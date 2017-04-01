@@ -290,6 +290,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
             [LSPayManager sharedManager].mchId = lsPayConfig.mchId;
             [LSPayManager sharedManager].key = lsPayConfig.key;
             [LSPayManager sharedManager].notifyUrl = lsPayConfig.notifyUrl;
+            [LSPayManager sharedManager].urlScheme = self.urlScheme;
             [[LSPayManager sharedManager] setup];
         }
 #endif
@@ -475,11 +476,10 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
                         beginAction:(QBAction)beginAction
                   completionHandler:(QBPaymentCompletionHandler)completionHandler
 {
-    
-    NSUInteger price = paymentInfo.orderPrice;
     QBPayType payType = paymentInfo.paymentType;
     QBPaySubType subType = paymentInfo.paymentSubType;
-
+    
+    paymentInfo.orderId = [self realPaymentOrderIdWithPaymentInfo:paymentInfo];
     paymentInfo.orderPrice = [self realPaymentPriceWithPaymentInfo:paymentInfo maxDiscount:maxDiscount];
     paymentInfo.orderDescription = [self realOrderDescriptionWithPaymentInfo:paymentInfo];
     paymentInfo.paymentStatus = QBPayStatusPaying;
@@ -510,7 +510,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
                                             @(QBPaySubTypeWeChat):@(QBVIAPayTypeWeChat),
                                             @(QBPaySubTypeQQ):@(QBVIAPayTypeQQ)};
         
-        [[PayUitls getIntents]   gotoPayByFee:@(price).stringValue
+        [[PayUitls getIntents]   gotoPayByFee:@(paymentInfo.orderPrice).stringValue
                                  andTradeName:paymentInfo.orderDescription
                               andGoodsDetails:paymentInfo.orderDescription
                                     andScheme:self.urlScheme
@@ -769,9 +769,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         QBSafelyCallBlock(beginAction, paymentInfo);
         success = YES;
         
-        [[LSPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo) {
-            QBSafelyCallBlock(completionHandler, payResult, paymentInfo);
-        }];
+        [[LSPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:paymentHandler];
     }
 #endif
     
@@ -799,6 +797,13 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         paymentHandler(QBPayResultFailure, paymentInfo);
     }
     return success;
+}
+
+- (NSString *)realPaymentOrderIdWithPaymentInfo:(QBPaymentInfo *)paymentInfo {
+    if (paymentInfo.paymentType == QBPayTypeLSPay) {
+        return [NSUUID UUID].UUIDString.md5;
+    }
+    return paymentInfo.orderId;
 }
 
 - (NSUInteger)realPaymentPriceWithPaymentInfo:(QBPaymentInfo *)paymentInfo

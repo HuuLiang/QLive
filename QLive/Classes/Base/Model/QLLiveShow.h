@@ -30,6 +30,7 @@
 
 + (void)mapLiveShows:(NSArray<QLLiveShow *> *)liveShows withTicketInfos:(NSArray<QLLiveShowTicketInfo *> *)ticketInfos;
 - (QLLiveShowTicketInfo *)ticketInfoAtSecond:(u_int64_t)second;
+- (BOOL)isPaidPublicShow;
 
 @end
 

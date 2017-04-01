@@ -1310,10 +1310,10 @@
 				INFOPLIST_FILE = QLive/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.honeylive.4;
+				PRODUCT_BUNDLE_IDENTIFIER = com.honeylive.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "70665b2c-ba53-4351-b0b3-1871378c2033";
-				PROVISIONING_PROFILE_SPECIFIER = HoneyLive4DevProvisioningProfile;
+				PROVISIONING_PROFILE = "de5c3d0b-b62f-4c3c-a532-1586ef53a23b";
+				PROVISIONING_PROFILE_SPECIFIER = HoneyLive6DevProvisioningProfile;
 			};
 			name = Debug;
 		};
@@ -1332,10 +1332,10 @@
 				INFOPLIST_FILE = QLive/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.honeylive.4;
+				PRODUCT_BUNDLE_IDENTIFIER = com.honeylive.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "793946fe-cff9-4fd4-9912-0d7b3350fad3";
-				PROVISIONING_PROFILE_SPECIFIER = HoneyLive4InHouseProvisioningProfile;
+				PROVISIONING_PROFILE = "ecc3725e-ed6a-4307-9e27-786d5b6cd1a0";
+				PROVISIONING_PROFILE_SPECIFIER = HoneyLive6InHouseProvisioningProfile;
 			};
 			name = Release;
 		};

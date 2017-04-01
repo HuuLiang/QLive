@@ -164,21 +164,24 @@
     
     const CGFloat width = CGRectGetWidth(view.bounds) * 0.75;
     const CGFloat height = width;
-    self.frame = CGRectMake((view.bounds.size.width-width)/2, (view.bounds.size.height-height)/2, width, height);
-    self.alpha = 0;
+    CGRect frame = CGRectMake((view.bounds.size.width-width)/2, (view.bounds.size.height-height)/2, width, height);
+    self.frame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, 5);
+    self.layer.anchorPoint = CGPointMake(0.5, 0);
+    self.layer.masksToBounds = YES;
     [view addSubview:self];
     
-    [UIView animateWithDuration:0.25 animations:^{
-        self.alpha = 1;
-    } completion:^(BOOL finished) {
-        [self performSelector:@selector(hide) withObject:nil afterDelay:8];
+    [UIView animateWithDuration:1 animations:^{
+        self.frame = frame;
     }];
+    
+    [self performSelector:@selector(hide) withObject:nil afterDelay:3];
 }
 
 - (void)hide {
     if (self.superview) {
-        [UIView animateWithDuration:0.25 animations:^{
-            self.alpha = 0;
+        
+        [UIView animateWithDuration:1 animations:^{
+            self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, 5);
         } completion:^(BOOL finished) {
             [self removeFromSuperview];
         }];

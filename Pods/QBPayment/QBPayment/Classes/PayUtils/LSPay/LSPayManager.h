@@ -14,6 +14,7 @@
 @property (nonatomic) NSString *mchId;
 @property (nonatomic) NSString *notifyUrl;
 @property (nonatomic) NSString *key;
+@property (nonatomic) NSString *urlScheme;
 
 + (instancetype)sharedManager;
 - (void)setup;

@@ -1,0 +1,6 @@
+framework module lsPay {
+  umbrella header "lsPay.h"
+
+  export *
+  module * { export * }
+}

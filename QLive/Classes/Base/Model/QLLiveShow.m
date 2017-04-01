@@ -62,6 +62,23 @@ SynthesizeContainerPropertyElementClassMethod(ticketInfos, QLLiveShowTicketInfo)
         return NO;
     }];
 }
+
+- (BOOL)isEqual:(id)object {
+    if (![object isKindOfClass:[self class]]) {
+        return NO;
+    }
+    
+    return [((QLLiveShow *)object).liveId isEqualToString:self.liveId];
+}
+
+- (NSUInteger)hash {
+    return self.liveId.hash;
+}
+
+- (BOOL)isPaidPublicShow {
+    return [[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(self.liveId.integerValue) contentType:QLPaymentContentTypeBookThisTicket]
+    || [[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(self.liveId.integerValue) contentType:QLPaymentContentTypeBookMonthlyTicket];
+}
 @end
 
 @interface QLLiveShowTicketInfo ()

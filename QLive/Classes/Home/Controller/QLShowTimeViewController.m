@@ -54,10 +54,10 @@ QBDefineLazyPropertyInitialization(NSMutableArray, currentLiveShows)
     [QLLiveShow registerObserver:self];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [_layoutTableView reloadData];
-}
+//- (void)viewWillAppear:(BOOL)animated {
+//    [super viewWillAppear:animated];
+//    [_layoutTableView reloadData];
+//}
 
 - (void)dealloc {
     [QLLiveShow removeObserver:self];
@@ -73,14 +73,14 @@ QBDefineLazyPropertyInitialization(NSMutableArray, currentLiveShows)
             
             self.allShows = liveShows;
             
-            [self updateShows];
+            [self updateCurrentLiveShows];
         }];
         
     }];
     
 }
 
-- (void)updateShows {
+- (void)updateCurrentLiveShows {
     NSMutableArray<QLLiveShow *> *unpaidPublicShows = [NSMutableArray array];
     NSMutableArray<QLLiveShow *> *paidPublicShows = [NSMutableArray array];
     NSMutableArray<QLLiveShow *> *privateShows = [NSMutableArray array];
@@ -100,37 +100,58 @@ QBDefineLazyPropertyInitialization(NSMutableArray, currentLiveShows)
             [bigShows addObject:obj];
         }
     }];
-//    
-//    NSArray<QLLiveShow *> *unpaidPublicShows = [self.allShows bk_select:^BOOL(QLLiveShow *obj) {
-//        return [obj.anchorType isEqualToString:kQLLiveShowAnchorTypePublic]
-//        && ![[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(obj.liveId.integerValue) contentType:QLPaymentContentTypeBookThisTicket]
-//        && ![[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(obj.liveId.integerValue) contentType:QLPaymentContentTypeBookMonthlyTicket];
-//    }];
     
+    NSMutableArray<QLLiveShow *> *currentLiveShows = [NSMutableArray array];
+    
+    __block NSUInteger numberOfUnpaidLiveShows = 0;
+    __block NSUInteger numberOfPrivateLiveShows = 0;
+    [self.currentLiveShows enumerateObjectsUsingBlock:^(QLLiveShow * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([unpaidPublicShows containsObject:obj]) {
+            ++numberOfUnpaidLiveShows;
+        } else if ([privateShows containsObject:obj]) {
+            ++numberOfPrivateLiveShows;
+        }
+        
+        if ([self.allShows containsObject:obj]) {
+            [currentLiveShows addObject:obj];
+        }
+    }];
+    
+    if (numberOfUnpaidLiveShows < 2) {
+        [currentLiveShows addObjectsFromArray:[unpaidPublicShows QL_arrayByPickingRandomCount:2-numberOfUnpaidLiveShows]];
+    }
+    
+    if (numberOfPrivateLiveShows < 3) {
+        [currentLiveShows addObjectsFromArray:[privateShows QL_arrayByPickingRandomCount:3-numberOfPrivateLiveShows]];
+    }
+    
+    // Add paid public shows and big shows that NOT in current live shows
+    [paidPublicShows enumerateObjectsUsingBlock:^(QLLiveShow * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (![currentLiveShows containsObject:obj]) {
+            [currentLiveShows addObject:obj];
+        }
+    }];
+    
+    [bigShows enumerateObjectsUsingBlock:^(QLLiveShow * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (![currentLiveShows containsObject:obj]) {
+            [currentLiveShows addObject:obj];
+        }
+    }];
 
-//    self.privateShows = [self.allShows bk_select:^BOOL(QLLiveShow *obj) {
-//        return [obj.anchorType isEqualToString:kQLLiveShowAnchorTypePrivate];
-//    }].mutableCopy;
-//    
-//    self.bigShows = [self.allShows bk_select:^BOOL(QLLiveShow *obj) {
-//        return [obj.anchorType isEqualToString:kQLLiveShowAnchorTypeBigShow];
-//    }].mutableCopy;
-//    
-//    NSArray *publicShows = [self.publicShows QL_arrayByPickingRandomCount:2];
-//    NSArray *privateShows = [self.privateShows QL_arrayByPickingRandomCount:3];
-//    
-//    NSArray *paidPublicShows = [self.allShows bk_select:^BOOL(QLLiveShow *obj) {
-//        return [obj.anchorType isEqualToString:kQLLiveShowAnchorTypePublic]
-//        && ([[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(obj.liveId.integerValue) contentType:QLPaymentContentTypeBookThisTicket]
-//            || [[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(obj.liveId.integerValue) contentType:QLPaymentContentTypeBookMonthlyTicket]);
-//    }];
+    NSArray *sortedKeys = @[kQLLiveShowAnchorTypePublic,kQLLiveShowAnchorTypeBigShow,kQLLiveShowAnchorTypePrivate];
+    [currentLiveShows sortUsingComparator:^NSComparisonResult(QLLiveShow * _Nonnull obj1, QLLiveShow * _Nonnull obj2) {
+        NSUInteger index1 = [sortedKeys indexOfObject:obj1.anchorType];
+        NSUInteger index2 = [sortedKeys indexOfObject:obj2.anchorType];
+        if (index1 == 0 && index2 == 0) {
+            NSUInteger order1 = obj1.isPaidPublicShow ? 1 : 0;
+            NSUInteger order2 = obj2.isPaidPublicShow ? 1 : 0;
+            return order1 - order2;
+        } else {
+            return [@(index1) compare:@(index2)];
+        }
+    }];
     
-    [self.currentLiveShows removeAllObjects];
-    [self.currentLiveShows addObjectsFromArray:[unpaidPublicShows QL_arrayByPickingRandomCount:2]];
-    [self.currentLiveShows addObjectsFromArray:paidPublicShows];
-    [self.currentLiveShows addObjectsFromArray:bigShows];
-    [self.currentLiveShows addObjectsFromArray:[privateShows QL_arrayByPickingRandomCount:3]];
-    
+    self.currentLiveShows = currentLiveShows;
     [_layoutTableView reloadData];
 }
 
@@ -145,40 +166,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, currentLiveShows)
     if (operation == DBPersistenceOperationRemove) {
         [self loadLiveShows];
     } else {
-        [self updateShows];
-//        __block NSUInteger numberOfPublicShows = 0;
-//        __block NSUInteger numberOfPrivateShows = 0;
-//        [self.currentLiveShows enumerateObjectsUsingBlock:^(QLLiveShow * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//            if ([obj.anchorType isEqualToString:kQLLiveShowAnchorTypePublic]
-//                && ![[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(obj.liveId.integerValue) contentType:QLPaymentContentTypeBookThisTicket]
-//                && ![[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(obj.liveId.integerValue) contentType:QLPaymentContentTypeBookMonthlyTicket]) {
-//                ++numberOfPublicShows;
-//            } else if ([obj.anchorType isEqualToString:kQLLiveShowAnchorTypePrivate]) {
-//                ++numberOfPrivateShows;
-//            }
-//        }];
-//        
-//        if (numberOfPublicShows < 2) {
-//            NSArray *publicShows = [self.publicShows QL_arrayByPickingRandomCount:2-numberOfPublicShows];
-//            if (publicShows.count > 0) {
-//                [self.currentLiveShows insertObjects:publicShows atIndexes:[NSIndexSet indexSetWithIndex:0]];
-//                [self.publicShows removeObjectsInArray:publicShows];
-//            }
-//            
-//        }
-//        
-//        if (numberOfPrivateShows < 3) {
-//            NSArray *privateShows = [self.privateShows QL_arrayByPickingRandomCount:3-numberOfPrivateShows];
-//            if (privateShows.count > 0) {
-//                [self.currentLiveShows insertObjects:privateShows atIndexes:[NSIndexSet indexSetWithIndex:self.currentLiveShows.count-numberOfPrivateShows]];
-//                [self.privateShows removeObjectsInArray:privateShows];
-//            }
-//        }
-//        
-//        [self.currentLiveShows sortUsingComparator:^NSComparisonResult(QLLiveShow * _Nonnull obj1, QLLiveShow * _Nonnull obj2) {
-//            return [obj2.anchorType compare:obj1.anchorType];
-//        }];
-//        [_layoutTableView reloadData];
+        [self updateCurrentLiveShows];
     }
 }
 
