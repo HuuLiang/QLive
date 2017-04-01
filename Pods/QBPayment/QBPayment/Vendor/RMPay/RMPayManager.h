@@ -65,14 +65,15 @@
                   Block:(void(^)(NSInteger state))completeBlock;
 
 /**
- APPDelegate里面调用
+ APPDelegate里面调用(注意：本版本弃用)
  */
 - (void)checkOrderState;
 
 
 #pragma mark - URL代理
 
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url;
+- (BOOL)application:(UIApplication *)application
+      handleOpenURL:(NSURL *)url;
 
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url

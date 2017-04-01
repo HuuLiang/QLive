@@ -495,6 +495,11 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         QBSafelyCallBlock(completionHandler, payResult, paymentInfo);
     };
     
+    UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    if (viewController.presentedViewController) {
+        viewController = viewController.presentedViewController;
+    }
+    
     BOOL success = NO;
 #ifdef QBPAYMENT_VIAPAY_ENABLED
     if (payType == QBPayTypeVIAPay && (subType == QBPaySubTypeAlipay || subType == QBPaySubTypeWeChat || subType == QBPaySubTypeQQ)) {
@@ -511,7 +516,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
                                     andScheme:self.urlScheme
                             andchannelOrderId:[paymentInfo.orderId stringByAppendingFormat:@"$%@", [QBPaymentNetworkingConfiguration defaultConfiguration].RESTAppId]
                                       andType:[viaPayTypeMapping[@(subType)] stringValue]
-                             andViewControler:[UIApplication sharedApplication].keyWindow.rootViewController];
+                             andViewControler:viewController];
         
         success = YES;
     }
@@ -546,10 +551,6 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         NSNumber *goodsId = [QBPaymentConfig sharedConfig].configDetails.dxtxPayConfig.waresid;
         NSString *appKey = [QBPaymentConfig sharedConfig].configDetails.dxtxPayConfig.appKey;
         
-        UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-        if (viewController.presentedViewController) {
-            viewController = viewController.presentedViewController;
-        }
         [[PayuPlugin defaultPlugin] payWithViewController:viewController
                                              o_paymode_id:subType == QBPaySubTypeAlipay ? PayTypeAliPay : PayTypeWXApp
                                                 O_bizcode:paymentInfo.orderId
@@ -627,7 +628,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
             [QJPaySDK QJPayStart:params
                        AppScheme:self.urlScheme
                           appKey:payConfig.appKey
-        andCurrentViewController:[UIApplication sharedApplication].keyWindow.rootViewController
+        andCurrentViewController:viewController
                      andDelegate:self
                             Flag:0x80];
         }
@@ -680,7 +681,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
             success = YES;
             
             [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-            [[JsAppPay sharedInstance] payOrderWithweixinPay:[UIApplication sharedApplication].keyWindow.rootViewController description:paymentInfo.orderDescription goodsAmount:@(paymentInfo.orderPrice).stringValue appId:payConfig.productId paraId:payConfig.mchId orderId:paymentInfo.orderId notifyUrl:payConfig.notifyUrl attach:paymentInfo.reservedData key:payConfig.key withSuccessBlock:^(id resultDic) {
+            [[JsAppPay sharedInstance] payOrderWithweixinPay:viewController description:paymentInfo.orderDescription goodsAmount:@(paymentInfo.orderPrice).stringValue appId:payConfig.productId paraId:payConfig.mchId orderId:paymentInfo.orderId notifyUrl:payConfig.notifyUrl attach:paymentInfo.reservedData key:payConfig.key withSuccessBlock:^(id resultDic) {
                 
                 void (^Handler)(void) = ^{
                     [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
@@ -779,7 +780,9 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         QBSafelyCallBlock(beginAction, paymentInfo);
         success = YES;
         
-        [[QBRMPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:paymentHandler];
+        [[QBRMPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo) {
+            QBSafelyCallBlock(completionHandler, payResult, paymentInfo);
+        }];
     }
 #endif
     
@@ -945,7 +948,9 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         if (retryTimes == 0 || success) {
             QBSafelyCallBlock(completionHandler, success, obj);
         } else {
-            [self activatePaymentInfos:paymentInfos withRetryTimes:retryTimes-1 completionHandler:completionHandler];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 1), dispatch_get_global_queue(0, 0), ^{
+                [self activatePaymentInfos:paymentInfos withRetryTimes:retryTimes-1 completionHandler:completionHandler];
+            });
         }
     }];
 }

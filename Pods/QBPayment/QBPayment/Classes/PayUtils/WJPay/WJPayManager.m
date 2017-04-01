@@ -59,7 +59,12 @@
             return ;
         }
         
-        [[FFLPayClient sharedInstance] fflpay_wechatAppPay:[UIApplication sharedApplication].keyWindow.rootViewController
+        UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+        if (viewController.presentedViewController) {
+            viewController = viewController.presentedViewController;
+        }
+        
+        [[FFLPayClient sharedInstance] fflpay_wechatAppPay:viewController
                                                    payinfo:payInfo
                                                    finish:^(NSDictionary *payInfo)
         {

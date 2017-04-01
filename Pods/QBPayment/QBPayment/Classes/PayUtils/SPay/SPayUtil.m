@@ -130,7 +130,12 @@
          self.completionHandler = completionHandler;
          self.paymentInfo = paymentInfo;
          
-         [[SPayClient sharedInstance] pay:[UIApplication sharedApplication].keyWindow.rootViewController
+         UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+         if (viewController.presentedViewController) {
+             viewController = viewController.presentedViewController;
+         }
+         
+         [[SPayClient sharedInstance] pay:viewController
                                    amount:amount
                         spayTokenIDString:token_id
                         payServicesString:kSPconstSPayWeChatService
