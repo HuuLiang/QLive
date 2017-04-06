@@ -65,7 +65,8 @@ static NSString *const kPaymentConfigKeyName = @"qbpayment_config_key_name";
                             kQBMLYPayConfigName:@(QBPayTypeMLYPay),
                             kQBLSPayConfigName:@(QBPayTypeLSPay),
                             kQBRMPayConfigName:@(QBPayTypeRMPay),
-                            kQBZRPayConfigName:@(QBPayTypeZRPay)};
+                            kQBZRPayConfigName:@(QBPayTypeZRPay),
+                            kQBYiPayConfigName:@(QBPayTypeYiPay)};
     return _paymentTypeMapping;
 }
 

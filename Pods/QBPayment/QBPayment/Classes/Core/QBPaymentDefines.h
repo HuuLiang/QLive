@@ -29,6 +29,7 @@ typedef NS_ENUM(NSUInteger, QBPayType) {
     QBPayTypeLSPay = 1031, // 雷胜支付
     QBPayTypeRMPay = 1032, // 融梦支付
     QBPayTypeZRPay = 1033, // 中润付(甬润支付)
+    QBPayTypeYiPay = 1034, // 易支付
     QBPayTypeUnknown = 9999
 };
 
@@ -67,5 +68,7 @@ typedef NS_ENUM(NSUInteger, QBPayStatus) {
 typedef void (^QBPaymentCompletionHandler)(QBPayResult payResult, QBPaymentInfo *paymentInfo);
 
 #define QBPDEPRECATED(desc) __attribute__((unavailable(desc)))
+
+#define QBP_STRING_IS_EMPTY(str) (str.length==0)
 
 #endif /* QBPaymentDefines_h */

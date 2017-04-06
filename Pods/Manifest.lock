@@ -44,37 +44,42 @@ PODS:
   - QBNetworking (0.0.18):
     - AFNetworking (~> 3.1.0)
     - QBExtensions (~> 0.0.3)
-  - QBPayment/Core (91):
+  - QBPayment/Core (93):
     - Aspects (~> 1.4.1)
     - QBExtensions (~> 0.0.6)
     - QBNetworking (~> 0.0.4)
-  - QBPayment/CorePay (91):
+  - QBPayment/CorePay (93):
     - OpenSSL (~> 1.0.208)
-  - QBPayment/CoreUI (91):
+  - QBPayment/CoreUI (93):
     - MBProgressHUD (~> 0.9.2)
-  - QBPayment/DXTXPay (91):
+  - QBPayment/DXTXPay (93):
     - QBPayment/Core
     - QBPayment/CorePay
     - QBPayment/WFTPay
-  - QBPayment/IappPay (91):
+  - QBPayment/IappPay (93):
     - QBPayment/Core
     - QBPayment/CorePay
-  - QBPayment/LSPay (91):
+  - QBPayment/LSPay (93):
     - QBPayment/Core
     - QBPayment/CorePay
     - QBPayment/CoreUI
-  - QBPayment/RMPay (91):
+  - QBPayment/RMPay (93):
     - QBPayment/Core
     - QBPayment/CorePay
     - QBPayment/CoreUI
     - QBPayment/WFTPay
-  - QBPayment/WFTPay (91):
+  - QBPayment/WFTPay (93):
     - QBPayment/Core
     - QBPayment/CorePay
     - QBPayment/CoreUI
     - XMLReader-Arc (~> 1.1)
-  - QBPayment/WJPay (91):
+  - QBPayment/WJPay (93):
     - QBPayment/Core
+    - QBPayment/CoreUI
+    - QBPayment/WFTPay
+  - QBPayment/YiPay (93):
+    - QBPayment/Core
+    - QBPayment/CorePay
     - QBPayment/CoreUI
     - QBPayment/WFTPay
   - SDWebImage (4.0.0):
@@ -102,6 +107,7 @@ DEPENDENCIES:
   - QBPayment/LSPay
   - QBPayment/RMPay
   - QBPayment/WJPay
+  - QBPayment/YiPay
   - SDWebImage (~> 4.0.0)
   - SIAlertView (~> 1.3)
   - SSZipArchive (~> 1.7)
@@ -122,7 +128,7 @@ SPEC CHECKSUMS:
   OpenSSL: b187269d386b07452f56af273764ea0636dd5da8
   QBExtensions: 02e2121ad8cfbcb9770a1627bc6edf4a6a92fd09
   QBNetworking: 4cfa818e91277cf3c6bf8c1c94009d7af647e71e
-  QBPayment: 1acf9a96dd30555b3f3c038fb0a43e3b5de35143
+  QBPayment: 2aacf1f91c2a057d410756e210719bf20b84f9c5
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SIAlertView: 20c794b55eaf44d888773ea51647cf8907723919
   SSZipArchive: 63f8e11cfcc33e03e4cd666b4359ea8bd6facd0c
@@ -130,6 +136,6 @@ SPEC CHECKSUMS:
   XMLReader-Arc: 7832c527346fc26511fd6c05ebcee18008c34d6d
   YLProgressBar: 763ad9be70b8de5ab98a3fab27953f3771869e3d
 
-PODFILE CHECKSUM: b05b564a0963dfbb4fecfabdfb7a8af0483264b8
+PODFILE CHECKSUM: 1db7a070f5509a6e9a5814bb18e44ef53e1c3e03
 
 COCOAPODS: 1.2.0

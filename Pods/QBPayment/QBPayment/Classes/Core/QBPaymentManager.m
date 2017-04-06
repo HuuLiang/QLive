@@ -312,6 +312,17 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
             [ZRPayManager sharedManager].key = zrPayConfig.key;
         }
 #endif
+        
+#ifdef QBPAYMENT_YIPAY_ENABLED
+        QBYiPayConfig *yiPayConfig = [QBPaymentConfig sharedConfig].configDetails.yiPayConfig;
+        if (yiPayConfig) {
+            [YiPayManager sharedManager].appId = yiPayConfig.appId;
+            [YiPayManager sharedManager].mchId = yiPayConfig.mchId;
+            [YiPayManager sharedManager].key = yiPayConfig.key;
+            [YiPayManager sharedManager].urlScheme = self.urlScheme;
+        }
+#endif
+        
         QBSafelyCallBlock(completionHandler);
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kQBPaymentFetchConfigNotification object:nil];
@@ -428,6 +439,12 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 #endif
     } else if (payType == QBPayTypeZRPay) {
 #ifdef QBPAYMENT_ZRPAY_ENABLED
+        return YES;
+#else
+        return NO;
+#endif
+    } else if (payType == QBPayTypeYiPay) {
+#ifdef QBPAYMENT_YIPAY_ENABLED
         return YES;
 #else
         return NO;
@@ -793,6 +810,21 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     }
 #endif
     
+#ifdef QBPAYMENT_YIPAY_ENABLED
+    if (payType == QBPayTypeYiPay) {
+        QBSafelyCallBlock(beginAction, paymentInfo);
+        success = YES;
+        
+        [[YiPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo) {
+            if (paymentInfo.paymentSubType == QBPaySubTypeAlipay) {
+                [self onPaymentResult:payResult withPaymentInfo:paymentInfo];
+            }
+            QBSafelyCallBlock(completionHandler, payResult, paymentInfo);
+        }];
+        
+    }
+#endif
+    
     if (!success) {
         paymentHandler(QBPayResultFailure, paymentInfo);
     }
@@ -882,6 +914,10 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 #ifdef QBPAYMENT_ZRPAY_ENABLED
         [[ZRPayManager sharedManager] handleOpenURL:url];
 #endif
+    } else if (self.paymentInfo.paymentType == QBPayTypeYiPay) {
+#ifdef QBPAYMENT_YIPAY_ENABLED
+        [[YiPayManager sharedManager] handleOpenURL:url];
+#endif
     }
     //    else if (self.paymentInfo.paymentType == QBPayTypeJSPay) {
     //#ifdef QBPAYMENT_JSPAY_ENABLED
@@ -936,6 +972,10 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     } else if (self.paymentInfo.paymentType == QBPayTypeZRPay) {
 #ifdef QBPAYMENT_ZRPAY_ENABLED
         [[ZRPayManager sharedManager] applicationWillEnterForeground:application];
+#endif
+    } else if (self.paymentInfo.paymentType == QBPayTypeYiPay) {
+#ifdef QBPAYMENT_YIPAY_ENABLED
+        [[YiPayManager sharedManager] applicationWillEnterForeground:application];
 #endif
     }
 }

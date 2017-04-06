@@ -43,9 +43,16 @@ QBSynthesizeSingletonMethod(sharedManager)
     dxtxPayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyDxtx.json";
     configDetails.dxtxPayConfig = dxtxPayConfig;
     
+    //雷胜
+    QBLSPayConfig *lsPayConfig = [[QBLSPayConfig alloc] init];
+    lsPayConfig.key = @"5a5259202a1863eb6c2f7d2b26a11e68";
+    lsPayConfig.mchId = @"1031";
+    lsPayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyLsPay.json";
+    configDetails.lsPayConfig = lsPayConfig;
+    
     //支付方式
     QBPaymentConfigSummary *payConfig = [[QBPaymentConfigSummary alloc] init];
-    payConfig.alipay = kQBDXTXPayConfigName;
+    payConfig.alipay = kQBLSPayConfigName;
     payConfig.wechat = kQBDXTXPayConfigName;
     
     config.configDetails = configDetails;
@@ -56,7 +63,8 @@ QBSynthesizeSingletonMethod(sharedManager)
                                                      paymentPv:@(kQLPaymentPv)
                                                      channelNo:kQLChannelNo
                                                      urlScheme:kQLPaymentURLScheme
-                                                 defaultConfig:config];
+                                                 defaultConfig:config
+                                                defaultTimeOut:5];
 }
 
 - (void)showPaymnetViewControllerInViewController:(UIViewController *)viewController

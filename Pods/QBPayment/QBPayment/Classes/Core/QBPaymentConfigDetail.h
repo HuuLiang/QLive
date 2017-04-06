@@ -25,6 +25,7 @@
 @class QBLSPayConfig;
 @class QBRMPayConfig;
 @class QBZRPayConfig;
+@class QBYiPayConfig;
 
 extern NSString *const kQBIAppPayConfigName;
 extern NSString *const kQBVIAPayConfigName;
@@ -42,6 +43,7 @@ extern NSString *const kQBMLYPayConfigName;
 extern NSString *const kQBLSPayConfigName;
 extern NSString *const kQBRMPayConfigName;
 extern NSString *const kQBZRPayConfigName;
+extern NSString *const kQBYiPayConfigName;
 
 @interface QBPaymentConfigDetail : NSObject <QBResponseParsable>
 
@@ -61,6 +63,7 @@ extern NSString *const kQBZRPayConfigName;
 @property (nonatomic,retain) QBLSPayConfig *lsPayConfig; //雷胜支付
 @property (nonatomic,retain) QBRMPayConfig *rmPayConfig; //融梦支付
 @property (nonatomic,retain) QBZRPayConfig *zrPayConfig; //中润付(甬润支付)
+@property (nonatomic,retain) QBYiPayConfig *yiPayConfig; //易支付
 
 @end
 
@@ -191,6 +194,14 @@ extern NSString *const kQBZRPayConfigName;
 
 @interface QBZRPayConfig : NSObject
 
+@property (nonatomic) NSString *appId;
+@property (nonatomic) NSString *key;
+
+@end
+
+@interface QBYiPayConfig : NSObject
+
+@property (nonatomic) NSString *mchId;
 @property (nonatomic) NSString *appId;
 @property (nonatomic) NSString *key;
 

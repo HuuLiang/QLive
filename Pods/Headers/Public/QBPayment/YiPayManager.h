@@ -1,0 +1,1 @@
+../../../QBPayment/QBPayment/Classes/PayUtils/YiPay/YiPayManager.h
