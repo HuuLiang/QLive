@@ -14,6 +14,7 @@
 #import "RACEXTScope.h"
 #import "QBPaymentConfig.h"
 #import "Aspects.h"
+#import <MBProgressHUD.h>
 
 //#import "QBSystemConfigModel.h"
 #import "QBPaymentConfigModel.h"
@@ -478,7 +479,9 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         CustomOrderDescription(paymentInfo);
         return [self startPaymentWithPaymentInfo:paymentInfo maxDiscount:orderInfo.maxDiscount beginAction:beginAction completionHandler:completionHandler];
     } else {
+        [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
         [self refreshAvailablePaymentTypesWithCompletionHandler:^{
+            [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
             
             paymentInfo.paymentType = [self paymentTypeForOrderPayType:orderInfo.payType];
             CustomOrderDescription(paymentInfo);

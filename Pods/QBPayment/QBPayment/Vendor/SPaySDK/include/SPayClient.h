@@ -26,7 +26,7 @@
  *
  *  @return <#return value description#>
  */
-- (void)macChannelConfig:(SPayClientConstEnumMacChannel)channel;
+- (void)macChannelConfig:(SPayClientConstEnumMacChannel)channel  NS_DEPRECATED_IOS(1.1.2, 1.2.2, "此方法已废弃，如果有用到此方法的请联系技术支持");
 
 
 /**
@@ -74,10 +74,11 @@
 /**
  *  SPay支付
  *
- *  @param pushFromCtrl      当前支付所在的页面
- *  @param amount            支付的金额精确到分，整数类型
- *  @param spayTokenIDString 支付授权码
- *  @param payServicesString 支付类型（多个以“|”连接）【目前不支持：QQ钱包付款码支付(受理模式)，QQ钱包付款码支付】
+ *  @param pushFromCtrl      当前支付所在的页面（付款码和扫码需要传入，其他为nil）
+ *  @param amount            支付的金额精确到分，整数类型（付款码需要传入，其他为nil）
+
+ *  @param spayTokenIDString 支付授权码（必填）
+ *  @param payServicesString 支付类型(必填如pay.weixin.app)
  *  @param finish            SDK支付完成回调
  */
 - (void)pay:(UIViewController*)pushFromCtrl

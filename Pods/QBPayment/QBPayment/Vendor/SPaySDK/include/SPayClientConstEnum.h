@@ -82,7 +82,10 @@ typedef enum {
     SPayClientConstEnumQQNotOpen= 3003,
     
     //微信没有安装（微信Wap支付时候用到）
-    SPayClientConstEnumWechatNotOpen= 3004
+    SPayClientConstEnumWechatNotOpen= 3004,
+    
+    //支付宝没有安装（支付宝Wap支付时候用到）
+    SPayClientConstEnumAlipayNotOpen = 3005
 
     
     
