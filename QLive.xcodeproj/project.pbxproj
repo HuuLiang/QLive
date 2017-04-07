@@ -1312,7 +1312,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.honeylive.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f94c6af1-59e8-4ade-ba7f-73f6def3458c";
+				PROVISIONING_PROFILE = "dd7ab173-c64d-4843-adee-9dc1325f993a";
 				PROVISIONING_PROFILE_SPECIFIER = HoneyLive8DevProvisioningProfile;
 			};
 			name = Debug;
