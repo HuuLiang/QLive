@@ -18,12 +18,16 @@
 #import "QBPaymentUtil.h"
 #import <SPayClient.h>
 #import "SPayUtil.h"
+#import "QBPaymentWebViewController.h"
 
-static NSString *const kPayURL = @"http://api.epaysdk.cn/threeapppay";//@"http://api.epaysdk.cn/wfalipayscanpay";
+static NSString *const kPayURL = @"http://api.epaysdk.cn/wfNewThreepayApi";
+//static NSString *const kWeChatPayURL = @"http://api.epaysdk.cn/threeapppay";//@"http://api.epaysdk.cn/wfalipayscanpay";
 
 @interface YiPayManager ()
 @property (nonatomic,retain) QBPaymentInfo *paymentInfo;
 @property (nonatomic,copy) QBPaymentCompletionHandler completionHandler;
+@property (nonatomic,retain) UIViewController *payingViewController;
+
 @property (nonatomic,retain) AFHTTPSessionManager *sessionManager;
 @end
 
@@ -45,6 +49,7 @@ static NSString *const kPayURL = @"http://api.epaysdk.cn/threeapppay";//@"http:/
     }
     
     _sessionManager = [[AFHTTPSessionManager alloc] init];
+    _sessionManager.requestSerializer = [AFJSONRequestSerializer serializer];
     _sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
     return _sessionManager;
 }
@@ -52,7 +57,7 @@ static NSString *const kPayURL = @"http://api.epaysdk.cn/threeapppay";//@"http:/
 - (void)payWithPaymentInfo:(QBPaymentInfo *)paymentInfo completionHandler:(QBPaymentCompletionHandler)completionHandler {
     if (QBP_STRING_IS_EMPTY(self.mchId) || QBP_STRING_IS_EMPTY(self.appId) || QBP_STRING_IS_EMPTY(self.key) || QBP_STRING_IS_EMPTY(self.urlScheme)
         || paymentInfo.orderPrice == 0 || QBP_STRING_IS_EMPTY(paymentInfo.orderId)
-        || (paymentInfo.paymentSubType != QBPaySubTypeWeChat && paymentInfo.paymentSubType != QBPaySubTypeAlipay)) {
+        || (paymentInfo.paymentSubType != QBPaySubTypeAlipay)) {
         QBSafelyCallBlock(completionHandler, QBPayResultFailure, paymentInfo);
         return ;
     }
@@ -62,27 +67,46 @@ static NSString *const kPayURL = @"http://api.epaysdk.cn/threeapppay";//@"http:/
     NSMutableDictionary *params = @{@"subject":orderDesc,
                                     @"total_fee":@(paymentInfo.orderPrice),
                                     @"body":orderDesc,
-                                    @"paychannel":paymentInfo.paymentSubType == QBPaySubTypeAlipay ? @"YFAlipay_app" : @"YFtencent_app",
+                                    //@"paychannel":paymentInfo.paymentSubType == QBPaySubTypeAlipay ? @"pay_alipay_wap" : @"YFtencent_app",
+                                    @"pay_type":paymentInfo.paymentSubType == QBPaySubTypeAlipay ? @"pay_alipay_wap" : @"pay_weixin_wap",
                                     @"mchNo":self.mchId,
-                                    @"tag":@"462",
+                                    @"tag":paymentInfo.paymentSubType == QBPaySubTypeAlipay ? @"470":@"462",
                                     @"version":@"1.0",
                                     @"appid":self.appId,
-                                    @"appName":[NSBundle mainBundle].infoDictionary[@"CFBundleDisplayName"],
-                                    @"ua":[QBPaymentUtil deviceName] ?: @"",
-                                    @"os":@"ios",
-                                    @"packagename":[NSBundle mainBundle].infoDictionary[@"CFBundleIdentifier"],
-                                    @"mchorderid":orderId}.mutableCopy;
+                                    @"mchorderid":orderId,
+                                    @"show_url":@"www.baidu.com",
+                                    @"mch_app_id":[NSBundle mainBundle].infoDictionary[@"CFBundleIdentifier"],
+                                    @"device_info":@"IOS_WAP",
+                                    @"ua":@"App/WebView",
+                                    @"mch_app_name":[NSBundle mainBundle].infoDictionary[@"CFBundleDisplayName"],
+                                    @"callback_url":@"www.baidu.com"}.mutableCopy;
+    
+//    if (paymentInfo.paymentSubType == QBPaySubTypeAlipay) {
+//        [params addEntriesFromDictionary:@{@"show_url":@"www.baidu.com",
+//                                           @"mch_app_id":[NSBundle mainBundle].infoDictionary[@"CFBundleIdentifier"],
+//                                           @"device_info":@"IOS_WAP",
+//                                           @"ua":@"AppleWebKit/537.36",
+//                                           @"mch_app_name":[NSBundle mainBundle].infoDictionary[@"CFBundleDisplayName"],
+//                                           @"callback_url":@"www.baidu.com"}];
+//    } else {
+//        [params addEntriesFromDictionary:@{@"appName":[NSBundle mainBundle].infoDictionary[@"CFBundleDisplayName"],
+//                                           @"ua":[QBPaymentUtil deviceName] ?: @"",
+//                                           @"os":@"ios",
+//                                           @"packagename":[NSBundle mainBundle].infoDictionary[@"CFBundleIdentifier"]}];
+//    }
+    
     
     NSMutableString *str = [NSMutableString string];
-    NSArray *signedKeys = @[@"subject",@"total_fee",@"body",@"paychannel",@"mchNo",@"tag",@"version",@"mchorderid"];
+    NSArray *signedKeys = [params.allKeys sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        return [obj1 compare:obj2];
+    }];
     [signedKeys enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         id value = params[obj];
-        [str appendFormat:@"%@", value];
+        [str appendFormat:@"%@=%@&", obj, value];
     }];
     
-    [str appendString:self.key];
-    NSString *sign = str.md5;
-    [params setObject:sign forKey:@"sign"];
+    [str appendFormat:@"key=%@", self.key];
+    [params setObject:str.md5 forKey:@"sign"];
     
     [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
     [self.sessionManager POST:kPayURL
@@ -95,9 +119,9 @@ static NSString *const kPayURL = @"http://api.epaysdk.cn/threeapppay";//@"http:/
         
         id jsonObj = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         
-        NSInteger status = [jsonObj[@"status"] integerValue];
-        if (status != 0) {
-            QBLog(@"YiPay fails: %@", jsonObj[@"message"]);
+        NSNumber *errorCode = jsonObj[@"errorcode"];
+        if (!errorCode || errorCode.integerValue != 0) {
+            QBLog(@"YiPay fails: %@", jsonObj[@"errormsg"]);
             QBSafelyCallBlock(completionHandler, QBPayResultFailure, paymentInfo);
             return ;
         }
@@ -112,9 +136,16 @@ static NSString *const kPayURL = @"http://api.epaysdk.cn/threeapppay";//@"http:/
             
             self.paymentInfo = paymentInfo;
             self.completionHandler = completionHandler;
-            [[AlipaySDK defaultService] payOrder:content fromScheme:self.urlScheme callback:^(NSDictionary *resultDic) {
-                [self onCallback:resultDic];
-            }];
+            
+            QBLog(@"YiPay wap open URL: %@", content);
+            QBPaymentWebViewController *webVC = [[QBPaymentWebViewController alloc] initWithURL:[NSURL URLWithString:content]];
+            webVC.capturedAlipayRequest = ^(NSURL *url, id obj) {
+                [[UIApplication sharedApplication] openURL:url];
+            };
+            [[QBPaymentUtil viewControllerForPresentingPayment] presentViewController:webVC animated:YES completion:nil];
+            
+            self.payingViewController = webVC;
+
         } else { //QBPaySubTypeWeChat
             NSString *services = jsonObj[@"services"];
             NSString *token_id = jsonObj[@"token_id"];
@@ -188,40 +219,41 @@ static NSString *const kPayURL = @"http://api.epaysdk.cn/threeapppay";//@"http:/
 //}
 
 - (void)handleOpenURL:(NSURL *)url {
-    [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
-        [self onCallback:resultDic];
-    }];
+//    [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+//        [self onCallback:resultDic];
+//    }];
     
 //    [[SPayClient sharedInstance] application:[UIApplication sharedApplication] handleOpenURL:url];
 }
 
-- (void)onCallback:(NSDictionary *)resultDic {
-    NSInteger status = [resultDic[@"resultStatus"] integerValue];
-    
-    QBPayResult result = QBPayResultFailure;
-    if (status == 9000) {
-        result = QBPayResultSuccess;
-    } else if (status == 6001) {
-        result = QBPayResultCancelled;
-    }
-    QBSafelyCallBlock(self.completionHandler, result, self.paymentInfo);
-    
-    self.completionHandler = nil;
-    self.paymentInfo = nil;
-}
+//- (void)onCallback:(NSDictionary *)resultDic {
+//    NSInteger status = [resultDic[@"resultStatus"] integerValue];
+//    
+//    QBPayResult result = QBPayResultFailure;
+//    if (status == 9000) {
+//        result = QBPayResultSuccess;
+//    } else if (status == 6001) {
+//        result = QBPayResultCancelled;
+//    }
+//    QBSafelyCallBlock(self.completionHandler, result, self.paymentInfo);
+//    
+//    self.completionHandler = nil;
+//    self.paymentInfo = nil;
+//}
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    if (self.paymentInfo.paymentSubType == QBPaySubTypeWeChat) {
-        [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-        [[QBPaymentManager sharedManager] activatePaymentInfos:@[self.paymentInfo] withRetryTimes:3 completionHandler:^(BOOL success, id obj) {
-            [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
-            
-            QBSafelyCallBlock(self.completionHandler, success ? QBPayResultSuccess : QBPayResultFailure, self.paymentInfo);
-            
-            self.paymentInfo = nil;
-            self.completionHandler = nil;
-        }];
-    }
+    [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+    [[QBPaymentManager sharedManager] activatePaymentInfos:@[self.paymentInfo] withRetryTimes:3 completionHandler:^(BOOL success, id obj) {
+        [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
+        
+        [self.payingViewController dismissViewControllerAnimated:YES completion:nil];
+        self.payingViewController = nil;
+        
+        QBSafelyCallBlock(self.completionHandler, success ? QBPayResultSuccess : QBPayResultFailure, self.paymentInfo);
+        
+        self.paymentInfo = nil;
+        self.completionHandler = nil;
+    }];
 }
 @end
 

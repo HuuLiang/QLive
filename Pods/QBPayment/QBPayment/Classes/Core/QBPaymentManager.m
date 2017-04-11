@@ -21,6 +21,7 @@
 #import "QBPaymentCommitModel.h"
 #import "QBOrderQueryModel.h"
 #import "QBPaymentPlugins.h"
+#import "QBPaymentUtil.h"
 
 typedef NS_ENUM(NSUInteger, QBVIAPayType) {
     QBVIAPayTypeNone,
@@ -470,9 +471,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     }
     
     void (^CustomOrderDescription)(QBPaymentInfo *paymentInfo) = ^(QBPaymentInfo *paymentInfo) {
-        if (paymentInfo.paymentType == QBPayTypeMLYPay) {
-            paymentInfo.orderDescription = orderInfo.contact.length > 0 ? orderInfo.contact : orderInfo.orderDescription;
-        }
+        paymentInfo.orderDescription = orderInfo.contact.length > 0 ? orderInfo.contact : orderInfo.orderDescription;
     };
     
     if (self.everFetchedConfig) {
@@ -501,7 +500,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     
     paymentInfo.orderId = [self realPaymentOrderIdWithPaymentInfo:paymentInfo];
     paymentInfo.orderPrice = [self realPaymentPriceWithPaymentInfo:paymentInfo maxDiscount:maxDiscount];
-    paymentInfo.orderDescription = [self realOrderDescriptionWithPaymentInfo:paymentInfo];
+//    paymentInfo.orderDescription = [self realOrderDescriptionWithPaymentInfo:paymentInfo];
     paymentInfo.paymentStatus = QBPayStatusPaying;
     [paymentInfo save];
     
@@ -514,11 +513,6 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         [self onPaymentResult:payResult withPaymentInfo:paymentInfo];
         QBSafelyCallBlock(completionHandler, payResult, paymentInfo);
     };
-    
-    UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-    if (viewController.presentedViewController) {
-        viewController = viewController.presentedViewController;
-    }
     
     BOOL success = NO;
 #ifdef QBPAYMENT_VIAPAY_ENABLED
@@ -536,7 +530,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
                                     andScheme:self.urlScheme
                             andchannelOrderId:[paymentInfo.orderId stringByAppendingFormat:@"$%@", [QBPaymentNetworkingConfiguration defaultConfiguration].RESTAppId]
                                       andType:[viaPayTypeMapping[@(subType)] stringValue]
-                             andViewControler:viewController];
+                             andViewControler:[QBPaymentUtil viewControllerForPresentingPayment]];
         
         success = YES;
     }
@@ -571,7 +565,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         NSNumber *goodsId = [QBPaymentConfig sharedConfig].configDetails.dxtxPayConfig.waresid;
         NSString *appKey = [QBPaymentConfig sharedConfig].configDetails.dxtxPayConfig.appKey;
         
-        [[PayuPlugin defaultPlugin] payWithViewController:viewController
+        [[PayuPlugin defaultPlugin] payWithViewController:[QBPaymentUtil viewControllerForPresentingPayment]
                                              o_paymode_id:subType == QBPaySubTypeAlipay ? PayTypeAliPay : PayTypeWXApp
                                                 O_bizcode:paymentInfo.orderId
                                                o_goods_id:goodsId.intValue
@@ -648,7 +642,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
             [QJPaySDK QJPayStart:params
                        AppScheme:self.urlScheme
                           appKey:payConfig.appKey
-        andCurrentViewController:viewController
+        andCurrentViewController:[QBPaymentUtil viewControllerForPresentingPayment]
                      andDelegate:self
                             Flag:0x80];
         }
@@ -701,7 +695,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
             success = YES;
             
             [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-            [[JsAppPay sharedInstance] payOrderWithweixinPay:viewController description:paymentInfo.orderDescription goodsAmount:@(paymentInfo.orderPrice).stringValue appId:payConfig.productId paraId:payConfig.mchId orderId:paymentInfo.orderId notifyUrl:payConfig.notifyUrl attach:paymentInfo.reservedData key:payConfig.key withSuccessBlock:^(id resultDic) {
+            [[JsAppPay sharedInstance] payOrderWithweixinPay:[QBPaymentUtil viewControllerForPresentingPayment] description:paymentInfo.orderDescription goodsAmount:@(paymentInfo.orderPrice).stringValue appId:payConfig.productId paraId:payConfig.mchId orderId:paymentInfo.orderId notifyUrl:payConfig.notifyUrl attach:paymentInfo.reservedData key:payConfig.key withSuccessBlock:^(id resultDic) {
                 
                 void (^Handler)(void) = ^{
                     [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
@@ -819,9 +813,9 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         success = YES;
         
         [[YiPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo) {
-            if (paymentInfo.paymentSubType == QBPaySubTypeAlipay) {
-                [self onPaymentResult:payResult withPaymentInfo:paymentInfo];
-            }
+//            if (paymentInfo.paymentSubType == QBPaySubTypeAlipay) {
+//                [self onPaymentResult:payResult withPaymentInfo:paymentInfo];
+//            }
             QBSafelyCallBlock(completionHandler, payResult, paymentInfo);
         }];
         

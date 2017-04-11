@@ -12,6 +12,7 @@
 #import "QBPaymentManager.h"
 #import <QBDefines.h>
 #import <MBProgressHUD.h>
+#import "QBPaymentUtil.h"
 
 @interface QBRMPayManager () <RMPayManagerDelegate>
 @property (nonatomic,retain) QBPaymentInfo *paymentInfo;
@@ -49,10 +50,6 @@
     self.paymentInfo = paymentInfo;
     self.completionHandler = completionHandler;
     
-    UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-    if (viewController.presentedViewController) {
-        viewController = viewController.presentedViewController;
-    }
     [[RMPayManager sharedInstance] clickToPayAppId:self.appId
                                          PartnerId:self.mchId
                                                Key:self.key
@@ -62,7 +59,7 @@
                                           TotalFee:@(paymentInfo.orderPrice)
                                             Attach:paymentInfo.reservedData
                                          NotifyUrl:self.notifyUrl
-                                        Controller:viewController
+                                        Controller:[QBPaymentUtil viewControllerForPresentingPayment]
                                              Block:^(NSInteger state)
     {
         

@@ -18,6 +18,7 @@
 #include <ifaddrs.h>
 #include <arpa/inet.h>
 #import "MBProgressHUD.h"
+#import "QBPaymentUtil.h"
 
 @interface SPayUtil ()
 @property (nonatomic,copy) QBPaymentCompletionHandler completionHandler;
@@ -130,12 +131,7 @@
          self.completionHandler = completionHandler;
          self.paymentInfo = paymentInfo;
          
-         UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-         if (viewController.presentedViewController) {
-             viewController = viewController.presentedViewController;
-         }
-         
-         [[SPayClient sharedInstance] pay:viewController
+         [[SPayClient sharedInstance] pay:[QBPaymentUtil viewControllerForPresentingPayment]
                                    amount:amount
                         spayTokenIDString:token_id
                         payServicesString:kSPconstSPayWeChatService

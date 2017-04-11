@@ -11,7 +11,9 @@
 @interface QBPaymentWebViewController : UIViewController
 
 @property (nonatomic,copy) void (^closeAction)(void);
+@property (nonatomic,copy) void (^capturedAlipayRequest)(NSURL *url, id obj);
 
 - (instancetype)initWithHTMLString:(NSString *)htmlString;
+- (instancetype)initWithURL:(NSURL *)url;
 
 @end

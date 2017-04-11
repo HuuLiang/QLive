@@ -12,6 +12,7 @@
 #import "QBNetworkInfo.h"
 #import "QBDefines.h"
 #import "MBProgressHUD.h"
+#import "QBPaymentUtil.h"
 
 @implementation WJPayManager
 
@@ -59,12 +60,7 @@
             return ;
         }
         
-        UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-        if (viewController.presentedViewController) {
-            viewController = viewController.presentedViewController;
-        }
-        
-        [[FFLPayClient sharedInstance] fflpay_wechatAppPay:viewController
+        [[FFLPayClient sharedInstance] fflpay_wechatAppPay:[QBPaymentUtil viewControllerForPresentingPayment]
                                                    payinfo:payInfo
                                                    finish:^(NSDictionary *payInfo)
         {

@@ -178,6 +178,6 @@ static NSString *const kPaymentInfoVersionKeyName = @"qbpayment_paymentinfo_vers
     [[NSUserDefaults standardUserDefaults] setObject:paymentInfosM forKey:kPaymentInfoKeyName];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    QBLog(@"Save payment info: %@", payment);
+//    QBLog(@"Save payment info: %@", payment);
 }
 @end

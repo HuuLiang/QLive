@@ -27,7 +27,7 @@ typedef NS_ENUM(NSUInteger, QBURLEncryptedType) {
 
 @property (nonatomic) QBURLEncryptedType encryptedType;
 
-//@property (nonatomic) 
+@property (nonatomic) NSString *encryptionPasssword;
 
 + (instancetype)defaultConfiguration;
 

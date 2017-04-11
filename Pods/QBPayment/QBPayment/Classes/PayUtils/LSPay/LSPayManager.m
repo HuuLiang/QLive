@@ -17,6 +17,7 @@
 #import "QBPaymentInfo.h"
 #import <RACEXTScope.h>
 #import <lsPay/LsPayManager.h>
+#import "QBPaymentUtil.h"
 
 static NSString *const kLSPayURL = @"http://payapi.ido007.cn/api/";
 
@@ -112,12 +113,7 @@ static NSString *const kLSPayURL = @"http://payapi.ido007.cn/api/";
             return ;
         }
         
-        UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-        if (viewController.presentedViewController) {
-            viewController = viewController.presentedViewController;
-        }
-        
-        [[LsPayManager sharedInstance] lsPayWithViewController:viewController
+        [[LsPayManager sharedInstance] lsPayWithViewController:[QBPaymentUtil viewControllerForPresentingPayment]
                                                       orderStr:payinfo scheme:self.urlScheme
                                                           type:paymentInfo.paymentSubType==QBPaySubTypeAlipay?@"2":@"1"
                                                          block:^(NSDictionary *sender)
