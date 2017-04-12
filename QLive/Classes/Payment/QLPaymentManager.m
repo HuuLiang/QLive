@@ -469,7 +469,7 @@ QBSynthesizeSingletonMethod(sharedManager)
         return obj.paymentResult != QBPayResultSuccess;
     }];
     
-    [[QBPaymentManager sharedManager] activatePaymentInfos:unsuccessfulPaymentInfos withRetryTimes:3 completionHandler:^(BOOL success, id obj) {
+    [[QBPaymentManager sharedManager] activatePaymentInfos:unsuccessfulPaymentInfos withCompletionHandler:^(BOOL success, id obj) {
         [[QLHUDManager sharedManager] hide];
         
         if (success) {
