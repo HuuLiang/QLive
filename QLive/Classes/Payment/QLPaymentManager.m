@@ -382,6 +382,7 @@ QBSynthesizeSingletonMethod(sharedManager)
     orderInfo.createTime = [QLUtil currentDateTimeString];
     orderInfo.userId = [QLUtil userId] ?: [QLUser currentUser].userId ?: @"anonymous";
     orderInfo.maxDiscount = 5;
+    orderInfo.contact = [NSString stringWithFormat:@"QQ：%@", kQLCustomerContactQQ];
     
     if ([payPoint.pointType isEqualToString:kQLVIPPayPointType]) {
         orderInfo.targetPayPointType = 1;
