@@ -512,6 +512,9 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         @strongify(self);
         [self onPaymentResult:payResult withPaymentInfo:paymentInfo];
         QBSafelyCallBlock(completionHandler, payResult, paymentInfo);
+        
+        self.paymentInfo = nil;
+        self.completionHandler = nil;
     };
     
     BOOL success = NO;
@@ -656,7 +659,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
         [[HTPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:^(BOOL success, id obj) {
             if (success) {
-                [self activatePaymentInfos:@[paymentInfo] withRetryTimes:3 completionHandler:^(BOOL success, id obj) {
+                [self activatePaymentInfo:paymentInfo withRetryTimes:3 shouldCommitFailureResult:YES completionHandler:^(BOOL success, id obj) {
                     [hud hide:YES];
                     if (success) {
                         QBSafelyCallBlock(completionHandler, QBPayResultSuccess, paymentInfo);
@@ -774,6 +777,9 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         
         [[MLYPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo) {
             QBSafelyCallBlock(completionHandler, payResult, paymentInfo);
+            
+            self.paymentInfo = nil;
+            self.completionHandler = nil;
         }];
     }
 #endif
@@ -794,6 +800,9 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         
         [[QBRMPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo) {
             QBSafelyCallBlock(completionHandler, payResult, paymentInfo);
+            
+            self.paymentInfo = nil;
+            self.completionHandler = nil;
         }];
     }
 #endif
@@ -817,6 +826,9 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 //                [self onPaymentResult:payResult withPaymentInfo:paymentInfo];
 //            }
             QBSafelyCallBlock(completionHandler, payResult, paymentInfo);
+            
+            self.paymentInfo = nil;
+            self.completionHandler = nil;
         }];
         
     }
@@ -994,6 +1006,19 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
                 [self activatePaymentInfos:paymentInfos withRetryTimes:retryTimes-1 completionHandler:completionHandler];
             });
         }
+    }];
+}
+
+- (void)activatePaymentInfo:(QBPaymentInfo *)paymentInfo
+             withRetryTimes:(NSUInteger)retryTimes
+  shouldCommitFailureResult:(BOOL)shouldCommitFailureResult
+          completionHandler:(QBCompletionHandler)completionHandler {
+    [self activatePaymentInfos:@[paymentInfo] withRetryTimes:retryTimes completionHandler:^(BOOL success, id obj) {
+        if (!success && shouldCommitFailureResult) {
+            [self onPaymentResult:QBPayResultFailure withPaymentInfo:paymentInfo];
+        }
+        
+        QBSafelyCallBlock(completionHandler, success, paymentInfo);
     }];
 }
 
