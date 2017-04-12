@@ -798,12 +798,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         QBSafelyCallBlock(beginAction, paymentInfo);
         success = YES;
         
-        [[QBRMPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo) {
-            QBSafelyCallBlock(completionHandler, payResult, paymentInfo);
-            
-            self.paymentInfo = nil;
-            self.completionHandler = nil;
-        }];
+        [[QBRMPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:paymentHandler];
     }
 #endif
     
