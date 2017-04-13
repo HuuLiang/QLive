@@ -569,12 +569,12 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         NSString *appKey = [QBPaymentConfig sharedConfig].configDetails.dxtxPayConfig.appKey;
         
         [[PayuPlugin defaultPlugin] payWithViewController:[QBPaymentUtil viewControllerForPresentingPayment]
-                                             o_paymode_id:subType == QBPaySubTypeAlipay ? PayTypeAliPay : PayTypeWXApp
+                                             o_paymode_id:PayTypeWXApp
                                                 O_bizcode:paymentInfo.orderId
                                                o_goods_id:goodsId.intValue
                                              o_goods_name:paymentInfo.orderDescription
                                                   o_price:paymentInfo.orderPrice/100.
-                                                o_address:nil
+                                                o_address:[QBPaymentConfig sharedConfig].configDetails.dxtxPayConfig.notifyUrl
                                             o_showaddress:nil
                                             o_privateinfo:paymentInfo.reservedData
                                                    Scheme:self.urlScheme
@@ -895,7 +895,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 #endif
     } else if (self.paymentInfo.paymentType == QBPayTypeDXTXPay) {
 #ifdef QBPAYMENT_DXTXPAY_ENABLED
-        [[PayuPlugin defaultPlugin] processOrderWithPaymentResult:url];
+//        [[PayuPlugin defaultPlugin] processOrderWithPaymentResult:url];
         [[PayuPlugin defaultPlugin] application:[UIApplication sharedApplication] handleOpenURL:url];
 #endif
     } else if (self.paymentInfo.paymentType == QBPayTypeMTDLPay) {

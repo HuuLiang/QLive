@@ -15,10 +15,10 @@
 
 static NSString *const kQLRESTBaseURL = @"http://sfs.dswtg.com";
 static NSString *const kQLRESTAppId = @"QUBA_2028";
-static const NSUInteger kQLPaymentPv = 217;
+static const NSUInteger kQLPaymentPv = 218;
 static const NSUInteger kQLContentPv = 100;
 //static NSString *const kQLChannelNo = @"IOS_L00000001";
-static NSString *const kQLPaymentURLScheme = @"comhoneylive27paymenturlscheme";
+static NSString *const kQLPaymentURLScheme = @"comhoneylive28paymenturlscheme";
 static NSString *const kPackageCertificate = @"iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd.";
 
 static NSString *const kQLAvatarImage = @"qlive_avatar.jpg";
