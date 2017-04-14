@@ -24,6 +24,7 @@ static NSString *const kPackageCertificate = @"iPhone Distribution: Neijiang Fen
 static NSString *const kQLAvatarImage = @"qlive_avatar.jpg";
 static NSString *const kQLResourceZipFile = @"http://oiiw1v71t.bkt.clouddn.com/live/zy/Resources.zip";
 
+static NSString *const kQLActivationBaseURL = @"http://ivc.pvafibre.cn";
 static NSString *const kQLCustomerContactQQ = @"3230905479";
 
 #endif /* QLConfiguration_h */

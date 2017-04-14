@@ -18,7 +18,7 @@ static NSString *const kSuccessResponse = @"SUCCESS";
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         QBNetworkingConfiguration *configuration = [[QBNetworkingConfiguration alloc] init];
-        configuration.baseURL = @"http://spiv.jlswz.com";
+        configuration.baseURL = kQLActivationBaseURL;
         configuration.channelNo = kQLChannelNo;
         configuration.RESTAppId = kQLRESTAppId;
         configuration.RESTpV = @100;
