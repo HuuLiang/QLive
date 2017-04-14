@@ -90,9 +90,8 @@ extern NSString *const kQBYiPayConfigName;
 
 @interface QBMingPayConfig : NSObject
 
-@property (nonatomic) NSString *payUrl;
-@property (nonatomic) NSString *queryOrderUrl;
 @property (nonatomic) NSString *mch;
+@property (nonatomic) NSString *notifyUrl;
 
 @end
 

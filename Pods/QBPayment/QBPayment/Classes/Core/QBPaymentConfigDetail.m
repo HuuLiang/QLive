@@ -233,21 +233,21 @@ NSString *const kQBYiPayConfigName = @"YFPAY";
 
 @implementation QBMingPayConfig
 
-- (NSDictionary *)dictionaryRepresentation {
-    NSMutableDictionary *dicRep = [NSMutableDictionary dictionary];
-    [dicRep safelySetObject:self.mch forKey:@"mch"];
-    return dicRep;
-}
-
-+ (instancetype)configFromDictionary:(NSDictionary *)dic {
-    QBMingPayConfig *config = [[self alloc] init];
-    [dic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-        if (obj) {
-            [config setValue:obj forKey:key];
-        }
-    }];
-    return config;
-}
+//- (NSDictionary *)dictionaryRepresentation {
+//    NSMutableDictionary *dicRep = [NSMutableDictionary dictionary];
+//    [dicRep safelySetObject:self.mch forKey:@"mch"];
+//    return dicRep;
+//}
+//
+//+ (instancetype)configFromDictionary:(NSDictionary *)dic {
+//    QBMingPayConfig *config = [[self alloc] init];
+//    [dic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+//        if (obj) {
+//            [config setValue:obj forKey:key];
+//        }
+//    }];
+//    return config;
+//}
 
 @end
 

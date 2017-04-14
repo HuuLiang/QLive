@@ -265,7 +265,8 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 #ifdef QBPAYMENT_MINGPAY_ENABLED
         QBMingPayConfig *mingPayConfig = [QBPaymentConfig sharedConfig].configDetails.mingPayConfig;
         if (mingPayConfig) {
-            [MingPayManager sharedManager].mchId = mingPayConfig.mch;
+            [MingPayManager sharedManager].mch = mingPayConfig.mch;
+            [MingPayManager sharedManager].notifyUrl = mingPayConfig.notifyUrl;
         }
 #endif
         
@@ -757,7 +758,12 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         QBSafelyCallBlock(beginAction, paymentInfo);
         success = YES;
         
-        [[MingPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:paymentHandler];
+        [[MingPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo) {
+            QBSafelyCallBlock(completionHandler, payResult, paymentInfo);
+            
+            self.paymentInfo = nil;
+            self.completionHandler = nil;
+        }];
     }
 #endif
     
@@ -898,6 +904,11 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 //        [[PayuPlugin defaultPlugin] processOrderWithPaymentResult:url];
         [[PayuPlugin defaultPlugin] application:[UIApplication sharedApplication] handleOpenURL:url];
 #endif
+    } else if (self.paymentInfo.paymentType == QBPayTypeMingPay) {
+#ifdef QBPAYMENT_MINGPAY_ENABLED
+        //        [[PayuPlugin defaultPlugin] processOrderWithPaymentResult:url];
+        [[MingPayManager sharedManager] handleOpenURL:url];
+#endif
     } else if (self.paymentInfo.paymentType == QBPayTypeMTDLPay) {
 #ifdef QBPAYMENT_MTDLPAY_ENABLED
         [QJPaySDK handleOpenURL:url];
@@ -940,6 +951,10 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     } else if (self.paymentInfo.paymentType == QBPayTypeSPay) {
 #if defined(QBPAYMENT_WFTPAY_ENABLED)
         [[SPayUtil sharedInstance] applicationWillEnterForeground];
+#endif
+    } else if (self.paymentInfo.paymentType == QBPayTypeMingPay) {
+#if defined(QBPAYMENT_MINGPAY_ENABLED)
+        [[MingPayManager sharedManager] applicationWillEnterForeground:application];
 #endif
     } else if (self.paymentInfo.paymentType == QBPayTypeHTPay) {
 #ifdef QBPAYMENT_HTPAY_ENABLED

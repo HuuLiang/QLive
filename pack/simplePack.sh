@@ -6,7 +6,7 @@ ABS_DIR="`cd $CURRENT_DIR;pwd`"
 CODESIGN_EXEC="/usr/bin/codesign"
 PLIST_BUDDY_EXEC="/usr/libexec/PlistBuddy"
 SIGNING_IDENTITY="iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd."
-PROVISIONING_PROFILE="$ABS_DIR/../ProvisioningProfile/HoneyLive27InHouseProvisioningProfile.mobileprovision"
+PROVISIONING_PROFILE="$ABS_DIR/../ProvisioningProfile/HoneyLive30InHouseProvisioningProfile.mobileprovision"
 
 PROJECT_NAME=$1
 MIN_PKG_NO=$2
@@ -14,7 +14,7 @@ MAX_PKG_NO=$3
 
 PARENT_PACKAGE="${ABS_DIR}/${PROJECT_NAME}.ipa"
 PROJECT_APP_NAME="${PROJECT_NAME}.app"
-CHANNEL_PREFIX="IOS_A_I" #iOS主包
+CHANNEL_PREFIX="IOS_L_I" #iOS主包
 #CHANNEL_PREFIX="H5-0000" #H5
 
 IPA_STORAGE_DIR="$ABS_DIR/ipas"
