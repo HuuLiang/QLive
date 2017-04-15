@@ -46,6 +46,7 @@ typedef void (^QLSelectionAction)(NSUInteger idx, id obj);
 typedef void (^QLCompletionHandler)(id obj, NSError *error);
 
 static NSString *const kDefaultDateTimeFormat = @"yyyyMMddHHmmss";
+static NSString *const kDefaultDateFormat = @"yyyyMMdd";
 
 static NSString *const kDebugNotification = @"com.qlive.notification.debug";
 static NSString *const kFastFollowingNotification = @"com.qlive.notification.fastfollowing";

@@ -20,6 +20,13 @@ static NSString *const kQLRegisterUserDefaultsKeyName = @"com.qlive.userdefaults
     return [dateFormatter stringFromDate:[NSDate date]];
 }
 
++ (NSString *)currentDateString {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:kDefaultDateFormat];
+    
+    return [dateFormatter stringFromDate:[NSDate date]];
+}
+
 + (NSDate *)dateFromString:(NSString *)dateString {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:kDefaultDateTimeFormat];

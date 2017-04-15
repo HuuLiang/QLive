@@ -45,6 +45,12 @@ QBSynthesizeSingletonMethod(sharedManager)
     }];
 }
 
+- (void)request_queryAdInfosWithCompletionHandler:(QLCompletionHandler)completionHandler {
+    [[QLHttpClient sharedClient] requestURL:@"/livecps/adInfos.json" withParams:nil methodType:QLHttpMethodGET completionHandler:^(id obj, NSError *error) {
+        [self onResponseWithObject:obj error:error modelClass:[QLAdInfos class] completionHandler:completionHandler];
+    }];
+}
+
 - (void)onResponseWithObject:(id)object
                        error:(NSError *)error
                   modelClass:(Class)modelClass

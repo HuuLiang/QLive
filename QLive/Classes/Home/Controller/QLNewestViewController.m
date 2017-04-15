@@ -21,6 +21,7 @@ static NSString *const kHeaderReusableIdentifier = @"HeaderReusableIdentifier";
 @property (nonatomic,retain) NSMutableArray<QLAnchor *> *pendingAnchors;
 @property (nonatomic,retain) NSMutableArray<QLAnchor *> *displayAnchors;
 @property (nonatomic,retain) NSDate *lastLoadDate;
+@property (nonatomic,retain) NSArray<QLAdInfo *> *adInfos;
 @end
 
 @implementation QLNewestViewController
@@ -85,6 +86,19 @@ QBDefineLazyPropertyInitialization(NSMutableArray, displayAnchors)
             
             Handler();
         }];
+        
+        @weakify(self);
+        [[QLRESTManager sharedManager] request_queryAdInfosWithCompletionHandler:^(id obj, NSError *error) {
+            @strongify(self);
+            if (!self) {
+                return ;
+            }
+            
+            if (obj) {
+                self.adInfos = [(QLAdInfos *)obj adInfos];
+                [self->_layoutCollectionView reloadData];
+            }
+        }];
     } else {
         Handler();
     }
@@ -133,11 +147,34 @@ QBDefineLazyPropertyInitialization(NSMutableArray, displayAnchors)
     QLCollectionHeaderFooterView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kHeaderReusableIdentifier forIndexPath:indexPath];
     if (!headerView.backgroundView) {
         QLBannerView *bannerView = [[QLBannerView alloc] init];
-        bannerView.imageURLStringsGroup = @[@"newest_banner_1",@"newest_banner_2",@"newest_banner_3"];
-        bannerView.titlesGroup = @[@"多看多互动，热力涨不停！",@"等级系统，全新上线！",@"绿色直播，拒绝违规！"];
         headerView.backgroundView = bannerView;
     }
-
+    
+    QLBannerView *bannerView = (QLBannerView *)headerView.backgroundView;
+    if (self.adInfos.count == 0) {
+        bannerView.imageURLStringsGroup = @[@"newest_banner_1",@"newest_banner_2",@"newest_banner_3"];
+        bannerView.titlesGroup = @[@"多看多互动，热力涨不停！",@"等级系统，全新上线！",@"绿色直播，拒绝违规！"];
+        bannerView.selectionAction = nil;
+        bannerView.hideText = NO;
+    } else {
+        NSMutableArray *imageURLStrings = [NSMutableArray array];
+        [self.adInfos enumerateObjectsUsingBlock:^(QLAdInfo * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (obj.imgCover) {
+                [imageURLStrings addObject:obj.imgCover];
+            }
+        }];
+        bannerView.imageURLStringsGroup = imageURLStrings;
+        bannerView.hideText = YES;
+        
+        @weakify(self);
+        bannerView.selectionAction = ^(NSUInteger index, id obj) {
+            @strongify(self);
+            QLAdInfo *adInfo = index < self.adInfos.count ? self.adInfos[index] : nil;
+            if (adInfo.adUrl.length) {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:adInfo.adUrl]];
+            }
+        };
+    }
     return headerView;
 }
 

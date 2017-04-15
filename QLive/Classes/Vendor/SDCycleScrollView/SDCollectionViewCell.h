@@ -44,6 +44,7 @@
 
 @property (nonatomic, assign) BOOL hasConfigured;
 
+@property (nonatomic, assign) BOOL hideText;
 /** 只展示文字轮播 */
 @property (nonatomic, assign) BOOL onlyDisplayText;
 

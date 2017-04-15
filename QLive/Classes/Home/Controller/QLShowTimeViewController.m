@@ -24,6 +24,7 @@ static NSString *const kHeaderReusableIdentifier = @"HeaderReusableIdentifier";
 //@property (nonatomic,retain) NSMutableArray<QLLiveShow *> *privateShows;
 //@property (nonatomic,retain) NSMutableArray<QLLiveShow *> *bigShows;
 @property (nonatomic,retain) NSMutableArray<QLLiveShow *> *currentLiveShows;
+@property (nonatomic,retain) NSArray<QLAdInfo *> *adInfos;
 @end
 
 @implementation QLShowTimeViewController
@@ -76,6 +77,19 @@ QBDefineLazyPropertyInitialization(NSMutableArray, currentLiveShows)
             [self updateCurrentLiveShows];
         }];
         
+    }];
+    
+    @weakify(self);
+    [[QLRESTManager sharedManager] request_queryAdInfosWithCompletionHandler:^(id obj, NSError *error) {
+        @strongify(self);
+        if (!self) {
+            return ;
+        }
+        
+        if (obj) {
+            self.adInfos = [(QLAdInfos *)obj adInfos];
+            [self->_layoutTableView reloadData];
+        }
     }];
     
 }
@@ -186,11 +200,45 @@ QBDefineLazyPropertyInitialization(NSMutableArray, currentLiveShows)
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UITableViewHeaderFooterView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:kHeaderReusableIdentifier];
-    if (!headerView.backgroundView) {
-        QLBannerView *bannerView = [[QLBannerView alloc] init];
+    
+    static const void *kBannerViewAssociatedKey = &kBannerViewAssociatedKey;
+    QLBannerView *bannerView = objc_getAssociatedObject(headerView, kBannerViewAssociatedKey);
+    if (!bannerView) {
+        bannerView = [[QLBannerView alloc] init];
+        objc_setAssociatedObject(headerView, kBannerViewAssociatedKey, bannerView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        [headerView addSubview:bannerView];
+        {
+            [bannerView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.edges.equalTo(headerView);
+            }];
+        }
+    }
+    
+    if (self.adInfos.count == 0) {
         bannerView.imageURLStringsGroup = @[@"newest_banner_1",@"newest_banner_2",@"newest_banner_3"];
         bannerView.titlesGroup = @[@"多看多互动，热力涨不停！",@"等级系统，全新上线！",@"绿色直播，拒绝违规！"];
-        headerView.backgroundView = bannerView;
+        bannerView.selectionAction = nil;
+        bannerView.hideText = NO;
+        bannerView.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
+    } else {
+        NSMutableArray *imageURLStrings = [NSMutableArray array];
+        [self.adInfos enumerateObjectsUsingBlock:^(QLAdInfo * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (obj.imgCover) {
+                [imageURLStrings addObject:obj.imgCover];
+            }
+        }];
+        bannerView.imageURLStringsGroup = imageURLStrings;
+        bannerView.hideText = YES;
+        bannerView.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter;
+        
+        @weakify(self);
+        bannerView.selectionAction = ^(NSUInteger index, id obj) {
+            @strongify(self);
+            QLAdInfo *adInfo = index < self.adInfos.count ? self.adInfos[index] : nil;
+            if (adInfo.adUrl.length) {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:adInfo.adUrl]];
+            }
+        };
     }
     return headerView;
 }

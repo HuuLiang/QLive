@@ -47,6 +47,7 @@
 #import "QLAnchor.h"
 #import "QLLiveShow.h"
 #import "QLPayPoint.h"
+#import "QLAdInfo.h"
 #import "QLRESTManager.h"
 #import "QLPaymentManager.h"
 #import "QLResourceDownloader.h"

@@ -571,6 +571,7 @@ NSString * const ID = @"cycleCell";
         cell.onlyDisplayText = self.onlyDisplayText;
     }
     
+    cell.hideText = self.hideText;
     return cell;
 }
 
