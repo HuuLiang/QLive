@@ -18,7 +18,7 @@ static NSString *const kQLRESTAppId = @"QUBA_2028";
 static const NSUInteger kQLPaymentPv = 219;
 static const NSUInteger kQLContentPv = 100;
 //static NSString *const kQLChannelNo = @"IOS_L00000001";
-static NSString *const kQLPaymentURLScheme = @"comhoneylive32paymenturlscheme";
+static NSString *const kQLPaymentURLScheme = @"comhoneylive33paymenturlscheme";
 static NSString *const kPackageCertificate = @"iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd.";
 
 static NSString *const kQLAvatarImage = @"qlive_avatar.jpg";
