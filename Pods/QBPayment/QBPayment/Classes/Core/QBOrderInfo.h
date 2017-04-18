@@ -27,7 +27,6 @@ typedef NS_ENUM(NSUInteger, QBOrderPayType) {
 @property (nonatomic) NSString *userId;
 @property (nonatomic) NSUInteger currentPayPointType;
 @property (nonatomic) NSUInteger targetPayPointType;
-@property (nonatomic) NSString *contact;
 @property (nonatomic) NSString *reservedData;
 
 @end

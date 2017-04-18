@@ -114,6 +114,7 @@ static NSString *const kPaymentConfigKeyName = @"qbpayment_config_key_name";
     QBPaymentConfig *currentConfig = [[self class] sharedConfig];
     currentConfig.payConfig = self.payConfig;
     currentConfig.configDetails = self.configDetails;
+    currentConfig.contact = self.contact;
     
     [[NSUserDefaults standardUserDefaults] setObject:[self dictionaryRepresentationWithEncryptBlock:nil] forKey:kPaymentConfigKeyName];
     [[NSUserDefaults standardUserDefaults] synchronize];

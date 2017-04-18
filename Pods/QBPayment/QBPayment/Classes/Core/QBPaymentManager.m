@@ -472,7 +472,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     }
     
     void (^CustomOrderDescription)(QBPaymentInfo *paymentInfo) = ^(QBPaymentInfo *paymentInfo) {
-        paymentInfo.orderDescription = orderInfo.contact.length > 0 ? orderInfo.contact : orderInfo.orderDescription;
+        paymentInfo.orderDescription = [QBPaymentConfig sharedConfig].contact.length > 0 ? [QBPaymentConfig sharedConfig].contact : orderInfo.orderDescription;
     };
     
     if (self.everFetchedConfig) {
