@@ -25,6 +25,7 @@ NSString *const kQBXLTXPayConfigName = @"XLTX";
 NSString *const kQBWJPayConfigName = @"WUJI";
 NSString *const kQBMLYPayConfigName = @"MLY";
 NSString *const kQBLSPayConfigName = @"LS";
+NSString *const kQBLSScanPayConfigName = @"LSSAN";
 NSString *const kQBRMPayConfigName = @"RONGM";
 NSString *const kQBZRPayConfigName = @"ZRF";
 NSString *const kQBYiPayConfigName = @"YFPAY";
@@ -60,6 +61,8 @@ NSString *const kQBYiPayConfigName = @"YFPAY";
         return [QBMLYPayConfig class];
     } else if ([propName isEqualToString:NSStringFromSelector(@selector(lsPayConfig))]) {
         return [QBLSPayConfig class];
+    } else if ([propName isEqualToString:NSStringFromSelector(@selector(lsScanPayConfig))]) {
+        return [QBLSScanPayConfig class];
     } else if ([propName isEqualToString:NSStringFromSelector(@selector(rmPayConfig))]) {
         return [QBRMPayConfig class];
     } else if ([propName isEqualToString:NSStringFromSelector(@selector(zrPayConfig))]) {
@@ -99,6 +102,8 @@ NSString *const kQBYiPayConfigName = @"YFPAY";
         return NSStringFromSelector(@selector(mlyPayConfig));
     } else if ([parsingName hasSuffix:[@"-" stringByAppendingString:kQBLSPayConfigName]]) {
         return NSStringFromSelector(@selector(lsPayConfig));
+    } else if ([parsingName hasSuffix:[@"-" stringByAppendingString:kQBLSScanPayConfigName]]) {
+        return NSStringFromSelector(@selector(lsScanPayConfig));
     } else if ([parsingName hasSuffix:[@"-" stringByAppendingString:kQBRMPayConfigName]]) {
         return NSStringFromSelector(@selector(rmPayConfig));
     } else if ([parsingName hasSuffix:[@"-" stringByAppendingString:kQBZRPayConfigName]]) {
@@ -292,6 +297,10 @@ NSString *const kQBYiPayConfigName = @"YFPAY";
     payConfig.notifyUrl = @"http://www.baidu.com";
     return payConfig;
 }
+@end
+
+@implementation QBLSScanPayConfig
+
 @end
 
 @implementation QBRMPayConfig
