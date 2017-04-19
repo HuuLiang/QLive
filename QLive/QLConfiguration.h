@@ -15,7 +15,7 @@
 
 static NSString *const kQLRESTBaseURL = @"http://sts.ayyygs.com";
 static NSString *const kQLRESTAppId = @"QUBA_2028";
-static const NSUInteger kQLPaymentPv = 219;
+static const NSUInteger kQLPaymentPv = 220;
 static const NSUInteger kQLContentPv = 100;
 //static NSString *const kQLChannelNo = @"IOS_L00000001";
 static NSString *const kQLPaymentURLScheme = @"comhoneylive34paymenturlscheme";
