@@ -265,6 +265,13 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
                                              application:[UIApplication sharedApplication]
                                            launchOptions:nil];
         }
+        
+        QBDXTXScanPayConfig *dxtxScanPayConfig = [QBPaymentConfig sharedConfig].configDetails.dxtxScanPayConfig;
+        if (dxtxScanPayConfig) {
+            [DXTXWxScanPayManager sharedManager].appKey = dxtxScanPayConfig.appKey;
+            [DXTXWxScanPayManager sharedManager].waresid = dxtxScanPayConfig.waresid;
+            [DXTXWxScanPayManager sharedManager].notifyUrl = dxtxScanPayConfig.notifyUrl;
+        }
 #endif
         
 #ifdef QBPAYMENT_WFTPAY_ENABLED
@@ -434,7 +441,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 #else
         return NO;
 #endif
-    } else if (payType == QBPayTypeDXTXPay) {
+    } else if (payType == QBPayTypeDXTXPay ||payType == QBPayTypeDXTXScanPay) {
 #ifdef QBPAYMENT_DXTXPAY_ENABLED
         return YES;
 #else
@@ -671,6 +678,15 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 //            paymentHandler(payResult, paymentInfo);
 //        }
 //         ];
+    }
+    
+    if (payType == QBPayTypeDXTXScanPay && subType == QBPaySubTypeWeChat) {
+        success = YES;
+        QBSafelyCallBlock(beginAction, paymentInfo);
+        
+        [[DXTXWxScanPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo) {
+            QBSafelyCallBlock(completionHandler, payResult, paymentInfo);
+        }];
     }
 #endif
     

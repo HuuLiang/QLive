@@ -10,12 +10,17 @@
 
 @interface QBPaymentQRCodeViewController : UIViewController
 
-@property (nonatomic,retain,readonly) UIImage *image;
-@property (nonatomic,copy) void (^paymentCompletion)(id obj);
+@property (nonatomic,retain) UIImage *image;
+@property (nonatomic,copy) void (^paymentCompletion)(BOOL isManual, id obj);
+@property (nonatomic,copy) void (^refreshAction)(id obj);
+
+@property (nonatomic) BOOL enableCheckPayment;
+@property (nonatomic) BOOL enableRefreshQRCode;
 
 + (instancetype)presentQRCodeInViewController:(UIViewController *)viewController
                                     withImage:(UIImage *)image
-                            paymentCompletion:(void (^)(id obj))paymentCompletion;
+                            paymentCompletion:(void (^)(BOOL isManual, id obj))paymentCompletion
+                                refreshAction:(void (^)(id obj))refreshAction;
 
 - (instancetype)initWithImage:(UIImage *)image;
 

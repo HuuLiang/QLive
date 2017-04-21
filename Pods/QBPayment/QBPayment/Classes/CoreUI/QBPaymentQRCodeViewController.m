@@ -7,6 +7,8 @@
 //
 
 #import "QBPaymentQRCodeViewController.h"
+#import "UIColor+hexColor.h"
+#import "UIImage+color.h"
 
 static NSString *const kSuccessSavePhotoMessage = @"图片保存成功，是否跳转到微信app？";
 static NSString *const kFailureSavePhotoMessage = @"图片保存失败";
@@ -18,6 +20,7 @@ static NSString *const kCloseConfirmMessage = @"您的支付还未完成，是�
     UIImageView *_imageView;
     UILabel *_textLabel;
     UIButton *_wechatButton;
+    UIButton *_refreshButton;
 }
 @end
 
@@ -25,9 +28,11 @@ static NSString *const kCloseConfirmMessage = @"您的支付还未完成，是�
 
 + (instancetype)presentQRCodeInViewController:(UIViewController *)viewController
                                     withImage:(UIImage *)image
-                            paymentCompletion:(void (^)(id obj))paymentCompletion {
+                            paymentCompletion:(void (^)(BOOL isManual, id obj))paymentCompletion
+                                refreshAction:(void (^)(id obj))refreshAction {
     QBPaymentQRCodeViewController *qrVC = [[self alloc] initWithImage:image];
     qrVC.paymentCompletion = paymentCompletion;
+    qrVC.refreshAction = refreshAction;
     
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:qrVC];
     [viewController presentViewController:nav animated:YES completion:nil];
@@ -38,6 +43,8 @@ static NSString *const kCloseConfirmMessage = @"您的支付还未完成，是�
     self = [super init];
     if (self) {
         _image = image;
+        _enableCheckPayment = YES;
+        _enableRefreshQRCode = YES;
     }
     return self;
 }
@@ -63,7 +70,28 @@ static NSString *const kCloseConfirmMessage = @"您的支付还未完成，是�
 //    gesRec.minimumPressDuration = 1;
     [_imageView addGestureRecognizer:gesRec];
     
+    _wechatButton = [[UIButton alloc] init];
+    _wechatButton.layer.cornerRadius = 8;
+    _wechatButton.layer.masksToBounds = YES;
+    [_wechatButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"#00cc0d"]] forState:UIControlStateNormal];
+    [_wechatButton setTitle:@"打开微信扫一扫" forState:UIControlStateNormal];
+    [_wechatButton addTarget:self action:@selector(onWeChatScan) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_wechatButton];
+    
+    _refreshButton = [[UIButton alloc] init];
+    _refreshButton.layer.cornerRadius = _wechatButton.layer.cornerRadius;
+//    _refreshButton.layer.masksToBounds = YES;
+    _refreshButton.layer.borderWidth = 1;
+    _refreshButton.layer.borderColor = [UIColor colorWithHexString:@"#00cc0d"].CGColor;
+    [_refreshButton setTitle:@"刷新二维码" forState:UIControlStateNormal];
+    [_refreshButton setTitleColor:[UIColor colorWithHexString:@"#00cc0d"] forState:UIControlStateNormal];
+    [_refreshButton setTitleColor:[UIColor colorWithHexString:@"#999999"] forState:UIControlStateDisabled];
+    [_refreshButton addTarget:self action:@selector(onRefresh) forControlEvents:UIControlEventTouchUpInside];
+    _refreshButton.hidden = self.refreshAction == nil;
+    [self.view addSubview:_refreshButton];
+    
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"关闭" style:UIBarButtonItemStylePlain target:self action:@selector(onClose)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"已支付" style:UIBarButtonItemStylePlain target:self action:@selector(onPaid)];
 }
 
 #ifdef DEBUG
@@ -72,20 +100,65 @@ static NSString *const kCloseConfirmMessage = @"您的支付还未完成，是�
 }
 #endif
 
+- (void)onPaid {
+    if (self.paymentCompletion) {
+        self.paymentCompletion(YES,self);
+    }
+}
+
+- (void)onWeChatScan {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"weixin://scanqrcode"]];
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:kPaymentCompletionMessage delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [alertView show];
+}
+
+- (void)onRefresh {
+    if (self.refreshAction) {
+        self.refreshAction(self);
+    }
+}
+
+- (void)setImage:(UIImage *)image {
+    _image = image;
+    _imageView.image = image;
+}
+
+- (void)setEnableCheckPayment:(BOOL)enableCheckPayment {
+    _enableCheckPayment = enableCheckPayment;
+    self.navigationItem.rightBarButtonItem.enabled = enableCheckPayment;
+}
+
+- (void)setEnableRefreshQRCode:(BOOL)enableRefreshQRCode {
+    _enableRefreshQRCode = enableRefreshQRCode;
+    _refreshButton.enabled = enableRefreshQRCode;
+    
+    if (enableRefreshQRCode) {
+        _refreshButton.layer.borderColor = [UIColor colorWithHexString:@"#00cc0d"].CGColor;
+    } else {
+        _refreshButton.layer.borderColor = [UIColor colorWithHexString:@"#999999"].CGColor;
+    }
+}
+
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     
     const CGFloat fullWidth = self.view.bounds.size.width;
     const CGFloat fullHeight = self.view.bounds.size.height;
     
-    const CGFloat imageWidth = fullWidth * 0.8;
-    const CGFloat imageHeight = imageWidth;
+    const CGFloat imageHeight = fullHeight * 0.25;
+    const CGFloat imageWidth = imageHeight;
     const CGFloat imageX = (fullWidth - imageWidth)/2;
-    const CGFloat imageY = (fullHeight - imageHeight)/2 *0.75;
+    const CGFloat imageY = (fullHeight - imageHeight)/2 *0.5;
     _imageView.frame = CGRectMake(imageX, imageY, imageWidth, imageHeight);
     
-    CGRect textRect = [_textLabel.text boundingRectWithSize:CGSizeMake(imageWidth, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:_textLabel.font} context:nil];
-    _textLabel.frame = CGRectMake(imageX, CGRectGetMaxY(_imageView.frame)+15, imageWidth, textRect.size.height);
+    const CGFloat textWidth = fullWidth * 0.8;
+    const CGFloat textX = (fullWidth - textWidth)/2;
+    CGRect textRect = [_textLabel.text boundingRectWithSize:CGSizeMake(textWidth, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:_textLabel.font} context:nil];
+    _textLabel.frame = CGRectMake(textX, CGRectGetMaxY(_imageView.frame)+15, textWidth, textRect.size.height);
+    
+    _wechatButton.frame = CGRectMake(textX, CGRectGetMaxY(_textLabel.frame)+15, textWidth, 44);
+    _refreshButton.frame = CGRectMake(textX, CGRectGetMaxY(_wechatButton.frame)+15, _wechatButton.frame.size.width, _wechatButton.frame.size.height);
 }
 
 - (void)onLongPressImage:(UIGestureRecognizer *)gesRec {
@@ -129,14 +202,14 @@ static NSString *const kCloseConfirmMessage = @"您的支付还未完成，是�
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if ([alertView.message isEqualToString:kSuccessSavePhotoMessage]
         && [[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"确定"]) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"weixin://scanqrcode"]];
-        
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:kPaymentCompletionMessage delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-        [alertView show];
+        [self onWeChatScan];
     } else if ([alertView.message isEqualToString:kPaymentCompletionMessage]
                && [[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"确定"]) {
         if (self.paymentCompletion) {
-            self.paymentCompletion(self);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.paymentCompletion(NO, self);
+            });
+            
         }
     } else if ([alertView.message isEqualToString:kCloseConfirmMessage]
                && [[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"确定"]) {

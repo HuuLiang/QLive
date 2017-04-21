@@ -21,6 +21,7 @@
 #ifdef QBPAYMENT_DXTXPAY_ENABLED
 #import "PayuPlugin.h"
 #import "MBProgressHUD.h"
+#import "DXTXWxScanPayManager.h"
 #endif
 
 #ifdef QBPAYMENT_HTPAY_ENABLED

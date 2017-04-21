@@ -73,17 +73,37 @@ static NSString *const kLSWxScanPayURL = @"http://pay.ido007.cn/";
         
         [QBPaymentQRCodeViewController presentQRCodeInViewController:[QBPaymentUtil viewControllerForPresentingPayment]
                                                            withImage:image
-                                                   paymentCompletion:^(id qrVC)
+                                                   paymentCompletion:^(BOOL isManual, id qrVC)
         {
-            [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-            [[QBPaymentManager sharedManager] activatePaymentInfo:paymentInfo withRetryTimes:3 shouldCommitFailureResult:YES completionHandler:^(BOOL success, id obj) {
-                [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
+            QBPaymentQRCodeViewController *thisVC = qrVC;
+            [MBProgressHUD showHUDAddedTo:thisVC.view animated:YES];
+            [qrVC setEnableCheckPayment:NO];
+            
+            [[QBPaymentManager sharedManager] activatePaymentInfo:paymentInfo withRetryTimes:3 shouldCommitFailureResult:!isManual completionHandler:^(BOOL success, id obj) {
+                [MBProgressHUD hideHUDForView:thisVC.view animated:YES];
+                [qrVC setEnableCheckPayment:YES];
+                
                 if (success) {
-                    [qrVC dismissViewControllerAnimated:YES completion:nil];
-                    QBSafelyCallBlock(completionHandler, QBPayResultSuccess, paymentInfo);
+                    [qrVC dismissViewControllerAnimated:YES completion:^{
+                        QBSafelyCallBlock(completionHandler, QBPayResultSuccess, paymentInfo);
+                    }];
+                    
                 } else {
                     QBSafelyCallBlock(completionHandler, QBPayResultFailure, paymentInfo);
                 }
+            }];
+        } refreshAction:^(id obj) {
+            QBPaymentQRCodeViewController *thisVC = obj;
+            thisVC.enableRefreshQRCode = NO;
+            [self.sessionManager GET:kLSWxScanPayURL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                thisVC.enableRefreshQRCode = YES;
+                
+                UIImage *image = [UIImage imageWithData:responseObject];
+                if (image) {
+                    thisVC.image = image;
+                }
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                thisVC.enableRefreshQRCode = YES;
             }];
         }];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

@@ -16,6 +16,7 @@
 @class QBHTPayConfig;
 @class QBWeiYingPayConfig;
 @class QBDXTXPayConfig;
+@class QBDXTXScanPayConfig;
 @class QBMTDLPayConfig;
 @class QBJSPayConfig;
 @class QBHeePayConfig;
@@ -36,6 +37,7 @@ extern NSString *const kQBHTPayConfigName;
 extern NSString *const kQBMTDLPayConfigName;
 extern NSString *const kQBWeiYingConfigName;
 extern NSString *const kQBDXTXPayConfigName;
+extern NSString *const kQBDXTXScanPayConfigName;
 extern NSString *const kQBJSPayConfigName;
 extern NSString *const kQBHeePayConfigName;
 extern NSString *const kQBXLTXPayConfigName;
@@ -55,6 +57,7 @@ extern NSString *const kQBYiPayConfigName;
 @property (nonatomic,retain) QBSPayConfig *spayConfig; //威富通
 @property (nonatomic,retain) QBHTPayConfig *htpayConfig; //海豚支付
 @property (nonatomic,retain) QBDXTXPayConfig *dxtxPayConfig; //盾行天下
+@property (nonatomic,retain) QBDXTXScanPayConfig *dxtxScanPayConfig; //盾行天下扫码
 @property (nonatomic,retain) QBWeiYingPayConfig *weiYingPayConfig; //微赢支付
 @property (nonatomic,retain) QBMTDLPayConfig *mtdlPayConfig; //明天动力
 @property (nonatomic,retain) QBJSPayConfig *jsPayConfig; //杰莘
@@ -124,6 +127,10 @@ extern NSString *const kQBYiPayConfigName;
 @property (nonatomic) NSString *appid;
 @property (nonatomic) NSString *notifyUrl;
 @property (nonatomic) NSNumber *waresid;
+
+@end
+
+@interface QBDXTXScanPayConfig : QBDXTXPayConfig
 
 @end
 
