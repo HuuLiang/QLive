@@ -12,8 +12,8 @@
 #import "QLHotViewController.h"
 #import "QLNewestViewController.h"
 #import "QLShowTimeViewController.h"
-#import "QLRecentMessageViewController.h"
-#import "QLSearchViewController.h"
+//#import "QLRecentMessageViewController.h"
+//#import "QLSearchViewController.h"
 
 @interface QLHomeViewController () <UIPageViewControllerDelegate,UIPageViewControllerDataSource,UIScrollViewDelegate>
 @property (nonatomic,retain) UIPageViewController *pageVC;
@@ -30,31 +30,34 @@
     }
     
     @weakify(self);
-    _segmentedControl = [[QLSegmentedControl alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth * 0.75, 44)];
-    _segmentedControl.titles = @[@"关注",@"热门",@"最新",@"秀场"];
+    _segmentedControl = [[QLSegmentedControl alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 44)];
+    _segmentedControl.titles = @[@"热门",@"最新"];
     _segmentedControl.selectionAction = ^(NSUInteger idx, id obj) {
         @strongify(self);
         [self turnToPageAtIndex:idx];
     };
     
-    UIButton *button = [_segmentedControl buttonAtIndex:_segmentedControl.titles.count-1];
-    [button setImage:[UIImage imageNamed:@"show_segment_icon"] forState:UIControlStateNormal];
+//    UIButton *button = [_segmentedControl buttonAtIndex:_segmentedControl.titles.count-1];
+//    [button setImage:[UIImage imageNamed:@"show_segment_icon"] forState:UIControlStateNormal];
     return _segmentedControl;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbaritem_search"] style:UIBarButtonItemStylePlain target:self action:@selector(onSearch)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbaritem_chat"] style:UIBarButtonItemStylePlain target:self action:@selector(onChat)];
+//        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbaritem_search"] style:UIBarButtonItemStylePlain target:self action:@selector(onSearch)];
+//        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navbaritem_chat"] style:UIBarButtonItemStylePlain target:self action:@selector(onChat)];
+//        self.navigationItem.titleView = self.segmentedControl;
     
-    
-    self.navigationItem.titleView = self.segmentedControl;
-    
-    self.viewControllers = @[[[QLFollowingViewController alloc] initWithSegmentedControl:self.segmentedControl],
-                             [[QLHotViewController alloc] initWithSegmentedControl:self.segmentedControl],
-                             [[QLNewestViewController alloc] initWithSegmentedControl:self.segmentedControl],
-                             [[QLShowTimeViewController alloc] initWithSegmentedControl:self.segmentedControl]];
+    [self.view addSubview:self.segmentedControl];
+    {
+        [self.segmentedControl mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.top.mas_equalTo(self.view);
+            make.height.mas_equalTo(MAX(38, 0.066));
+        }];
+    }
+    self.viewControllers = @[[[QLHotViewController alloc] initWithSegmentedControl:self.segmentedControl],
+                             [[QLNewestViewController alloc] initWithSegmentedControl:self.segmentedControl]];
     
     _pageVC = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     _pageVC.delegate = self;
@@ -67,26 +70,31 @@
     [self addChildViewController:_pageVC];
     [self.view addSubview:_pageVC.view];
     [_pageVC didMoveToParentViewController:self];
-
-    self.segmentedControl.selectedIndex = 1;
+    {
+    [_pageVC.view mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.mas_equalTo(self.view);
+        make.top.mas_equalTo(_segmentedControl.mas_bottom);
+    }];
+    }
+    self.segmentedControl.selectedIndex = 0;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onFastFollowingNotification) name:kFastFollowingNotification object:nil];
-
+    
 }
 
 - (void)onFastFollowingNotification {
     self.segmentedControl.selectedIndex = 0;
 }
 
-- (void)onSearch {
-    QLSearchViewController *searchVC = [[QLSearchViewController alloc] init];
-    [self.navigationController pushViewController:searchVC animated:NO];
-}
-
-- (void)onChat {
-    QLRecentMessageViewController *messageVC = [[QLRecentMessageViewController alloc] init];
-    [self.navigationController pushViewController:messageVC animated:YES];
-}
+//- (void)onSearch {
+//    QLSearchViewController *searchVC = [[QLSearchViewController alloc] init];
+//    [self.navigationController pushViewController:searchVC animated:NO];
+//}
+//
+//- (void)onChat {
+//    QLRecentMessageViewController *messageVC = [[QLRecentMessageViewController alloc] init];
+//    [self.navigationController pushViewController:messageVC animated:YES];
+//}
 
 - (void)turnToPageAtIndex:(NSUInteger)index {
     if (index >= self.viewControllers.count) {
@@ -100,10 +108,10 @@
     }
     self.currentViewController = [self.viewControllers objectAtIndex:index];
     [self.pageVC setViewControllers:@[self.currentViewController] direction:navDirection animated:YES completion:nil];
-//    
-//    if (self.segmentedControl.selectedIndex != index) {
-//        self.segmentedControl.selectedIndex = index;
-//    }
+    //
+    //    if (self.segmentedControl.selectedIndex != index) {
+    //        self.segmentedControl.selectedIndex = index;
+    //    }
     
 }
 
@@ -153,6 +161,6 @@
         self.segmentedControl.indicatorOffset = offset;
     }
     
-   
+    
 }
 @end

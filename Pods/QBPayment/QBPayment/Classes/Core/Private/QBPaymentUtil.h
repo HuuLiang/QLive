@@ -12,5 +12,6 @@
 
 + (UIViewController *)viewControllerForPresentingPayment;
 + (NSString *)deviceName;
++ (NSString *)IPAddress;
 
 @end

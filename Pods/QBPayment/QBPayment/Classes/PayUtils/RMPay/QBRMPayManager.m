@@ -71,19 +71,20 @@
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    if (self.paymentInfo == nil) {
-        return ;
-    }
-    
-    [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-    [[QBPaymentManager sharedManager] activatePaymentInfos:@[self.paymentInfo] withRetryTimes:3 completionHandler:^(BOOL success, id obj) {
-        [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
-        
-        QBSafelyCallBlock(self.completionHandler, success ? QBPayResultSuccess : QBPayResultFailure, self.paymentInfo);
-        
-        self.paymentInfo = nil;
-        self.completionHandler = nil;
-    }];
+    [[RMPayManager sharedInstance] checkOrderState];
+//    if (self.paymentInfo == nil) {
+//        return ;
+//    }
+//    
+//    [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+//    [[QBPaymentManager sharedManager] activatePaymentInfo:self.paymentInfo withRetryTimes:3 shouldCommitFailureResult:YES completionHandler:^(BOOL success, id obj) {
+//        [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
+//        
+//        QBSafelyCallBlock(self.completionHandler, success ? QBPayResultSuccess : QBPayResultFailure, self.paymentInfo);
+//        
+//        self.paymentInfo = nil;
+//        self.completionHandler = nil;
+//    }];
 }
 
 #pragma mark - RMPayManagerDelegate

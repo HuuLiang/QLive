@@ -36,27 +36,35 @@ QBSynthesizeSingletonMethod(sharedManager)
 //    iAppPayConfig.waresid = @(1);
 //    configDetails.iAppPayConfig = iAppPayConfig;
     
-    QBDXTXPayConfig *dxtxPayConfig = [[QBDXTXPayConfig alloc] init];
-    dxtxPayConfig.appKey = @"4EBF0DD3C58CD7ABFC79FADC63C9BBA4BA5E381EA1272FA7";
-    dxtxPayConfig.appid = @"wxfb8ca6edbebee85d";
-    dxtxPayConfig.waresid = @88;
-    dxtxPayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyDxtx.json";
-    configDetails.dxtxPayConfig = dxtxPayConfig;
+//    //盾行天下
+//    QBDXTXPayConfig *dxtxPayConfig = [[QBDXTXPayConfig alloc] init];
+//    dxtxPayConfig.appKey = @"90F8AE207145CE2E5747B15DBAF075ABE69F356FE3C9700D";
+//    dxtxPayConfig.appid = @"8";
+//    dxtxPayConfig.waresid = @8;
+//    dxtxPayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyDxtxios.json";
+//    configDetails.dxtxPayConfig = dxtxPayConfig;
     
     //雷胜
     QBLSPayConfig *lsPayConfig = [[QBLSPayConfig alloc] init];
     lsPayConfig.key = @"5a5259202a1863eb6c2f7d2b26a11e68";
     lsPayConfig.mchId = @"1031";
-    lsPayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyLsPay.json";
+    lsPayConfig.notifyUrl = @"http://phas.ayyygs.com/pd-has/notifyLsPay.json";
     configDetails.lsPayConfig = lsPayConfig;
+  
+    QBYiPayConfig *yiPayConfig = [[QBYiPayConfig alloc] init];
+    yiPayConfig.appId = @"1065";
+    yiPayConfig.key = @"ZLZTS9tpMk03gCPFMlf7WU2j";
+    yiPayConfig.mchId = @"QBKJ";
+    configDetails.yiPayConfig = yiPayConfig;
     
     //支付方式
     QBPaymentConfigSummary *payConfig = [[QBPaymentConfigSummary alloc] init];
-    payConfig.alipay = kQBLSPayConfigName;
-    payConfig.wechat = kQBDXTXPayConfigName;
+    payConfig.wechat = kQBLSPayConfigName;
+    payConfig.alipay = kQBYiPayConfigName;
     
     config.configDetails = configDetails;
     config.payConfig = payConfig;
+    config.contact = @"QQ:3324615224";
     [config setAsCurrentConfig];
     
     [[QBPaymentManager sharedManager] registerPaymentWithAppId:kQLRESTAppId
@@ -382,7 +390,6 @@ QBSynthesizeSingletonMethod(sharedManager)
     orderInfo.createTime = [QLUtil currentDateTimeString];
     orderInfo.userId = [QLUtil userId] ?: [QLUser currentUser].userId ?: @"anonymous";
     orderInfo.maxDiscount = 5;
-    orderInfo.contact = [NSString stringWithFormat:@"QQ：%@", kQLCustomerContactQQ];
     
     if ([payPoint.pointType isEqualToString:kQLVIPPayPointType]) {
         orderInfo.targetPayPointType = 1;
@@ -469,7 +476,7 @@ QBSynthesizeSingletonMethod(sharedManager)
         return obj.paymentResult != QBPayResultSuccess;
     }];
     
-    [[QBPaymentManager sharedManager] activatePaymentInfos:unsuccessfulPaymentInfos withRetryTimes:3 completionHandler:^(BOOL success, id obj) {
+    [[QBPaymentManager sharedManager] activatePaymentInfos:unsuccessfulPaymentInfos withCompletionHandler:^(BOOL success, id obj) {
         [[QLHUDManager sharedManager] hide];
         
         if (success) {

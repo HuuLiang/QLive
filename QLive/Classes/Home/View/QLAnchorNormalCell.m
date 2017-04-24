@@ -94,6 +94,8 @@
         }
         
         _audienceLabel = [[UILabel alloc] init];
+        _audienceLabel.font = [UIFont systemFontOfSize:15];
+        _audienceLabel.textColor = [UIColor colorWithHexString:@"#5AC8FA"];
         [self addSubview:_audienceLabel];
         {
             [_audienceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -128,12 +130,12 @@
 - (void)setNumberOfAudience:(NSUInteger)numberOfAudience {
     _numberOfAudience = numberOfAudience;
     
-    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld在看", (unsigned long)numberOfAudience]];
-    [attrString addAttributes:@{NSForegroundColorAttributeName:[QLTheme defaultTheme].themeColor,
-                                NSFontAttributeName:kExtraBigFont} range:NSMakeRange(0, attrString.length-2)];
-    [attrString addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"],
-                                NSFontAttributeName:kSmallFont} range:NSMakeRange(attrString.length-2, 2)];
-    _audienceLabel.attributedText = attrString;
+//    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld在看", (unsigned long)numberOfAudience]];
+//    [attrString addAttributes:@{NSForegroundColorAttributeName:[QLTheme defaultTheme].themeColor,
+//                                NSFontAttributeName:kExtraBigFont} range:NSMakeRange(0, attrString.length-2)];
+//    [attrString addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"],
+//                                NSFontAttributeName:kSmallFont} range:NSMakeRange(attrString.length-2, 2)];
+    _audienceLabel.text = [NSString stringWithFormat:@"%zd人看",numberOfAudience];
 }
 
 - (void)setAnchor:(QLAnchor *)anchor {

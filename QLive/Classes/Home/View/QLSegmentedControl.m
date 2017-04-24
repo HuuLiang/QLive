@@ -9,8 +9,8 @@
 #import "QLSegmentedControl.h"
 #import "QLSegmentedButton.h"
 
-static const CGFloat kIndicatorImageWidth = 14;
-static const CGFloat kIndicatorImageHeight = 6;
+static const CGFloat kIndicatorImageWidth = 60;
+static const CGFloat kIndicatorImageHeight = 2;
 
 @interface QLSegmentedControl ()
 @property (nonatomic,retain) NSMutableArray<UIButton *> *buttons;
@@ -27,20 +27,22 @@ QBDefineLazyPropertyInitialization(NSMutableArray, buttons)
         return _indicatorImageView;
     }
     
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(kIndicatorImageWidth, kIndicatorImageHeight), NO, 0);
-    
-    [[UIColor whiteColor] setFill];
-    UIBezierPath *triangle = [UIBezierPath bezierPath];
-    [triangle moveToPoint:CGPointMake(kIndicatorImageWidth/2, 0)];
-    [triangle addLineToPoint:CGPointMake(0, kIndicatorImageHeight)];
-    [triangle addLineToPoint:CGPointMake(kIndicatorImageWidth, kIndicatorImageHeight)];
-    [triangle closePath];
-    [triangle fill];
-    
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    
-    UIGraphicsEndImageContext();
-    _indicatorImageView = [[UIImageView alloc] initWithImage:image];
+//    UIGraphicsBeginImageContextWithOptions(CGSizeMake(kIndicatorImageWidth, kIndicatorImageHeight), NO, 0);
+//    
+//    [[UIColor colorWithHexString:@"#00C8FA"] setFill];
+//    UIBezierPath *triangle = [UIBezierPath bezierPath];
+//    [triangle moveToPoint:CGPointMake(kIndicatorImageWidth/2, 0)];
+//    [triangle addLineToPoint:CGPointMake(0, kIndicatorImageHeight)];
+//    [triangle addLineToPoint:CGPointMake(kIndicatorImageWidth, kIndicatorImageHeight)];
+//    [triangle closePath];
+//    [triangle fill];
+//    
+//    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+//    
+//    UIGraphicsEndImageContext();
+//    _indicatorImageView = [[UIImageView alloc] initWithImage:image];
+    _indicatorImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kIndicatorImageWidth, kIndicatorImageHeight)];
+    _indicatorImageView.backgroundColor = [UIColor colorWithHexString:@"#00C8FA"];
     _indicatorImageView.hidden = YES;
     [self addSubview:_indicatorImageView];
     return _indicatorImageView;

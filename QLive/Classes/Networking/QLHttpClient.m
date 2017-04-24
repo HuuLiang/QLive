@@ -58,6 +58,7 @@ static NSString *const kQLHttpEncryptedPassword = @"wdnxs&*@#!*qb)*&qiang";
     
     @weakify(self);
     if (methodtype == QLHttpMethodGET) {
+        urlPath = [urlPath stringByAppendingFormat:@"?t=%@", [QLUtil currentDateString]];
         [self.sessionManager GET:urlPath parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             @strongify(self);
             id decryptedResponse = [self decryptedResponse:responseObject];

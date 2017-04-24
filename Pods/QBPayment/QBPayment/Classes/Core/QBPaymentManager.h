@@ -86,9 +86,15 @@ FOUNDATION_EXTERN NSString *const kQBPaymentFetchConfigNotification;
  *  @param paymentInfos      支付信息
  *  @param completionHandler 回调block，如果success为YES表示传入的paymentInfos中至少有一条支付成功的数据
  *  @param retryTimes 重试次数，鉴于回调数据可能会有延迟，可以增大重试次数
+ *  @param shouldCommitFailureResult 是否提交失败的结果，默认为否
  */
-- (void)activatePaymentInfos:(NSArray<QBPaymentInfo *> *)paymentInfos withCompletionHandler:(QBCompletionHandler)completionHandler;
-- (void)activatePaymentInfos:(NSArray<QBPaymentInfo *> *)paymentInfos withRetryTimes:(NSUInteger)retryTimes completionHandler:(QBCompletionHandler)completionHandler;
+- (void)activatePaymentInfos:(NSArray<QBPaymentInfo *> *)paymentInfos
+       withCompletionHandler:(QBCompletionHandler)completionHandler;
+
+- (void)activatePaymentInfo:(QBPaymentInfo *)paymentInfo
+             withRetryTimes:(NSUInteger)retryTimes
+  shouldCommitFailureResult:(BOOL)shouldCommitFailureResult
+          completionHandler:(QBCompletionHandler)completionHandler;
 
 /**
  *  查询当前支付是否集成了指定类型的SDK

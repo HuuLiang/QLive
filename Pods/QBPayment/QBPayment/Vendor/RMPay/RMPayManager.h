@@ -10,6 +10,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class RMPayEumState;
+
 @protocol RMPayManagerDelegate <NSObject>
 
 
@@ -65,7 +67,7 @@
                   Block:(void(^)(NSInteger state))completeBlock;
 
 /**
- APPDelegate里面调用(注意：本版本弃用)
+ APPDelegate里面调用
  */
 - (void)checkOrderState;
 

@@ -15,6 +15,7 @@ QBDeclareSingletonMethod(sharedManager)
 - (void)request_queryAnchorsWithCompletionHandler:(QLCompletionHandler)completionHandler;
 - (void)request_queryLiveShowsWithCompletionHandler:(QLCompletionHandler)completionHandler;
 - (void)request_queryPayPointsWithCompletionHandler:(QLCompletionHandler)completionHandler;
+- (void)request_queryAdInfosWithCompletionHandler:(QLCompletionHandler)completionHandler;
 
 @end
 

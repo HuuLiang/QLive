@@ -91,6 +91,13 @@
     }
 }
 
+- (void)setHideText:(BOOL)hideText {
+    _titleLabel.hidden = hideText;
+}
+
+- (BOOL)hideText {
+    return _titleLabel.hidden;
+}
 
 - (void)layoutSubviews
 {
@@ -100,6 +107,7 @@
         _titleLabel.frame = self.bounds;
     } else {
         _imageView.frame = self.bounds;
+        
         CGFloat titleLabelW = self.sd_width;
         CGFloat titleLabelH = _titleLabelHeight;
         CGFloat titleLabelX = 0;

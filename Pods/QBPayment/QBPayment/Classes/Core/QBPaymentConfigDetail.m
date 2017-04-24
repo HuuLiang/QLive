@@ -19,12 +19,14 @@ NSString *const kQBHTPayConfigName = @"HAITUN";
 NSString *const kQBMTDLPayConfigName = @"MTDL";
 NSString *const kQBWeiYingConfigName = @"WEIYINGSDK";
 NSString *const kQBDXTXPayConfigName = @"DXTX";
+NSString *const kQBDXTXScanPayConfigName = @"DXTXSAN";
 NSString *const kQBJSPayConfigName = @"JSPAY";
 NSString *const kQBHeePayConfigName = @"HFB";
 NSString *const kQBXLTXPayConfigName = @"XLTX";
 NSString *const kQBWJPayConfigName = @"WUJI";
 NSString *const kQBMLYPayConfigName = @"MLY";
 NSString *const kQBLSPayConfigName = @"LS";
+NSString *const kQBLSScanPayConfigName = @"LSSAN";
 NSString *const kQBRMPayConfigName = @"RONGM";
 NSString *const kQBZRPayConfigName = @"ZRF";
 NSString *const kQBYiPayConfigName = @"YFPAY";
@@ -46,6 +48,8 @@ NSString *const kQBYiPayConfigName = @"YFPAY";
         return [QBWeiYingPayConfig class];
     } else if ([propName isEqualToString:NSStringFromSelector(@selector(dxtxPayConfig))]) {
         return [QBDXTXPayConfig class];
+    } else if ([propName isEqualToString:NSStringFromSelector(@selector(dxtxScanPayConfig))]) {
+        return [QBDXTXScanPayConfig class];
     } else if ([propName isEqualToString:NSStringFromSelector(@selector(mtdlPayConfig))]) {
         return [QBMTDLPayConfig class];
     } else if ([propName isEqualToString:NSStringFromSelector(@selector(jsPayConfig))]) {
@@ -60,6 +64,8 @@ NSString *const kQBYiPayConfigName = @"YFPAY";
         return [QBMLYPayConfig class];
     } else if ([propName isEqualToString:NSStringFromSelector(@selector(lsPayConfig))]) {
         return [QBLSPayConfig class];
+    } else if ([propName isEqualToString:NSStringFromSelector(@selector(lsScanPayConfig))]) {
+        return [QBLSScanPayConfig class];
     } else if ([propName isEqualToString:NSStringFromSelector(@selector(rmPayConfig))]) {
         return [QBRMPayConfig class];
     } else if ([propName isEqualToString:NSStringFromSelector(@selector(zrPayConfig))]) {
@@ -85,6 +91,8 @@ NSString *const kQBYiPayConfigName = @"YFPAY";
         return NSStringFromSelector(@selector(weiYingPayConfig));
     } else if ([parsingName hasSuffix:[@"-" stringByAppendingString:kQBDXTXPayConfigName]]) {
         return NSStringFromSelector(@selector(dxtxPayConfig));
+    } else if ([parsingName hasSuffix:[@"-" stringByAppendingString:kQBDXTXScanPayConfigName]]) {
+        return NSStringFromSelector(@selector(dxtxScanPayConfig));
     } else if ([parsingName hasSuffix:[@"-" stringByAppendingString:kQBMTDLPayConfigName]]) {
         return NSStringFromSelector(@selector(mtdlPayConfig));
     } else if ([parsingName hasSuffix:[@"-" stringByAppendingString:kQBJSPayConfigName]]) {
@@ -99,6 +107,8 @@ NSString *const kQBYiPayConfigName = @"YFPAY";
         return NSStringFromSelector(@selector(mlyPayConfig));
     } else if ([parsingName hasSuffix:[@"-" stringByAppendingString:kQBLSPayConfigName]]) {
         return NSStringFromSelector(@selector(lsPayConfig));
+    } else if ([parsingName hasSuffix:[@"-" stringByAppendingString:kQBLSScanPayConfigName]]) {
+        return NSStringFromSelector(@selector(lsScanPayConfig));
     } else if ([parsingName hasSuffix:[@"-" stringByAppendingString:kQBRMPayConfigName]]) {
         return NSStringFromSelector(@selector(rmPayConfig));
     } else if ([parsingName hasSuffix:[@"-" stringByAppendingString:kQBZRPayConfigName]]) {
@@ -233,21 +243,21 @@ NSString *const kQBYiPayConfigName = @"YFPAY";
 
 @implementation QBMingPayConfig
 
-- (NSDictionary *)dictionaryRepresentation {
-    NSMutableDictionary *dicRep = [NSMutableDictionary dictionary];
-    [dicRep safelySetObject:self.mch forKey:@"mch"];
-    return dicRep;
-}
-
-+ (instancetype)configFromDictionary:(NSDictionary *)dic {
-    QBMingPayConfig *config = [[self alloc] init];
-    [dic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-        if (obj) {
-            [config setValue:obj forKey:key];
-        }
-    }];
-    return config;
-}
+//- (NSDictionary *)dictionaryRepresentation {
+//    NSMutableDictionary *dicRep = [NSMutableDictionary dictionary];
+//    [dicRep safelySetObject:self.mch forKey:@"mch"];
+//    return dicRep;
+//}
+//
+//+ (instancetype)configFromDictionary:(NSDictionary *)dic {
+//    QBMingPayConfig *config = [[self alloc] init];
+//    [dic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+//        if (obj) {
+//            [config setValue:obj forKey:key];
+//        }
+//    }];
+//    return config;
+//}
 
 @end
 
@@ -256,6 +266,10 @@ NSString *const kQBYiPayConfigName = @"YFPAY";
 @end
 
 @implementation QBDXTXPayConfig
+
+@end
+
+@implementation QBDXTXScanPayConfig
 
 @end
 
@@ -292,6 +306,10 @@ NSString *const kQBYiPayConfigName = @"YFPAY";
     payConfig.notifyUrl = @"http://www.baidu.com";
     return payConfig;
 }
+@end
+
+@implementation QBLSScanPayConfig
+
 @end
 
 @implementation QBRMPayConfig

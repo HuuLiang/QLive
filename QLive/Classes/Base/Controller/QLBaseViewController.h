@@ -11,5 +11,6 @@
 @interface QLBaseViewController : UIViewController
 
 - (void)startLiveCastWithAnchor:(QLAnchor *)anchor;
+@property (nonatomic) BOOL hasCreatSearchView;
 
 @end

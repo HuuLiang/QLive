@@ -11,6 +11,7 @@
 @interface QLUtil : NSObject
 
 + (NSString *)currentDateTimeString;
++ (NSString *)currentDateString;
 + (NSDate *)dateFromString:(NSString *)dateString;
 
 + (NSString *)deviceName;

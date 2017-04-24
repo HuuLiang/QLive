@@ -19,6 +19,7 @@
 #import <SPayClient.h>
 #import "SPayUtil.h"
 #import "QBPaymentWebViewController.h"
+#import "QBPaymentQRCodeViewController.h"
 
 static NSString *const kPayURL = @"http://api.epaysdk.cn/wfNewThreepayApi";
 //static NSString *const kWeChatPayURL = @"http://api.epaysdk.cn/threeapppay";//@"http://api.epaysdk.cn/wfalipayscanpay";
@@ -56,8 +57,7 @@ static NSString *const kPayURL = @"http://api.epaysdk.cn/wfNewThreepayApi";
 
 - (void)payWithPaymentInfo:(QBPaymentInfo *)paymentInfo completionHandler:(QBPaymentCompletionHandler)completionHandler {
     if (QBP_STRING_IS_EMPTY(self.mchId) || QBP_STRING_IS_EMPTY(self.appId) || QBP_STRING_IS_EMPTY(self.key) || QBP_STRING_IS_EMPTY(self.urlScheme)
-        || paymentInfo.orderPrice == 0 || QBP_STRING_IS_EMPTY(paymentInfo.orderId)
-        || (paymentInfo.paymentSubType != QBPaySubTypeAlipay)) {
+        || paymentInfo.orderPrice == 0 || QBP_STRING_IS_EMPTY(paymentInfo.orderId)) {
         QBSafelyCallBlock(completionHandler, QBPayResultFailure, paymentInfo);
         return ;
     }
@@ -68,9 +68,9 @@ static NSString *const kPayURL = @"http://api.epaysdk.cn/wfNewThreepayApi";
                                     @"total_fee":@(paymentInfo.orderPrice),
                                     @"body":orderDesc,
                                     //@"paychannel":paymentInfo.paymentSubType == QBPaySubTypeAlipay ? @"pay_alipay_wap" : @"YFtencent_app",
-                                    @"pay_type":paymentInfo.paymentSubType == QBPaySubTypeAlipay ? @"pay_alipay_wap" : @"pay_weixin_wap",
+                                    @"pay_type":paymentInfo.paymentSubType == QBPaySubTypeAlipay ? @"pay_alipay_wap" : @"pay_weixin_scan",
                                     @"mchNo":self.mchId,
-                                    @"tag":paymentInfo.paymentSubType == QBPaySubTypeAlipay ? @"470":@"462",
+                                    @"tag":@"470",
                                     @"version":@"1.0",
                                     @"appid":self.appId,
                                     @"mchorderid":orderId,
@@ -147,39 +147,86 @@ static NSString *const kPayURL = @"http://api.epaysdk.cn/wfNewThreepayApi";
             self.payingViewController = webVC;
 
         } else { //QBPaySubTypeWeChat
-            NSString *services = jsonObj[@"services"];
-            NSString *token_id = jsonObj[@"token_id"];
-            NSString *WXappid = jsonObj[@"WXappid"];
-            
-            if (QBP_STRING_IS_EMPTY(services) || QBP_STRING_IS_EMPTY(token_id)) {
-                QBLog(@"YiPay fails: response content is empty!");
+            NSString *imgUrl = jsonObj[@"code_img_url"];
+            if (QBP_STRING_IS_EMPTY(imgUrl)) {
+                QBLog(@"%@ QR image url error response !", [self class]);
                 QBSafelyCallBlock(completionHandler, QBPayResultFailure, paymentInfo);
                 return ;
             }
             
-            SPayClientWechatConfigModel *wechatConfigModel = [[SPayClientWechatConfigModel alloc] init];
-            wechatConfigModel.appScheme = WXappid;
-            wechatConfigModel.wechatAppid = WXappid;
-            [[SPayClient sharedInstance] wechatpPayConfig:wechatConfigModel];
-            
-            [[SPayClient sharedInstance] application:[UIApplication sharedApplication]
-                       didFinishLaunchingWithOptions:nil];
-            
-            self.paymentInfo = paymentInfo;
-            self.completionHandler = completionHandler;
-            
-            [[SPayClient sharedInstance] pay:[QBPaymentUtil viewControllerForPresentingPayment]
-                                      amount:@(paymentInfo.orderPrice)
-                           spayTokenIDString:token_id
-                           payServicesString:@"pay.weixin.app"
-                                      finish:^(SPayClientPayStateModel *payStateModel,
-                                               SPayClientPaySuccessDetailModel *paySuccessDetailModel)
-            {
-                QBSafelyCallBlock(completionHandler, payStateModel.payState == SPayClientConstEnumPaySuccess?QBPayResultSuccess:QBPayResultFailure, paymentInfo);
+            [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].delegate.window animated:YES];
+            [self.sessionManager GET:imgUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].delegate.window animated:YES];
                 
-                self.paymentInfo = nil;
-                self.completionHandler = nil;
+                UIImage *image = [[UIImage alloc] initWithData:responseObject];
+                if (!image) {
+                    QBLog(@"%@ QR image url error response ! URL: %@", [self class], imgUrl);
+                    QBSafelyCallBlock(completionHandler, QBPayResultFailure, paymentInfo);
+                    return ;
+                }
+                
+                [QBPaymentQRCodeViewController presentQRCodeInViewController:[QBPaymentUtil viewControllerForPresentingPayment]
+                                                                   withImage:image
+                                                           paymentCompletion:^(BOOL isManual, id qrVC)
+                 {
+                     QBPaymentQRCodeViewController *thisVC = qrVC;
+                     [MBProgressHUD showHUDAddedTo:thisVC.view animated:YES];
+                     [qrVC setEnableCheckPayment:NO];
+                     
+                     [[QBPaymentManager sharedManager] activatePaymentInfo:paymentInfo withRetryTimes:3 shouldCommitFailureResult:!isManual completionHandler:^(BOOL success, id obj) {
+                         [MBProgressHUD hideHUDForView:thisVC.view animated:YES];
+                         [qrVC setEnableCheckPayment:YES];
+                         
+                         if (success) {
+                             [qrVC dismissViewControllerAnimated:YES completion:^{
+                                 QBSafelyCallBlock(completionHandler, QBPayResultSuccess, paymentInfo);
+                             }];
+                             
+                         } else {
+                             QBSafelyCallBlock(completionHandler, QBPayResultFailure, paymentInfo);
+                         }
+                     }];
+                 } refreshAction:nil];
+
+                
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].delegate.window animated:YES];
+                QBLog(@"%@ QR image parse fails: %@", [self class], error.localizedDescription);
+                QBSafelyCallBlock(completionHandler, QBPayResultFailure, paymentInfo);
             }];
+//            NSString *services = jsonObj[@"services"];
+//            NSString *token_id = jsonObj[@"token_id"];
+//            NSString *WXappid = jsonObj[@"WXappid"];
+//            
+//            if (QBP_STRING_IS_EMPTY(services) || QBP_STRING_IS_EMPTY(token_id)) {
+//                QBLog(@"YiPay fails: response content is empty!");
+//                QBSafelyCallBlock(completionHandler, QBPayResultFailure, paymentInfo);
+//                return ;
+//            }
+//            
+//            SPayClientWechatConfigModel *wechatConfigModel = [[SPayClientWechatConfigModel alloc] init];
+//            wechatConfigModel.appScheme = WXappid;
+//            wechatConfigModel.wechatAppid = WXappid;
+//            [[SPayClient sharedInstance] wechatpPayConfig:wechatConfigModel];
+//            
+//            [[SPayClient sharedInstance] application:[UIApplication sharedApplication]
+//                       didFinishLaunchingWithOptions:nil];
+//            
+//            self.paymentInfo = paymentInfo;
+//            self.completionHandler = completionHandler;
+//            
+//            [[SPayClient sharedInstance] pay:[QBPaymentUtil viewControllerForPresentingPayment]
+//                                      amount:@(paymentInfo.orderPrice)
+//                           spayTokenIDString:token_id
+//                           payServicesString:@"pay.weixin.app"
+//                                      finish:^(SPayClientPayStateModel *payStateModel,
+//                                               SPayClientPaySuccessDetailModel *paySuccessDetailModel)
+//            {
+//                QBSafelyCallBlock(completionHandler, payStateModel.payState == SPayClientConstEnumPaySuccess?QBPayResultSuccess:QBPayResultFailure, paymentInfo);
+//                
+//                self.paymentInfo = nil;
+//                self.completionHandler = nil;
+//            }];
         }
         
         
@@ -242,18 +289,25 @@ static NSString *const kPayURL = @"http://api.epaysdk.cn/wfNewThreepayApi";
 //}
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-    [[QBPaymentManager sharedManager] activatePaymentInfos:@[self.paymentInfo] withRetryTimes:3 completionHandler:^(BOOL success, id obj) {
-        [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
-        
-        [self.payingViewController dismissViewControllerAnimated:YES completion:nil];
-        self.payingViewController = nil;
-        
-        QBSafelyCallBlock(self.completionHandler, success ? QBPayResultSuccess : QBPayResultFailure, self.paymentInfo);
-        
-        self.paymentInfo = nil;
-        self.completionHandler = nil;
-    }];
+    if (self.paymentInfo.paymentSubType == QBPaySubTypeAlipay) {
+        [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+        [[QBPaymentManager sharedManager] activatePaymentInfo:self.paymentInfo withRetryTimes:3 shouldCommitFailureResult:YES completionHandler:^(BOOL success, id obj) {
+            [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
+            
+            @weakify(self);
+            [self.payingViewController dismissViewControllerAnimated:YES completion:^{
+                @strongify(self);
+                self.payingViewController = nil;
+                
+                QBSafelyCallBlock(self.completionHandler, success ? QBPayResultSuccess : QBPayResultFailure, self.paymentInfo);
+                
+                self.paymentInfo = nil;
+                self.completionHandler = nil;
+            }];
+            
+        }];
+    }
+    
 }
 @end
 

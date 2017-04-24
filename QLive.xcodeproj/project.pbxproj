@@ -120,6 +120,7 @@
 		BC69B28F1E7D26C2002D05B4 /* QLVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BC69B28E1E7D26C2002D05B4 /* QLVideoPlayer.m */; };
 		BC69B2921E7D2D17002D05B4 /* QLLiveCastViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC69B2911E7D2D17002D05B4 /* QLLiveCastViewController.m */; };
 		BC69B2951E7D40A6002D05B4 /* QLLiveShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC69B2941E7D40A6002D05B4 /* QLLiveShowViewController.m */; };
+		BCA052DC1EA20C5A00F28DFF /* QLAdInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BCA052DB1EA20C5A00F28DFF /* QLAdInfo.m */; };
 		BCBC10B61E7A888000BAFD23 /* QLLiveGiftPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BCBC10B51E7A888000BAFD23 /* QLLiveGiftPlayer.m */; };
 		BCF54BFF1E65F66800F97127 /* QLHUDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF54BFE1E65F66800F97127 /* QLHUDManager.m */; };
 		E56F7EBD2B231BD6090ED00D /* libPods-QLive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B8B4F47795532AAB80A8C69A /* libPods-QLive.a */; };
@@ -355,6 +356,8 @@
 		BC69B2911E7D2D17002D05B4 /* QLLiveCastViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLLiveCastViewController.m; sourceTree = "<group>"; };
 		BC69B2931E7D40A6002D05B4 /* QLLiveShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLLiveShowViewController.h; sourceTree = "<group>"; };
 		BC69B2941E7D40A6002D05B4 /* QLLiveShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLLiveShowViewController.m; sourceTree = "<group>"; };
+		BCA052DA1EA20C5A00F28DFF /* QLAdInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLAdInfo.h; sourceTree = "<group>"; };
+		BCA052DB1EA20C5A00F28DFF /* QLAdInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLAdInfo.m; sourceTree = "<group>"; };
 		BCBC10B41E7A888000BAFD23 /* QLLiveGiftPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLLiveGiftPlayer.h; sourceTree = "<group>"; };
 		BCBC10B51E7A888000BAFD23 /* QLLiveGiftPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLLiveGiftPlayer.m; sourceTree = "<group>"; };
 		BCF54BFD1E65F66800F97127 /* QLHUDManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLHUDManager.h; sourceTree = "<group>"; };
@@ -578,6 +581,8 @@
 				BC185EED1E70A948001CBF70 /* QLLiveShow.m */,
 				BC2B62911E729652001DC8C3 /* QLPayPoint.h */,
 				BC2B62921E729652001DC8C3 /* QLPayPoint.m */,
+				BCA052DA1EA20C5A00F28DFF /* QLAdInfo.h */,
+				BCA052DB1EA20C5A00F28DFF /* QLAdInfo.m */,
 				BC0DE0A01E8265D400A20878 /* QLActivateModel.h */,
 				BC0DE0A11E8265D400A20878 /* QLActivateModel.m */,
 			);
@@ -1169,6 +1174,7 @@
 				BC524F7F1E6DC7F200B34833 /* DBTableVersion.m in Sources */,
 				BC2533C41E780306005EA643 /* QLLiveGift.m in Sources */,
 				BC2979441E69649D0013794F /* QLMineProfileCell.m in Sources */,
+				BCA052DC1EA20C5A00F28DFF /* QLAdInfo.m in Sources */,
 				BC267B4E1E7BD92D00DAC8D2 /* TZImagePickerController.m in Sources */,
 				BC69B28F1E7D26C2002D05B4 /* QLVideoPlayer.m in Sources */,
 				BC267B4A1E7BD92D00DAC8D2 /* TZGifPhotoPreviewController.m in Sources */,
@@ -1310,10 +1316,10 @@
 				INFOPLIST_FILE = QLive/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.honeylive.13;
+				PRODUCT_BUNDLE_IDENTIFIER = com.honeylive.35;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e590468f-8cb8-491f-bf4e-61c86c80b558";
-				PROVISIONING_PROFILE_SPECIFIER = HoneyLive13DevProvisioningProfile;
+				PROVISIONING_PROFILE = "bb37b522-b1db-4a11-946c-c96f79a97e12";
+				PROVISIONING_PROFILE_SPECIFIER = HoneyLive35DevProvisioningProfile;
 			};
 			name = Debug;
 		};
@@ -1332,10 +1338,10 @@
 				INFOPLIST_FILE = QLive/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.honeylive.13;
+				PRODUCT_BUNDLE_IDENTIFIER = com.honeylive.35;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e3146de4-248b-4377-afe2-f2de207b84db";
-				PROVISIONING_PROFILE_SPECIFIER = HoneyLive13InHouseProvisioningProfile;
+				PROVISIONING_PROFILE = "d750db5b-ff2d-4873-b485-bf49e42d6ed0";
+				PROVISIONING_PROFILE_SPECIFIER = HoneyLive35InHouseProvisioningProfile;
 			};
 			name = Release;
 		};

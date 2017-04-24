@@ -15,6 +15,7 @@
 
 @property (nonatomic,retain) QBPaymentConfigSummary *payConfig;
 @property (nonatomic,retain) QBPaymentConfigDetail *configDetails;
+@property (nonatomic) NSString *contact;
 
 + (instancetype)sharedConfig;
 - (void)setAsCurrentConfig;

@@ -8,6 +8,8 @@
 
 #import "QLBaseViewController.h"
 #import "QLLiveCastViewController.h"
+#import "QLRecentMessageViewController.h"
+#import "QLSearchViewController.h"
 
 @interface QLBaseViewController ()
 
@@ -24,6 +26,11 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@" " style:UIBarButtonItemStylePlain target:nil action:nil];
+    if (self.hasCreatSearchView) {
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"navbaritem_search"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(onSearch)];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"navbaritem_chat"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(onChat)];
+    }
+    
 }
 
 - (BOOL)hidesBottomBarWhenPushed {
@@ -31,7 +38,7 @@
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
+    return UIStatusBarStyleDefault;
 }
 
 - (void)startLiveCastWithAnchor:(QLAnchor *)anchor {
@@ -42,6 +49,16 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)onSearch {
+    QLSearchViewController *searchVC = [[QLSearchViewController alloc] init];
+    [self.navigationController pushViewController:searchVC animated:NO];
+}
+
+- (void)onChat {
+    QLRecentMessageViewController *messageVC = [[QLRecentMessageViewController alloc] init];
+    [self.navigationController pushViewController:messageVC animated:YES];
 }
 
 @end

@@ -57,6 +57,7 @@ static NSString *const kPaymentConfigKeyName = @"qbpayment_config_key_name";
                             kQBHTPayConfigName:@(QBPayTypeHTPay),
                             kQBMTDLPayConfigName:@(QBPayTypeMTDLPay),
                             kQBDXTXPayConfigName:@(QBPayTypeDXTXPay),
+                            kQBDXTXScanPayConfigName:@(QBPayTypeDXTXScanPay),
 							kQBWeiYingConfigName:@(QBPayTypeWeiYingPay),
                             kQBJSPayConfigName:@(QBPayTypeJSPay),
                             kQBHeePayConfigName:@(QBPayTypeHeePay),
@@ -64,6 +65,7 @@ static NSString *const kPaymentConfigKeyName = @"qbpayment_config_key_name";
                             kQBWJPayConfigName:@(QBPayTypeWJPay),
                             kQBMLYPayConfigName:@(QBPayTypeMLYPay),
                             kQBLSPayConfigName:@(QBPayTypeLSPay),
+                            kQBLSScanPayConfigName:@(QBPayTypeLSScanPay),
                             kQBRMPayConfigName:@(QBPayTypeRMPay),
                             kQBZRPayConfigName:@(QBPayTypeZRPay),
                             kQBYiPayConfigName:@(QBPayTypeYiPay)};
@@ -114,6 +116,7 @@ static NSString *const kPaymentConfigKeyName = @"qbpayment_config_key_name";
     QBPaymentConfig *currentConfig = [[self class] sharedConfig];
     currentConfig.payConfig = self.payConfig;
     currentConfig.configDetails = self.configDetails;
+    currentConfig.contact = self.contact;
     
     [[NSUserDefaults standardUserDefaults] setObject:[self dictionaryRepresentationWithEncryptBlock:nil] forKey:kPaymentConfigKeyName];
     [[NSUserDefaults standardUserDefaults] synchronize];
