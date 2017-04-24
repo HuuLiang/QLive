@@ -8,6 +8,7 @@
 
 #import "QLNavigationController.h"
 #import "UINavigationItem+QLNavigationItem.h"
+#import "QLMineViewController.h"
 
 @interface QLNavigationController () <UINavigationControllerDelegate>
 
@@ -19,13 +20,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navigationBar.translucent = NO;
-    self.navigationBar.barTintColor = [QLTheme defaultTheme].themeColor;
-    self.navigationBar.tintColor = [UIColor whiteColor];
-    [self.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
-    self.navigationBar.shadowImage = [[UIImage alloc] init];
-    self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor],
+//    self.navigationBar.barTintColor = [QLTheme defaultTheme].themeColor;
+//    self.navigationBar.tintColor = [UIColor whiteColor];
+//    [self.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
+//    self.navigationBar.shadowImage = [[UIImage alloc] init];
+    self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"],
                                                NSFontAttributeName:[UIFont boldSystemFontOfSize:20]};
     self.delegate = self;
+
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

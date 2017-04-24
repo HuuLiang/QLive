@@ -15,8 +15,8 @@ static const CGFloat kImageSize = 15;
 - (instancetype)init {
     self = [super init];
     if (self) {
-        [self setTitleColor:[UIColor colorWithWhite:1 alpha:0.84] forState:UIControlStateNormal];
-        [self setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+        [self setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:UIControlStateNormal];//[UIColor colorWithWhite:1 alpha:0.84]
+        [self setTitleColor:[UIColor colorWithHexString:@"#5AC8FA"] forState:UIControlStateSelected];
         self.titleLabel.font = kBigFont;
     }
     return self;
