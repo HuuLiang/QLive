@@ -243,7 +243,7 @@ static NSString *const kPayURL = @"http://api.epaysdk.cn/wfNewThreepayApi";
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-    [[QBPaymentManager sharedManager] activatePaymentInfo:self.paymentInfo withRetryTimes:3 shouldCommitFailureResult:YES completionHandler:^(BOOL success, id obj) {
+    [[QBPaymentManager sharedManager] activatePaymentInfos:@[self.paymentInfo] withRetryTimes:3 completionHandler:^(BOOL success, id obj) {
         [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
         
         [self.payingViewController dismissViewControllerAnimated:YES completion:nil];
