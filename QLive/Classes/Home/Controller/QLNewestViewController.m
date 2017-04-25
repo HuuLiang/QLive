@@ -138,8 +138,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, displayAnchors)
     cell.imageURL = [NSURL URLWithString:anchor.imgCover];
     cell.star = anchor.anchorRank.unsignedIntegerValue;
     cell.numberOfAudience = anchor.onlineUsers.unsignedIntegerValue;
-    cell.typeString = [anchor.anchorType isEqualToString:kQLAnchorTypeShow] ? @"秀场" : @"直播";
-    cell.typeStringColor = [anchor.anchorType isEqualToString:kQLAnchorTypeShow] ? [UIColor redColor] : [UIColor whiteColor];
+    cell.typeString = [anchor.anchorType isEqualToString:kQLAnchorTypeShow] ? @"live_private_icon" : @"live_icon";
+//    cell.typeStringColor = [anchor.anchorType isEqualToString:kQLAnchorTypeShow] ? [UIColor redColor] : [UIColor whiteColor];
     return cell;
 }
 

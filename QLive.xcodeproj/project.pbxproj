@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B36918F91EAE0284002B6E0C /* QLLiveShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = B36918F81EAE0284002B6E0C /* QLLiveShowView.m */; };
 		BC0DE09F1E82645B00A20878 /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC0DE09E1E82645B00A20878 /* UMMobClick.framework */; };
 		BC0DE0A21E8265D400A20878 /* QLActivateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0DE0A11E8265D400A20878 /* QLActivateModel.m */; };
 		BC0DE0A51E82733000A20878 /* QLLivePrivateShowContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0DE0A41E82733000A20878 /* QLLivePrivateShowContactViewController.m */; };
@@ -129,6 +130,8 @@
 /* Begin PBXFileReference section */
 		133CE10DE0F35612365215E2 /* Pods-QLive.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QLive.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QLive/Pods-QLive.debug.xcconfig"; sourceTree = "<group>"; };
 		21495D034E645AFD3EF990D0 /* Pods-QLive.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QLive.release.xcconfig"; path = "Pods/Target Support Files/Pods-QLive/Pods-QLive.release.xcconfig"; sourceTree = "<group>"; };
+		B36918F71EAE0284002B6E0C /* QLLiveShowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLLiveShowView.h; sourceTree = "<group>"; };
+		B36918F81EAE0284002B6E0C /* QLLiveShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLLiveShowView.m; sourceTree = "<group>"; };
 		B8B4F47795532AAB80A8C69A /* libPods-QLive.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QLive.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC0DE09E1E82645B00A20878 /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
 		BC0DE0A01E8265D400A20878 /* QLActivateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLActivateModel.h; sourceTree = "<group>"; };
@@ -806,6 +809,8 @@
 				BC2B3FE51E810F9600EBF0A2 /* QLLiveShowTicketExportView.m */,
 				BC2B3FED1E8147E800EBF0A2 /* QLLiveShowJumpQueuePopView.h */,
 				BC2B3FEE1E8147E800EBF0A2 /* QLLiveShowJumpQueuePopView.m */,
+				B36918F71EAE0284002B6E0C /* QLLiveShowView.h */,
+				B36918F81EAE0284002B6E0C /* QLLiveShowView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1106,6 +1111,7 @@
 				BC39616A1E6EF12300256FFF /* UIScrollView+Refresh.m in Sources */,
 				BC2B3FE61E810F9600EBF0A2 /* QLLiveShowTicketExportView.m in Sources */,
 				BC1C959F1E64C3C0006BDBD0 /* QLFollowingViewController.m in Sources */,
+				B36918F91EAE0284002B6E0C /* QLLiveShowView.m in Sources */,
 				BC267AEF1E7BC06500DAC8D2 /* TAAbstractDotView.m in Sources */,
 				BC267AF11E7BC06500DAC8D2 /* TADotView.m in Sources */,
 				BC2C377B1E6D9636006E435A /* QLLaunchViewController.m in Sources */,

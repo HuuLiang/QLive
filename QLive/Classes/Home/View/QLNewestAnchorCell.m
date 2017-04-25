@@ -11,7 +11,8 @@
 @interface QLNewestAnchorCell ()
 {
     UIImageView *_starImageView;
-    UILabel *_typeLabel;
+    //    UILabel *_typeLabel;
+    UIImageView *_typeImageView;
     UIButton *_audienceButton;
     UIImageView *_thumbImageView;
 }
@@ -42,15 +43,25 @@
             }];
         }
         
-        _typeLabel = [[UILabel alloc] init];
-        _typeLabel.font = kExtraSmallFont;
-        _typeLabel.textColor = [UIColor whiteColor];
-        _typeLabel.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
-        [self addSubview:_typeLabel];
+        //        _typeLabel = [[UILabel alloc] init];
+        //        _typeLabel.font = kExtraSmallFont;
+        //        _typeLabel.textColor = [UIColor whiteColor];
+        //        _typeLabel.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+        //        [self addSubview:_typeLabel];
+        //        {
+        //            [_typeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        //                make.right.equalTo(self).offset(-10);
+        //                make.top.equalTo(_starImageView);
+        //            }];
+        //        }
+        
+        _typeImageView = [[UIImageView alloc] init];
+        [self addSubview:_typeImageView];
         {
-            [_typeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            [_typeImageView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.right.equalTo(self).offset(-10);
                 make.top.equalTo(_starImageView);
+                make.size.mas_equalTo(CGSizeMake(54, 20));
             }];
         }
         
@@ -85,13 +96,14 @@
 
 - (void)setTypeString:(NSString *)typeString {
     _typeString = typeString;
-    _typeLabel.text = typeString;
+//    _typeLabel.text = typeString;
+    _typeImageView.image = [UIImage imageNamed:typeString];
 }
 
-- (void)setTypeStringColor:(UIColor *)typeStringColor {
-    _typeStringColor = typeStringColor;
-    _typeLabel.textColor = typeStringColor;
-}
+//- (void)setTypeStringColor:(UIColor *)typeStringColor {
+//    _typeStringColor = typeStringColor;
+//    _typeLabel.textColor = typeStringColor;
+//}
 
 - (void)setNumberOfAudience:(NSUInteger)numberOfAudience {
     _numberOfAudience = numberOfAudience;

@@ -13,7 +13,7 @@
 @property (nonatomic) NSURL *imageURL;
 @property (nonatomic) NSUInteger star;
 @property (nonatomic) NSString *typeString;
-@property (nonatomic) UIColor *typeStringColor;
+//@property (nonatomic) UIColor *typeStringColor;
 @property (nonatomic) NSUInteger numberOfAudience;
 
 @end

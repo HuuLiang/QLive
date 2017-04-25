@@ -30,10 +30,12 @@ QBDefineLazyPropertyInitialization(NSMutableArray, displayAnchors)
     
     // Do any additional setup after loading the view.
     _layoutTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    _layoutTableView.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
     _layoutTableView.delegate = self;
     _layoutTableView.dataSource = self;
     _layoutTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [_layoutTableView registerClass:[QLAnchorNormalCell class] forCellReuseIdentifier:kCellReusableIdentifier];
+    _layoutTableView.contentInset = UIEdgeInsetsMake(10, 0, 0, 0);
     [self.view addSubview:_layoutTableView];
     {
         [_layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {

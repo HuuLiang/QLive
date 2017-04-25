@@ -30,7 +30,7 @@
         _sharedController.tabBar.translucent = NO;
 //        _sharedController.tabBar.backgroundImage = [UIImage imageNamed:@"tabbar_background"];
         _sharedController.tabBar.shadowImage = [[UIImage alloc] init];
-        
+        _sharedController.tabBar.backgroundImage = [UIImage new];
 //        _sharedController.tabBar.barStyle = UIBarStyleBlack;
 //        _sharedController.tabBar.shadowImage = [UIImage imageWithColor:[QLTheme defaultTheme].themeColor];
         
@@ -55,8 +55,8 @@
         QLLiveViewController *liveVC = [[QLLiveViewController alloc] init];
         liveVC.title = @"蜜汁直播";
         liveVC.hasCreatSearchView = YES;
-//        QLNavigationController *liveNav = [[QLNavigationController alloc] initWithRootViewController:liveVC];
-        liveVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:nil
+        QLNavigationController *liveNav = [[QLNavigationController alloc] initWithRootViewController:liveVC];
+        liveNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:nil
                                                            image:[[UIImage imageNamed:@"tabbar_live_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
                                                    selectedImage:[[UIImage imageNamed:@"tabbar_live_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
         
@@ -77,7 +77,7 @@
                                                    selectedImage:[[UIImage imageNamed:@"tabbar_mine_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
 //        mineNav.tabBarItem.imageInsets = UIEdgeInsetsMake(-2, 0, 2, 0);
         
-        _sharedController.viewControllers = @[homeNav,followNav,liveVC,showTimeNav,mineNav];
+        _sharedController.viewControllers = @[homeNav,followNav,liveNav,showTimeNav,mineNav];
         
         UILongPressGestureRecognizer *longPressGes = [[UILongPressGestureRecognizer alloc] bk_initWithHandler:^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
             if (state == UIGestureRecognizerStateBegan) {

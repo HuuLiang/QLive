@@ -61,7 +61,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, buttons)
 //        UIButton *button = [[UIButton alloc] init];
 //        [button setTitleColor:[UIColor colorWithWhite:1 alpha:0.84] forState:UIControlStateNormal];
 //        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-//        button.titleLabel.font = kBigFont;
+//        button.titleLabel.font = [UIFont systemFontOfSize:15];
         [button setTitle:obj forState:UIControlStateNormal];
         [button addTarget:self action:@selector(onButton:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:button];

@@ -8,6 +8,10 @@
 
 #import "QLSegmentedButton.h"
 
+#define kBtnBigFont  [UIFont systemFontOfSize:MIN(15,roundf(kScreenWidth*0.047))]
+#define kBtnExtraBigBoldFont [UIFont boldSystemFontOfSize:MIN(16,roundf(kScreenWidth*0.05))]
+
+
 static const CGFloat kImageSize = 15;
 
 @implementation QLSegmentedButton
@@ -17,14 +21,14 @@ static const CGFloat kImageSize = 15;
     if (self) {
         [self setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:UIControlStateNormal];//[UIColor colorWithWhite:1 alpha:0.84]
         [self setTitleColor:[UIColor colorWithHexString:@"#5AC8FA"] forState:UIControlStateSelected];
-        self.titleLabel.font = kBigFont;
+        self.titleLabel.font = kBtnBigFont;
     }
     return self;
 }
 
 - (void)setSelected:(BOOL)selected {
     [super setSelected:selected];
-    self.titleLabel.font = selected ? kExtraBigBoldFont : kBigFont;
+    self.titleLabel.font = selected ? kBtnExtraBigBoldFont : kBtnBigFont;
 }
 
 - (CGRect)imageRectForContentRect:(CGRect)contentRect {
