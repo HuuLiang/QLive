@@ -28,21 +28,22 @@ static NSString *const kPlaceholderReusableIdentifier = @"PlaceholderReusableIde
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
     _layoutTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    _layoutTableView.backgroundColor = self.view.backgroundColor;
     _layoutTableView.delegate = self;
     _layoutTableView.dataSource = self;
     _layoutTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [_layoutTableView registerClass:[QLAnchorNormalCell class] forCellReuseIdentifier:kCellReusableIdentifier];
     [_layoutTableView registerClass:[QLFollowingPlaceholderCell class] forCellReuseIdentifier:kPlaceholderReusableIdentifier];
     [_layoutTableView registerClass:[QLFollowingHeaderView class] forHeaderFooterViewReuseIdentifier:kHeaderReusableIdentifier];
+     _layoutTableView.contentInset = UIEdgeInsetsMake(10, 0, 0, 0);
     [self.view addSubview:_layoutTableView];
     {
         [_layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self.view);
         }];
     }
-    
     [QLAnchor registerObserver:self];
     [self reloadFolowingUsers];
 }

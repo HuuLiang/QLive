@@ -66,10 +66,11 @@
 }
 
 - (void)showLiveView {
-    self.liveShowView.hidden = NO;
+    //    self.liveShowView.hidden = NO;
     CGFloat height = MAX(213, kScreenHeight*0.37);
     self.liveShowView.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight+height);
-    [UIView animateWithDuration:0.5 animations:^{
+    [UIView animateWithDuration:0.2 animations:^{
+        self.liveShowView.hidden = NO;
         self.liveShowView.frame = CGRectMake(0, -height, kScreenWidth, kScreenHeight+height);
     }];
     

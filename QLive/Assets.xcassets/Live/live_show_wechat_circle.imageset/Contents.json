@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "朋友圈朋友圈icon.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "朋友圈朋友圈icon.png",
       "scale" : "2x"
     },
     {

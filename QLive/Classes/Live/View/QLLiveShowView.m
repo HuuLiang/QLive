@@ -33,7 +33,7 @@
         
         CGFloat height = MAX(213, kScreenHeight*0.37);
         UIView *backView = [[UIView alloc] init];
-        backView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.87];
+        backView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.7];
         [self addSubview:backView];
         {
             [backView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -69,7 +69,7 @@
         _liveButton.layer.masksToBounds = YES;
         [_liveButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"#5AC8FA"]] forState:UIControlStateNormal];
         [_liveButton setTitle:@"开始直播" forState:UIControlStateNormal];
-        [_liveButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_liveButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_liveButton addTarget:self action:@selector(onLive) forControlEvents:UIControlEventTouchUpInside];
         [backView addSubview:_liveButton];
         {

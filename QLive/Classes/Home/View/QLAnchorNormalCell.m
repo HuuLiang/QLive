@@ -47,6 +47,7 @@
             [_liveIconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.equalTo(_thumbImageView).offset(15);
                 make.right.equalTo(_thumbImageView).offset(-15);
+                make.size.mas_equalTo(CGSizeMake(62, 24));
             }];
         }
         

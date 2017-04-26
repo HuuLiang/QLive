@@ -19,5 +19,6 @@
 @property (nonatomic) NSString *actionName;
 @property (nonatomic,copy) QBAction action;
 @property (nonatomic) CGFloat height;
-
+@property (nonatomic) NSInteger type;
+@property (nonatomic) NSString *title;
 @end

@@ -82,21 +82,24 @@
         [self.view addSubview:_headerImageView];
         {
             [_headerImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(self.view).offset(10);
-                make.top.equalTo(self.view).offset(10);
+                make.left.equalTo(self.view).offset(15);
+                make.top.equalTo(self.view).offset(25);
                 make.height.mas_equalTo(headerImageHeight);
                 make.width.mas_equalTo(headerImageWidth);
             }];
         }
         
         _ticketLabel = [[UILabel alloc] init];
-        _ticketLabel.textColor = [QLTheme defaultTheme].themeColor;
-        _ticketLabel.font = kBigBoldFont;
+        _ticketLabel.textColor = [UIColor whiteColor];
+        _ticketLabel.font = kExtraSmallFont;
         _ticketLabel.textAlignment = NSTextAlignmentRight;
         if ([self hasBoughtTicket]) {
             _ticketLabel.text = @"已买票";
         } else {
-            _ticketLabel.text = [NSString stringWithFormat:@"%ld", (unsigned long)self.liveShow.ticketInfos.count];
+            NSMutableAttributedString *attribute = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"剩余车票%ld", (unsigned long)self.liveShow.ticketInfos.count]];
+            NSString *countStr = [NSString stringWithFormat:@"%zd",self.liveShow.ticketInfos.count];
+            [attribute setAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithHexString:@"#5AC8FA"],NSFontAttributeName : [UIFont systemFontOfSize:20]} range:NSMakeRange(attribute.length-countStr.length, countStr.length)];
+            _ticketLabel.attributedText = attribute;
         }
         
         [_headerImageView addSubview:_ticketLabel];
@@ -143,7 +146,7 @@
     [self.closeButton setImage:[UIImage imageNamed:@"yellow_close"] forState:UIControlStateNormal];
     [self.closeButton mas_remakeConstraints:^(MASConstraintMaker *make) {
         if (_headerImageView) {
-            make.centerY.equalTo(_headerImageView);
+            make.centerY.equalTo(_headerImageView).offset(-20);
         } else {
             make.top.equalTo(self.view);
         }
@@ -222,7 +225,11 @@
     _remainingTickets = remainingTickets;
     
     if (![self hasBoughtTicket]) {
-        _ticketLabel.text = [NSString stringWithFormat:@"%ld", (unsigned long)remainingTickets];
+        NSMutableAttributedString *attribute = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"剩余车票%ld", (unsigned long)self.liveShow.ticketInfos.count]];
+        NSString *countStr = [NSString stringWithFormat:@"%zd",self.liveShow.ticketInfos.count];
+        [attribute setAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithHexString:@"#5AC8FA"],NSFontAttributeName : [UIFont systemFontOfSize:20]} range:NSMakeRange(attribute.length-countStr.length, countStr.length)];
+        _ticketLabel.attributedText = attribute;
+//        _ticketLabel.text = [NSString stringWithFormat:@"%ld", (unsigned long)remainingTickets];
     }
 }
 

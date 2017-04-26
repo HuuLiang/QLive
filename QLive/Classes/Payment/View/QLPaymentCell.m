@@ -22,6 +22,7 @@
     self = [super init];
     if (self) {
         _imageView = [[UIImageView alloc] init];
+        _imageView.contentMode = UIViewContentModeCenter;
         [self addSubview:_imageView];
         {
             [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -35,17 +36,18 @@
         _actionButton = [[UIButton alloc] init];
         _actionButton.titleLabel.font = kMediumFont;
         _actionButton.forceRoundCorner = YES;
-        _actionButton.layer.borderColor = [UIColor redColor].CGColor;
-        _actionButton.layer.borderWidth = 0.5;
-        [_actionButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        //        _actionButton.layer.borderColor = [UIColor colorWithHexString:@"#5AC8FA"].CGColor;
+        //        _actionButton.layer.borderWidth = 0.5;
+        
+        [_actionButton setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
         [_actionButton addTarget:self action:@selector(doAction) forControlEvents:UIControlEventTouchUpInside];
-        [_actionButton setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+        [_actionButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"#5AC8FA"]] forState:UIControlStateNormal];
         [self addSubview:_actionButton];
         {
             [_actionButton mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerY.equalTo(self);
                 make.right.equalTo(self).offset(-15);
-                make.size.mas_equalTo(CGSizeMake(80, 35));
+                make.size.mas_equalTo(CGSizeMake(60, 28));
             }];
         }
         

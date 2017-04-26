@@ -102,7 +102,7 @@
     const CGFloat avatarHeight = fullHeight * 0.4;
     const CGFloat avatarWidth = avatarHeight;
     const CGFloat avatarX = 40;
-    const CGFloat avatarY = fullHeight/2 - avatarHeight;
+    const CGFloat avatarY = 15;//fullHeight/2 - avatarHeight;
     _avatarImageView.frame = CGRectMake(avatarX, avatarY, avatarWidth, avatarHeight);
     
     const CGFloat nameHeight = _nameLabel.font.pointSize;
@@ -150,10 +150,10 @@
     const CGFloat statusHeight = 30;
     const CGFloat statusWidth = MIN(140, kScreenWidth *0.37);//statusHeight * 3;
     const CGFloat statusX = self.center.x - statusWidth/2;//fullWidth - 10 - statusWidth;
-    const CGFloat statusY = fullHeight - statusHeight -20;
+    const CGFloat statusY = fullHeight - statusHeight -15;
     _statusImageView.frame = CGRectMake(statusX, statusY, statusWidth, statusHeight);
 //
-    _separator.frame = CGRectMake(0, fullHeight-10, fullWidth, 10);
+    _separator.frame = CGRectMake(0, fullHeight, fullWidth, 10);
 }
 
 - (void)setAvatarURL:(NSURL *)avatarURL {

@@ -77,7 +77,8 @@
         [self addSubview:_audienceButton];
         {
             [_audienceButton mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.right.bottom.equalTo(self).offset(-10);
+                make.left.bottom.mas_equalTo(self);
+//                make.size.mas_equalTo();
             }];
         }
     }
@@ -107,6 +108,15 @@
 
 - (void)setNumberOfAudience:(NSUInteger)numberOfAudience {
     _numberOfAudience = numberOfAudience;
-    [_audienceButton setTitle:[NSString stringWithFormat:@"%ld", (unsigned long)numberOfAudience] forState:UIControlStateNormal];
+    [_audienceButton setTitle:[NSString stringWithFormat:@"%ld人在看", (unsigned long)numberOfAudience] forState:UIControlStateNormal];
 }
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    if (_audienceButton) {  
+        CGRect audienceRect = _audienceButton.frame;
+        _audienceButton.frame = CGRectMake(audienceRect.origin.x, audienceRect.origin.y, audienceRect.size.width + 8, audienceRect.size.height);
+    }
+}
+
 @end

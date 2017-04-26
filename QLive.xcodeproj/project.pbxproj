@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B319F3421EB042C70088D295 /* QLNewPaymentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B319F3411EB042C70088D295 /* QLNewPaymentCell.m */; };
 		B36918F91EAE0284002B6E0C /* QLLiveShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = B36918F81EAE0284002B6E0C /* QLLiveShowView.m */; };
 		BC0DE09F1E82645B00A20878 /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC0DE09E1E82645B00A20878 /* UMMobClick.framework */; };
 		BC0DE0A21E8265D400A20878 /* QLActivateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0DE0A11E8265D400A20878 /* QLActivateModel.m */; };
@@ -130,6 +131,8 @@
 /* Begin PBXFileReference section */
 		133CE10DE0F35612365215E2 /* Pods-QLive.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QLive.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QLive/Pods-QLive.debug.xcconfig"; sourceTree = "<group>"; };
 		21495D034E645AFD3EF990D0 /* Pods-QLive.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QLive.release.xcconfig"; path = "Pods/Target Support Files/Pods-QLive/Pods-QLive.release.xcconfig"; sourceTree = "<group>"; };
+		B319F3401EB042C70088D295 /* QLNewPaymentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLNewPaymentCell.h; sourceTree = "<group>"; };
+		B319F3411EB042C70088D295 /* QLNewPaymentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLNewPaymentCell.m; sourceTree = "<group>"; };
 		B36918F71EAE0284002B6E0C /* QLLiveShowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QLLiveShowView.h; sourceTree = "<group>"; };
 		B36918F81EAE0284002B6E0C /* QLLiveShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QLLiveShowView.m; sourceTree = "<group>"; };
 		B8B4F47795532AAB80A8C69A /* libPods-QLive.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QLive.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -933,6 +936,8 @@
 				BC2533B71E77D270005EA643 /* QLPaymentUIElement.m */,
 				BC2533B31E77D1A2005EA643 /* QLPaymentCell.h */,
 				BC2533B41E77D1A2005EA643 /* QLPaymentCell.m */,
+				B319F3401EB042C70088D295 /* QLNewPaymentCell.h */,
+				B319F3411EB042C70088D295 /* QLNewPaymentCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1134,6 +1139,7 @@
 				BC267B521E7BD92D00DAC8D2 /* TZProgressView.m in Sources */,
 				BC3961641E6EE5B400256FFF /* QLUtil.m in Sources */,
 				BC185EE61E707C41001CBF70 /* QLFollowingPlaceholderCell.m in Sources */,
+				B319F3421EB042C70088D295 /* QLNewPaymentCell.m in Sources */,
 				BC2717AF1E64388F0065E8F5 /* QLAppDelegate.m in Sources */,
 				BC267B471E7BD92D00DAC8D2 /* NSBundle+TZImagePicker.m in Sources */,
 				BC2717D41E643F7E0065E8F5 /* QLLiveViewController.m in Sources */,

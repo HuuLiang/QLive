@@ -22,8 +22,9 @@
     self.navigationBar.translucent = NO;
 //    self.navigationBar.barTintColor = [QLTheme defaultTheme].themeColor;
 //    self.navigationBar.tintColor = [UIColor whiteColor];
-//    [self.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
-//    self.navigationBar.shadowImage = [[UIImage alloc] init];
+    [self.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
+    self.navigationBar.shadowImage = [UIImage imageNamed:@"navbar_line"];//[[UIImage alloc] init];
+//    self.navigationBar.layer.borderColor = [UIColor colorWithHexString:@"#e6e6e6"].CGColor;
     self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"],
                                                NSFontAttributeName:[UIFont boldSystemFontOfSize:20]};
     self.delegate = self;

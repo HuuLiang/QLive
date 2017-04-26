@@ -28,21 +28,21 @@ QBSynthesizeSingletonMethod(sharedManager)
     
     QBPaymentConfigDetail *configDetails = [[QBPaymentConfigDetail alloc] init];
     //爱贝默认配置
-//    QBIAppPayConfig * iAppPayConfig = [[QBIAppPayConfig alloc] init];
-//    iAppPayConfig.appid = @"3006339410";
-//    iAppPayConfig.privateKey = @"MIICWwIBAAKBgQCHEQCLCZujWicF6ClEgHx4L/OdSHZ1LdKi/mzPOIa4IRfMOS09qDNV3+uK/zEEPu1DgO5Cl1lsm4xpwIiOqdXNRxLE9PUfgRy4syiiqRfofAO7w4VLSG4S0VU5F+jqQzKM7Zgp3blbc5BJ5PtKXf6zP3aCAYjz13HHH34angjg0wIDAQABAoGASOJm3aBoqSSL7EcUhc+j2yNdHaGtspvwj14mD0hcgl3xPpYYEK6ETTHRJCeDJtxiIkwfxjVv3witI5/u0LVbFmd4b+2jZQ848BHGFtZFOOPJFVCylTy5j5O79mEx0nJN0EJ/qadwezXr4UZLDIaJdWxhhvS+yDe0e0foz5AxWmkCQQDhd9U1uUasiMmH4WvHqMfq5l4y4U+V5SGb+IK+8Vi03Zfw1YDvKrgv1Xm1mdzYHFLkC47dhTm7/Ko8k5Kncf89AkEAmVtEtycnSYciSqDVXxWtH1tzsDeIMz/ZlDGXCAdUfRR2ZJ2u2jrLFunoS9dXhSGuERU7laasK0bDT4p0UwlhTwJAVF+wtPsRnI1PxX6xA7WAosH0rFuumax2SFTWMLhGduCZ9HEhX97/sD7V3gSnJWRsDJTasMEjWtrxpdufvPOnDQJAdsYPVGMItJPq5S3n0/rv2Kd11HdOD5NWKsa1mMxEjZN5lrfhoreCb7694W9pI31QWX6+ZUtvcR0fS82KBn3vVQJAa0fESiiDDrovKHBm/aYXjMV5anpbuAa5RJwCqnbjCWleZMwHV+8uUq9+YMnINZQnvi+C62It4BD+KrJn5q4pwg==";
-//    iAppPayConfig.publicKey = @"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCbNQyxdpLeMwE0QMv/dB3Jn1SRqYE/u3QT3ig2uXu4yeaZo4f7qJomudLKKOgpa8+4a2JAPRBSueDpiytR0zN5hRZKImeZAu2foSYkpBqnjb5CRAH7roO7+ervoizg6bhAEx2zlltV9wZKQZ0Di5wCCV+bMSEXkYqfASRplYUvHwIDAQAB";
-//    iAppPayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyIpay.json";
-//    iAppPayConfig.waresid = @(1);
-//    configDetails.iAppPayConfig = iAppPayConfig;
+    //    QBIAppPayConfig * iAppPayConfig = [[QBIAppPayConfig alloc] init];
+    //    iAppPayConfig.appid = @"3006339410";
+    //    iAppPayConfig.privateKey = @"MIICWwIBAAKBgQCHEQCLCZujWicF6ClEgHx4L/OdSHZ1LdKi/mzPOIa4IRfMOS09qDNV3+uK/zEEPu1DgO5Cl1lsm4xpwIiOqdXNRxLE9PUfgRy4syiiqRfofAO7w4VLSG4S0VU5F+jqQzKM7Zgp3blbc5BJ5PtKXf6zP3aCAYjz13HHH34angjg0wIDAQABAoGASOJm3aBoqSSL7EcUhc+j2yNdHaGtspvwj14mD0hcgl3xPpYYEK6ETTHRJCeDJtxiIkwfxjVv3witI5/u0LVbFmd4b+2jZQ848BHGFtZFOOPJFVCylTy5j5O79mEx0nJN0EJ/qadwezXr4UZLDIaJdWxhhvS+yDe0e0foz5AxWmkCQQDhd9U1uUasiMmH4WvHqMfq5l4y4U+V5SGb+IK+8Vi03Zfw1YDvKrgv1Xm1mdzYHFLkC47dhTm7/Ko8k5Kncf89AkEAmVtEtycnSYciSqDVXxWtH1tzsDeIMz/ZlDGXCAdUfRR2ZJ2u2jrLFunoS9dXhSGuERU7laasK0bDT4p0UwlhTwJAVF+wtPsRnI1PxX6xA7WAosH0rFuumax2SFTWMLhGduCZ9HEhX97/sD7V3gSnJWRsDJTasMEjWtrxpdufvPOnDQJAdsYPVGMItJPq5S3n0/rv2Kd11HdOD5NWKsa1mMxEjZN5lrfhoreCb7694W9pI31QWX6+ZUtvcR0fS82KBn3vVQJAa0fESiiDDrovKHBm/aYXjMV5anpbuAa5RJwCqnbjCWleZMwHV+8uUq9+YMnINZQnvi+C62It4BD+KrJn5q4pwg==";
+    //    iAppPayConfig.publicKey = @"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCbNQyxdpLeMwE0QMv/dB3Jn1SRqYE/u3QT3ig2uXu4yeaZo4f7qJomudLKKOgpa8+4a2JAPRBSueDpiytR0zN5hRZKImeZAu2foSYkpBqnjb5CRAH7roO7+ervoizg6bhAEx2zlltV9wZKQZ0Di5wCCV+bMSEXkYqfASRplYUvHwIDAQAB";
+    //    iAppPayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyIpay.json";
+    //    iAppPayConfig.waresid = @(1);
+    //    configDetails.iAppPayConfig = iAppPayConfig;
     
-//    //盾行天下
-//    QBDXTXPayConfig *dxtxPayConfig = [[QBDXTXPayConfig alloc] init];
-//    dxtxPayConfig.appKey = @"90F8AE207145CE2E5747B15DBAF075ABE69F356FE3C9700D";
-//    dxtxPayConfig.appid = @"8";
-//    dxtxPayConfig.waresid = @8;
-//    dxtxPayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyDxtxios.json";
-//    configDetails.dxtxPayConfig = dxtxPayConfig;
+    //    //盾行天下
+    //    QBDXTXPayConfig *dxtxPayConfig = [[QBDXTXPayConfig alloc] init];
+    //    dxtxPayConfig.appKey = @"90F8AE207145CE2E5747B15DBAF075ABE69F356FE3C9700D";
+    //    dxtxPayConfig.appid = @"8";
+    //    dxtxPayConfig.waresid = @8;
+    //    dxtxPayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyDxtxios.json";
+    //    configDetails.dxtxPayConfig = dxtxPayConfig;
     
     //雷胜
     QBLSPayConfig *lsPayConfig = [[QBLSPayConfig alloc] init];
@@ -50,7 +50,7 @@ QBSynthesizeSingletonMethod(sharedManager)
     lsPayConfig.mchId = @"1031";
     lsPayConfig.notifyUrl = @"http://phas.ayyygs.com/pd-has/notifyLsPay.json";
     configDetails.lsPayConfig = lsPayConfig;
-  
+    
     QBYiPayConfig *yiPayConfig = [[QBYiPayConfig alloc] init];
     yiPayConfig.appId = @"1065";
     yiPayConfig.key = @"ZLZTS9tpMk03gCPFMlf7WU2j";
@@ -96,13 +96,13 @@ QBSynthesizeSingletonMethod(sharedManager)
         element.imageURL = [NSURL URLWithString:anchor.logoUrl];
         element.imageIsRound = YES;
         element.actionName = @"私播";
-        element.height = 120;
+        element.height = 140;
         
         NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] init];
-        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:@"来与我交给朋友吧❤️\n主播QQ/微信号\n" attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"]}]];
-        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"心动价 ¥%@\n", QLIntegralPrice(payPoint.fee.floatValue/100)] attributes:@{NSForegroundColorAttributeName:[UIColor redColor]}]];
-        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:@"一对一交友私播\n" attributes:@{NSForegroundColorAttributeName:[UIColor greenColor]}]];
-        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"赠送%ld金币", (unsigned long)payPoint.goldCount.unsignedIntegerValue] attributes:@{NSForegroundColorAttributeName:[UIColor redColor]}]];
+        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:@"来与我交朋友吧|" attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#D42929"],NSFontAttributeName : kSmallFont}]];
+        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"主播QQ/微信号 心动价 "] attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"],NSFontAttributeName : kSmallFont}]];
+        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥%@\n", QLIntegralPrice(payPoint.fee.floatValue/100)] attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#D42929"],NSFontAttributeName : kMediumFont}]];
+        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"一对一交友"] attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"],NSFontAttributeName : kSmallFont}]];
         element.attributedText = attrString;
         
         element.action = ^(id obj) {
@@ -111,7 +111,7 @@ QBSynthesizeSingletonMethod(sharedManager)
                                                                        completed:^(BOOL success)
              {
                  if (success) {
-//                     [self readPrivateInfos];
+                     //                     [self readPrivateInfos];
                      QBSafelyCallBlock(completion, YES, payPoint);
                      [obj hideAnimated:NO];
                  } else {
@@ -119,7 +119,7 @@ QBSynthesizeSingletonMethod(sharedManager)
                  }
              }];
         };
-        [QLPaymentViewController showPaymentInViewController:viewController bannerImage:image UIElements:@[element]];
+        [QLPaymentViewController showPaymentInViewController:viewController bannerImage:image UIElements:@[element] isNewCell:YES];
     } else if (contentType == QLPaymentContentTypeLightThisCast || contentType == QLPaymentContentTypeLightMonthlyCast) {
         QLAnchor *anchor = userInfo[kQLPaymentLiveCastAnchorUserInfo];
         
@@ -132,14 +132,17 @@ QBSynthesizeSingletonMethod(sharedManager)
         }];
         
         QLPaymentUIElement *element = [[QLPaymentUIElement alloc] init];
-        element.image = [UIImage imageNamed:@"light_this_cast_payment_logo"];
+        element.image = [UIImage imageNamed:@"pay_lighten_single_icon"];
         element.actionName = @"点亮";
         element.height = 70;
         element.imageContentMode = UIViewContentModeScaleAspectFit;
         
         NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] init];
-        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:@"本场点亮 " attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"]}]];
-        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"活动价 ¥%@\n赠送%ld金币", QLIntegralPrice(payPoint.fee.floatValue/100),(unsigned long)payPoint.goldCount.unsignedIntegerValue] attributes:@{NSForegroundColorAttributeName:[UIColor redColor]}]];
+        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:@"本场点亮 活动价" attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"]}]];
+        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" ¥%@\n", QLIntegralPrice(payPoint.fee.floatValue/100)] attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#D42929"]}]];
+        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"赠送%ld金币", (unsigned long)payPoint.goldCount.unsignedIntegerValue] attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"],NSFontAttributeName :  [UIFont systemFontOfSize:12]}]];
+        NSString *string = [NSString stringWithFormat:@"%ld金币",(unsigned long)payPoint.goldCount.unsignedIntegerValue];
+        [attrString setAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#D42929"]} range:NSMakeRange(attrString.length-string.length, string.length-2)];
         element.attributedText = attrString;
         element.action = ^(id obj) {
             [[QLPaymentManager sharedManager] showPaymentActionSheetWithPayPoint:payPoint
@@ -161,15 +164,19 @@ QBSynthesizeSingletonMethod(sharedManager)
         }];
         
         element = [[QLPaymentUIElement alloc] init];
-        element.image = [UIImage imageNamed:@"light_monthly_cast_payment_logo"];
+        element.image = [UIImage imageNamed:@"pay_lighten_month_icon"];
         element.actionName = @"点亮";
         element.height = 70;
         element.imageContentMode = UIViewContentModeScaleAspectFit;
         
         attrString = [[NSMutableAttributedString alloc] init];
-        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:@"本场点亮 " attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"]}]];
-        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"活动价 ¥%@\n赠送%ld金币", QLIntegralPrice(payPoint.fee.floatValue/100),(unsigned long)payPoint.goldCount.unsignedIntegerValue] attributes:@{NSForegroundColorAttributeName:[UIColor redColor]}]];
-        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n包月观看秀场" attributes:@{NSForegroundColorAttributeName:[UIColor greenColor]}]];
+        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:@"包月点亮 活动价" attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"]}]];
+        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" ¥%@\n", QLIntegralPrice(payPoint.fee.floatValue/100)] attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#D42929"]}]];
+        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:@"(包月观看秀场)" attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#5AC8FA"],NSFontAttributeName :  [UIFont systemFontOfSize:12]}]];
+        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"赠送%ld金币", (unsigned long)payPoint.goldCount.unsignedIntegerValue] attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"],NSFontAttributeName :  [UIFont systemFontOfSize:12]}]];
+        string = [NSString stringWithFormat:@"%ld金币",(unsigned long)payPoint.goldCount.unsignedIntegerValue];
+        [attrString setAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#D42929"]} range:NSMakeRange(attrString.length-string.length, string.length-2)];
+        
         element.attributedText = attrString;
         element.action = ^(id obj) {
             [[QLPaymentManager sharedManager] showPaymentActionSheetWithPayPoint:payPoint
@@ -185,7 +192,7 @@ QBSynthesizeSingletonMethod(sharedManager)
         };
         [elements addObject:element];
         
-        [QLPaymentViewController showPaymentInViewController:viewController bannerImage:image UIElements:elements];
+        [QLPaymentViewController showPaymentInViewController:viewController bannerImage:image UIElements:elements isNewCell:NO];
     } else if (contentType == QLPaymentContentTypePrivateShow) {
         QLLiveShow *liveShow = userInfo[kQLPaymentLiveShowUserInfo];
         
@@ -200,13 +207,15 @@ QBSynthesizeSingletonMethod(sharedManager)
         element.imageIsRound = YES;
         element.imageContentMode = UIViewContentModeScaleAspectFill;
         element.actionName = @"私秀";
-        element.height = 100;
+        element.height = 140;
         
         NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] init];
-        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:@"喜欢我，就来加我吧❤️\n主播QQ/微信号 " attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"]}]];
-        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"心动价 ¥%@\n", QLIntegralPrice(payPoint.fee.floatValue/100)] attributes:@{NSForegroundColorAttributeName:[UIColor redColor]}]];
-        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:@"一对一激情私秀 " attributes:@{NSForegroundColorAttributeName:[UIColor greenColor]}]];
-        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"赠送%ld金币", (unsigned long)payPoint.goldCount.unsignedIntegerValue] attributes:@{NSForegroundColorAttributeName:[UIColor redColor]}]];
+        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:@"喜欢我就来加我吧|" attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#D42929"],NSFontAttributeName : kSmallFont}]];
+        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"主播QQ/微信号 心动价 "] attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"],NSFontAttributeName : kSmallFont}]];
+        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥%@\n", QLIntegralPrice(payPoint.fee.floatValue/100)] attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#D42929"],NSFontAttributeName : kMediumFont}]];
+        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"一对一激情私秀 赠送%ld金币",(unsigned long)payPoint.goldCount.unsignedIntegerValue] attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"],NSFontAttributeName : kSmallFont}]];
+        NSString *priceStr = [NSString stringWithFormat:@"%ld",(unsigned long)payPoint.goldCount.unsignedIntegerValue];
+        [attrString setAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithHexString:@"#D42929"],NSFontAttributeName : kSmallFont} range:NSMakeRange(attrString.length-priceStr.length -2, priceStr.length)];
         element.attributedText = attrString;
         
         element.action = ^(id obj) {
@@ -221,9 +230,9 @@ QBSynthesizeSingletonMethod(sharedManager)
                  QBSafelyCallBlock(completion, success, payPoint);
              }];
         };
-        [QLPaymentViewController showPaymentInViewController:viewController bannerImage:image UIElements:@[element]];
+        [QLPaymentViewController showPaymentInViewController:viewController bannerImage:image UIElements:@[element] isNewCell:YES];
     } else if (contentType == QLPaymentContentTypeJumpQueue) {
-
+        
         QLLiveShow *liveShow = userInfo[kQLPaymentLiveShowUserInfo];
         
         UIImage *image = [UIImage imageWithContentsOfFile:[[QLResourceDownloader sharedDownloader] pathForResource:@"live_show_jump_queue_banner" ofType:@"jpg"]];
@@ -237,12 +246,15 @@ QBSynthesizeSingletonMethod(sharedManager)
         element.imageIsRound = YES;
         element.imageContentMode = UIViewContentModeScaleAspectFill;
         element.actionName = @"插队";
-        element.height = 100;
-        
+        element.height = 140;
+        //                kBigFont
         NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] init];
-        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:@"该房间正在秘播中\n" attributes:@{NSForegroundColorAttributeName:[UIColor greenColor]}]];
-        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:@"插队上车观看 " attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"]}]];
-        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"活动价¥%@\n赠送%ld金币", QLIntegralPrice(payPoint.fee.floatValue/100),(unsigned long)payPoint.goldCount.unsignedIntegerValue] attributes:@{NSForegroundColorAttributeName:[UIColor redColor]}]];
+        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:@"该房间正在秘播|" attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#D42929"],NSFontAttributeName : kSmallFont}]];
+        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"主播QQ/微信号 心动价 "] attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"],NSFontAttributeName : kSmallFont}]];
+        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥%@\n", QLIntegralPrice(payPoint.fee.floatValue/100)] attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#D42929"],NSFontAttributeName : kMediumFont}]];
+        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"赠送%ld金币",(unsigned long)payPoint.goldCount.unsignedIntegerValue] attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"],NSFontAttributeName : kSmallFont}]];
+        NSString *priceStr = [NSString stringWithFormat:@"%ld",(unsigned long)payPoint.goldCount.unsignedIntegerValue];
+        [attrString setAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithHexString:@"#D42929"],NSFontAttributeName : kSmallFont} range:NSMakeRange(attrString.length-priceStr.length -2, priceStr.length)];
         element.attributedText = attrString;
         
         element.action = ^(id obj) {
@@ -257,7 +269,7 @@ QBSynthesizeSingletonMethod(sharedManager)
                  QBSafelyCallBlock(completion, success, payPoint);
              }];
         };
-        [QLPaymentViewController showPaymentInViewController:viewController bannerImage:image UIElements:@[element]];
+        [QLPaymentViewController showPaymentInViewController:viewController bannerImage:image UIElements:@[element] isNewCell:YES];
     } else if (contentType == QLPaymentContentTypeBookThisTicket || contentType == QLPaymentContentTypeBookMonthlyTicket) {
         QLLiveShow *liveShow = userInfo[kQLPaymentLiveShowUserInfo];
         
@@ -270,17 +282,21 @@ QBSynthesizeSingletonMethod(sharedManager)
         }];
         
         QLPaymentUIElement *element = [[QLPaymentUIElement alloc] init];
-        element.image = [UIImage imageNamed:@"light_this_cast_payment_logo"];
+        element.image = [UIImage imageNamed:@"pay_aboard_single_icon"];
         element.imageIsRound = NO;
         element.imageContentMode = UIViewContentModeScaleAspectFit;
         element.actionName = @"上车";
         element.height = 80;
         
         NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] init];
-        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:@"本场观看 " attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"]}]];
-        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"活动价 ¥%@\n赠送%ld金币", QLIntegralPrice(payPoint.fee.floatValue/100),(unsigned long)payPoint.goldCount.unsignedIntegerValue] attributes:@{NSForegroundColorAttributeName:[UIColor redColor]}]];
+        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:@"本场观看 活动价" attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"]}]];
+        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" ¥%@\n", QLIntegralPrice(payPoint.fee.floatValue/100)] attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#D42929"]}]];
+        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"赠送%ld金币", (unsigned long)payPoint.goldCount.unsignedIntegerValue] attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"],NSFontAttributeName :  [UIFont systemFontOfSize:12]}]];
+        NSString *string = [NSString stringWithFormat:@"%ld金币",(unsigned long)payPoint.goldCount.unsignedIntegerValue];
+        [attrString setAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#D42929"]} range:NSMakeRange(attrString.length-string.length, string.length-2)];
+        
         element.attributedText = attrString;
-
+        
         element.action = ^(id obj) {
             [[QLPaymentManager sharedManager] showPaymentActionSheetWithPayPoint:payPoint
                                                                        contentId:@(liveShow.liveId.integerValue)
@@ -300,18 +316,19 @@ QBSynthesizeSingletonMethod(sharedManager)
         }];
         
         element = [[QLPaymentUIElement alloc] init];
-        element.image = [UIImage imageNamed:@"vip_icon"];
+        element.image = [UIImage imageNamed:@"pay_ aboard_month_icon"];
         element.imageIsRound = NO;
         element.imageContentMode = UIViewContentModeScaleAspectFit;
         element.actionName = @"上车";
         element.height = 80;
         
         attrString = [[NSMutableAttributedString alloc] init];
-        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:@"包月观看 " attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"]}]];
-        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"活动价 ¥%@\n", QLIntegralPrice(payPoint.fee.floatValue/100)] attributes:@{NSForegroundColorAttributeName:[UIColor redColor]}]];
-        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:@"(30天不限场)" attributes:@{NSForegroundColorAttributeName:[UIColor greenColor]}]];
-        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"赠送%ld金币", (unsigned long)payPoint.goldCount.unsignedIntegerValue] attributes:@{NSForegroundColorAttributeName:[UIColor redColor]}]];
-        
+        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:@"包月观看 活动价" attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"]}]];
+        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" ¥%@\n", QLIntegralPrice(payPoint.fee.floatValue/100)] attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#D42929"]}]];
+        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:@"(30天不限场)" attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#5AC8FA"],NSFontAttributeName :  [UIFont systemFontOfSize:12]}]];
+        [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"赠送%ld金币", (unsigned long)payPoint.goldCount.unsignedIntegerValue] attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"],NSFontAttributeName :  [UIFont systemFontOfSize:12]}]];
+        string = [NSString stringWithFormat:@"%ld金币",(unsigned long)payPoint.goldCount.unsignedIntegerValue];
+        [attrString setAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#D42929"]} range:NSMakeRange(attrString.length-string.length, string.length-2)];
         element.attributedText = attrString;
         
         element.action = ^(id obj) {
@@ -328,7 +345,7 @@ QBSynthesizeSingletonMethod(sharedManager)
         };
         [elements addObject:element];
         
-        [QLPaymentViewController showPaymentInViewController:viewController bannerImage:image UIElements:elements];
+        [QLPaymentViewController showPaymentInViewController:viewController bannerImage:image UIElements:elements isNewCell:NO];
     }
 }
 
@@ -486,15 +503,15 @@ QBSynthesizeSingletonMethod(sharedManager)
             const NSUInteger contentId = successfulPaymentInfo.contentId.unsignedIntegerValue;
             const QLPaymentContentType contentType = successfulPaymentInfo.contentType.unsignedIntegerValue;
             
-//            QLPaymentContentTypeVIP,
-//            QLPaymentContentTypeCharge,
-//            QLPaymentContentTypePrivateCast, //私播
-//            QLPaymentContentTypeLightThisCast, //本场点亮
-//            QLPaymentContentTypeLightMonthlyCast, //包月点亮
-//            QLPaymentContentTypePrivateShow, //私秀
-//            QLPaymentContentTypeJumpQueue, //插队
-//            QLPaymentContentTypeBookThisTicket, //本场观看，上车
-//            QLPaymentContentTypeBookMonthlyTicket //包月观看，上车
+            //            QLPaymentContentTypeVIP,
+            //            QLPaymentContentTypeCharge,
+            //            QLPaymentContentTypePrivateCast, //私播
+            //            QLPaymentContentTypeLightThisCast, //本场点亮
+            //            QLPaymentContentTypeLightMonthlyCast, //包月点亮
+            //            QLPaymentContentTypePrivateShow, //私秀
+            //            QLPaymentContentTypeJumpQueue, //插队
+            //            QLPaymentContentTypeBookThisTicket, //本场观看，上车
+            //            QLPaymentContentTypeBookMonthlyTicket //包月观看，上车
             
             if (contentType == QLPaymentContentTypeVIP) {
                 [QLUser currentUser].isVIP = @1;
