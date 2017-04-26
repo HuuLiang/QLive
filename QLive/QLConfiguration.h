@@ -22,7 +22,7 @@ static NSString *const kQLPaymentURLScheme = @"comhoneylive35paymenturlscheme";
 static NSString *const kPackageCertificate = @"iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd.";
 
 static NSString *const kQLAvatarImage = @"qlive_avatar.jpg";
-static NSString *const kQLResourceZipFile = @"http://oiiw1v71t.bkt.clouddn.com/live/zy/Resources.zip";
+static NSString *const kQLResourceZipFile = @"http://liveimg.tool166.com/live/zy/liveresources.zip";//@"http://oiiw1v71t.bkt.clouddn.com/live/zy/Resources.zip";
 
 static NSString *const kQLActivationBaseURL = @"http://ivc.pvafibre.cn";
 static NSString *const kQLCustomerContactQQ = @"3230905479";

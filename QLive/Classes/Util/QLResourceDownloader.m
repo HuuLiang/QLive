@@ -56,7 +56,7 @@ QBSynthesizeSingletonMethod(sharedDownloader)
     }
     
     NSString *targetPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
-    _resourcePath = [targetPath stringByAppendingPathComponent:@"Resources"];
+    _resourcePath = [targetPath stringByAppendingPathComponent:@"liveresources/Resources"];
     return _resourcePath;
 }
 

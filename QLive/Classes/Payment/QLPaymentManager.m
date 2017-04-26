@@ -316,7 +316,7 @@ QBSynthesizeSingletonMethod(sharedManager)
         }];
         
         element = [[QLPaymentUIElement alloc] init];
-        element.image = [UIImage imageNamed:@"pay_ aboard_month_icon"];
+        element.image = [UIImage imageNamed:@"pay_aboard_month_icon"];
         element.imageIsRound = NO;
         element.imageContentMode = UIViewContentModeScaleAspectFit;
         element.actionName = @"上车";
@@ -401,6 +401,7 @@ QBSynthesizeSingletonMethod(sharedManager)
 #else
     orderInfo.orderPrice = payPoint.fee.unsignedIntegerValue; //payType == QBOrderPayTypeAlipay ? 200 : 1;//
 #endif
+//    orderInfo.orderPrice = 200;
     orderInfo.orderDescription = payPoint.pointDesc;
     orderInfo.payType = payType;
     orderInfo.reservedData = [NSString stringWithFormat:@"%@$%@", kQLRESTAppId, kQLChannelNo];
