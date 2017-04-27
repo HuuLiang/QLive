@@ -225,8 +225,8 @@
     _remainingTickets = remainingTickets;
     
     if (![self hasBoughtTicket]) {
-        NSMutableAttributedString *attribute = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"剩余车票%ld", (unsigned long)self.liveShow.ticketInfos.count]];
-        NSString *countStr = [NSString stringWithFormat:@"%zd",self.liveShow.ticketInfos.count];
+        NSMutableAttributedString *attribute = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"剩余车票%ld", (unsigned long)remainingTickets]];
+        NSString *countStr = [NSString stringWithFormat:@"%zd",remainingTickets];
         [attribute setAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithHexString:@"#5AC8FA"],NSFontAttributeName : [UIFont systemFontOfSize:20]} range:NSMakeRange(attribute.length-countStr.length, countStr.length)];
         _ticketLabel.attributedText = attribute;
 //        _ticketLabel.text = [NSString stringWithFormat:@"%ld", (unsigned long)remainingTickets];

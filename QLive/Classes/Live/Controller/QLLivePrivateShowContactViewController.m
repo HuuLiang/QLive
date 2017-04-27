@@ -24,8 +24,8 @@
 
 + (instancetype)showContactInViewController:(UIViewController *)viewController withAnchor:(QLAnchor *)anchor {
     QLLivePrivateShowContactViewController *contactVC = [[self alloc] init];
-    contactVC.anchor = anchor;
     [contactVC showInViewController:viewController];
+    contactVC.anchor = anchor;
     return contactVC;
 }
 
@@ -114,14 +114,32 @@
 - (void)setAnchor:(QLAnchor *)anchor {
     _anchor = anchor;
     
-    [_qqButton setTitle:anchor.qqNum forState:UIControlStateNormal];
-    [_wechatButton setTitle:anchor.weixinNum forState:UIControlStateNormal];
+    if (anchor.qqNum.length > 0) {
+        [_qqButton setTitle:anchor.qqNum forState:UIControlStateNormal];
+    }else {
+        [_qqButton setHidden:YES];
+    }
+    if (anchor.weixinNum.length > 0) {
+        [_wechatButton setTitle:anchor.weixinNum forState:UIControlStateNormal];
+    }else {
+        _wechatButton.hidden = YES;
+    }
 }
 
 - (void)setLiveShow:(QLLiveShow *)liveShow {
     _liveShow = liveShow;
-    [_qqButton setTitle:liveShow.qqNum forState:UIControlStateNormal];
-    [_wechatButton setTitle:liveShow.weixinNum forState:UIControlStateNormal];
+//    [_qqButton setTitle:liveShow.qqNum forState:UIControlStateNormal];
+//    [_wechatButton setTitle:liveShow.weixinNum forState:UIControlStateNormal];
+    if (liveShow.qqNum.length > 0) {
+        [_qqButton setTitle:liveShow.qqNum forState:UIControlStateNormal];
+    }else {
+        _qqButton.hidden = YES;
+    }
+    if (liveShow.weixinNum.length > 0) {
+        [_wechatButton setTitle:liveShow.weixinNum forState:UIControlStateNormal];
+    }else {
+        _wechatButton.hidden = YES;
+    }
 }
 
 - (void)onClose {
