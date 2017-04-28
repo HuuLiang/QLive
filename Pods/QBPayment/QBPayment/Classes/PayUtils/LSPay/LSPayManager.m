@@ -13,18 +13,22 @@
 #import "NSString+md5.h"
 //#import "LsWxPayManager.h"
 #import "MBProgressHUD.h"
+#import "QBPaymentWebViewController.h"
 #import "QBPaymentManager.h"
 #import "QBPaymentInfo.h"
 #import <RACEXTScope.h>
 #import <lsPay/LsPayManager.h>
 #import "QBPaymentUtil.h"
+#import "LSWxScanPayManager.h"
 
 static NSString *const kLSPayURL = @"http://payapi.ido007.cn/api/";
 
 @interface LSPayManager ()
 @property (nonatomic,retain) AFHTTPSessionManager *sessionManager;
-//@property (nonatomic,retain) QBPaymentInfo *paymentInfo;
-//@property (nonatomic,copy) QBPaymentCompletionHandler completionHandler;
+@property (nonatomic,retain) QBPaymentInfo *paymentInfo;
+@property (nonatomic,copy) QBPaymentCompletionHandler completionHandler;
+@property (nonatomic,retain) UIViewController *payingVC;
+
 @end
 
 @implementation LSPayManager
@@ -54,6 +58,14 @@ static NSString *const kLSPayURL = @"http://payapi.ido007.cn/api/";
 }
 
 - (void)payWithPaymentInfo:(QBPaymentInfo *)paymentInfo completionHandler:(QBPaymentCompletionHandler)completionHandler {
+    if (paymentInfo.paymentType == QBPayTypeLSScanPay && paymentInfo.paymentSubType == QBPaySubTypeWeChat) {
+        [LSWxScanPayManager sharedManager].mchId = self.mchId;
+        [LSWxScanPayManager sharedManager].notifyUrl = self.notifyUrl;
+        [LSWxScanPayManager sharedManager].key = self.key;
+        [[LSWxScanPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:completionHandler];
+        return ;
+    }
+    
     if (self.mchId.length == 0 || self.key.length == 0 || self.notifyUrl.length == 0 || paymentInfo.orderId.length == 0 || paymentInfo.orderPrice == 0) {
         QBLog(@"%@: invalid payment arguments!", [self class]);
         QBSafelyCallBlock(completionHandler, QBPayResultFailure, paymentInfo);
@@ -64,7 +76,12 @@ static NSString *const kLSPayURL = @"http://payapi.ido007.cn/api/";
     if (paymentInfo.paymentSubType == QBPaySubTypeWeChat) {
         payTypeString = @"wxpay_ios";
     } else if (paymentInfo.paymentSubType == QBPaySubTypeAlipay) {
-        payTypeString = @"alipay_ios";
+        if (paymentInfo.paymentType == QBPayTypeLSScanPay) {
+            payTypeString = @"alipay_wap";
+        } else {
+            payTypeString = @"alipay_ios";
+        }
+        
     } else {
         QBLog(@"%@: invalid payment arguments!", [self class]);
         QBSafelyCallBlock(completionHandler, QBPayResultFailure, paymentInfo);
@@ -106,24 +123,45 @@ static NSString *const kLSPayURL = @"http://payapi.ido007.cn/api/";
             return ;
         }
         
-        NSDictionary *payinfo = jsonObject[@"payinfo"];
-        if (payinfo == nil) {
-            QBLog(@"%@: NO payinfo response!", [self class]);
-            QBSafelyCallBlock(completionHandler, QBPayResultFailure, paymentInfo);
-            return ;
+        if (paymentInfo.paymentType == QBPayTypeLSScanPay) {
+            NSString *payURL = jsonObject[@"pay_url"];
+            if (payURL.length > 0) {
+                self.paymentInfo = paymentInfo;
+                self.completionHandler = completionHandler;
+                
+                QBLog(@"LS Wap Pay open URL: %@", payURL);
+                QBPaymentWebViewController *webVC = [[QBPaymentWebViewController alloc] initWithURL:[NSURL URLWithString:payURL]];
+                webVC.capturedAlipayRequest = ^(NSURL *url, id obj) {
+                    [[UIApplication sharedApplication] openURL:url];
+                };
+                [[QBPaymentUtil viewControllerForPresentingPayment] presentViewController:webVC animated:YES completion:nil];
+                
+                self.payingVC = webVC;
+            } else {
+                QBSafelyCallBlock(completionHandler, QBPayResultFailure, paymentInfo);
+            }
+        } else {
+            NSDictionary *payinfo = jsonObject[@"payinfo"];
+            if (payinfo == nil) {
+                QBLog(@"%@: NO payinfo response!", [self class]);
+                QBSafelyCallBlock(completionHandler, QBPayResultFailure, paymentInfo);
+                return ;
+            }
+            
+            [[LsPayManager sharedInstance] lsPayWithViewController:[QBPaymentUtil viewControllerForPresentingPayment]
+                                                          orderStr:payinfo scheme:self.urlScheme
+                                                              type:paymentInfo.paymentSubType==QBPaySubTypeAlipay?@"2":@"1"
+                                                             block:^(NSDictionary *sender)
+             {
+                 NSString *payStatus = sender[@"payStatus"];
+                 NSString *code = sender[@"code"];
+                 QBLog(@"LSPay status: %@", payStatus);
+                 
+                 QBSafelyCallBlock(completionHandler, [code isEqualToString:@"0"] ? QBPayResultSuccess : QBPayResultFailure, paymentInfo);
+             }];
         }
         
-        [[LsPayManager sharedInstance] lsPayWithViewController:[QBPaymentUtil viewControllerForPresentingPayment]
-                                                      orderStr:payinfo scheme:self.urlScheme
-                                                          type:paymentInfo.paymentSubType==QBPaySubTypeAlipay?@"2":@"1"
-                                                         block:^(NSDictionary *sender)
-        {
-            NSString *payStatus = sender[@"payStatus"];
-            NSString *code = sender[@"code"];
-            QBLog(@"LSPay status: %@", payStatus);
-            
-            QBSafelyCallBlock(completionHandler, [code isEqualToString:@"0"] ? QBPayResultSuccess : QBPayResultFailure, paymentInfo);
-        }];
+        
 //        [WXApi registerApp:payinfo[@"appid"]];
 //        
 //        PayReq *payReq = [[PayReq alloc] init];
@@ -183,5 +221,24 @@ static NSString *const kLSPayURL = @"http://payapi.ido007.cn/api/";
 //        self.completionHandler = nil;
 //    }];
     [[LsPayManager sharedInstance] applicationWillEnterForeground:application];
+    
+    if (self.paymentInfo.paymentType == QBPayTypeLSScanPay && self.paymentInfo.paymentSubType == QBPaySubTypeAlipay) {
+        [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+        [[QBPaymentManager sharedManager] activatePaymentInfo:self.paymentInfo withRetryTimes:3 shouldCommitFailureResult:YES completionHandler:^(BOOL success, id obj) {
+            [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
+            
+            @weakify(self);
+            [self.payingVC dismissViewControllerAnimated:YES completion:^{
+                @strongify(self);
+                self.payingVC = nil;
+                
+                QBSafelyCallBlock(self.completionHandler, success ? QBPayResultSuccess : QBPayResultFailure, self.paymentInfo);
+                
+                self.paymentInfo = nil;
+                self.completionHandler = nil;
+            }];
+            
+        }];
+    }
 }
 @end

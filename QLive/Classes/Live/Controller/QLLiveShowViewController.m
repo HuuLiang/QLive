@@ -29,7 +29,7 @@
 
 - (instancetype)initWithLiveShow:(QLLiveShow *)liveShow {
     
-//    NSString *urlString = [liveShow.anchorType isEqualToString:kQLLiveShowAnchorTypePrivate] ? liveShow.anchorUrl2 : liveShow.anchorUrl;
+    //    NSString *urlString = [liveShow.anchorType isEqualToString:kQLLiveShowAnchorTypePrivate] ? liveShow.anchorUrl2 : liveShow.anchorUrl;
     NSString *urlString = [liveShow.anchorType isEqualToString:kQLLiveShowAnchorTypeBigShow] ? liveShow.anchorUrl2 : liveShow.anchorUrl;
     self = [super initWithURL:[NSURL URLWithString:urlString]];
     if (self) {
@@ -173,10 +173,10 @@
                 
                 [viewControllers addObject:[[QLLiveShowViewController alloc] initWithLiveShow:self.liveShow]];
                 [self.navigationController setViewControllers:viewControllers animated:NO];
-//                [self.navigationController popViewControllerAnimated:YES];
-//                
-//                QLLiveShowViewController *liveShowVC = [[QLLiveShowViewController alloc] initWithLiveShow:self.liveShow];
-//                [self.navigationController pushViewController:liveShowVC animated:YES];
+                //                [self.navigationController popViewControllerAnimated:YES];
+                //
+                //                QLLiveShowViewController *liveShowVC = [[QLLiveShowViewController alloc] initWithLiveShow:self.liveShow];
+                //                [self.navigationController pushViewController:liveShowVC animated:YES];
                 
                 return NO;
             } else {
@@ -206,7 +206,7 @@
 
 //- (void)playAtSecond:(NSUInteger)second {
 //    [super playAtSecond:second];
-//    
+//
 //    [self updateRemainingTicketsWhenPlayingAtSecond:second];
 //}
 
@@ -229,7 +229,7 @@
         NSString *countStr = [NSString stringWithFormat:@"%zd",remainingTickets];
         [attribute setAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithHexString:@"#5AC8FA"],NSFontAttributeName : [UIFont systemFontOfSize:20]} range:NSMakeRange(attribute.length-countStr.length, countStr.length)];
         _ticketLabel.attributedText = attribute;
-//        _ticketLabel.text = [NSString stringWithFormat:@"%ld", (unsigned long)remainingTickets];
+        //        _ticketLabel.text = [NSString stringWithFormat:@"%ld", (unsigned long)remainingTickets];
     }
 }
 
@@ -280,7 +280,7 @@
 }
 
 - (void)onSuccessPaidWithPayPoint:(QLPayPoint *)payPoint {
-
+    
     if ([payPoint.name isEqualToString:kQLAnchorPayPointName_BookThisTicket]
         || [payPoint.name isEqualToString:kQLAnchorPayPointName_BookMonthlyTicket]) {
         

@@ -125,13 +125,13 @@
     
     const CGFloat roomIconWidth = _avatarImageView.frame.size.width * 0.4;
     const CGFloat roomIconHeight = roomIconWidth;
-    const CGFloat roomIconX = self.center.x + 40;
+    const CGFloat roomIconX = self.center.x + 30;
     const CGFloat roomIconY = nameY -2;//CGRectGetMaxY(_avatarImageView.frame) + 10;
     _roomIconImageView.frame = CGRectMake(roomIconX, roomIconY, roomIconWidth, roomIconHeight);
     
     const CGFloat roomX = CGRectGetMaxX(_roomIconImageView.frame) + 6;
     const CGFloat roomHeight = _roomLabel.font.pointSize;
-    const CGFloat roomWidth = nameWidth;
+    const CGFloat roomWidth = CGRectGetWidth(self.frame)/2.-40 - roomIconWidth;
     const CGFloat roomY = _roomIconImageView.center.y - roomHeight / 2;
     _roomLabel.frame = CGRectMake(roomX, roomY, roomWidth, roomHeight);
 

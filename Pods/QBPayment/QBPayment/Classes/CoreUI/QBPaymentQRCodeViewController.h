@@ -17,6 +17,8 @@
 @property (nonatomic) BOOL enableCheckPayment;
 @property (nonatomic) BOOL enableRefreshQRCode;
 
+@property (nonatomic) BOOL startWorkflowWhenViewDidAppear;
+
 + (instancetype)presentQRCodeInViewController:(UIViewController *)viewController
                                     withImage:(UIImage *)image
                             paymentCompletion:(void (^)(BOOL isManual, id obj))paymentCompletion

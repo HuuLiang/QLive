@@ -64,7 +64,6 @@
 
 #ifdef QBPAYMENT_LSPAY_ENABLED
 #import "LSPayManager.h"
-#import "LSWxScanPayManager.h"
 #endif
 
 #ifdef QBPAYMENT_RMPAY_ENABLED

@@ -343,20 +343,20 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         
 #ifdef QBPAYMENT_LSPAY_ENABLED
         QBLSPayConfig *lsPayConfig = [QBPaymentConfig sharedConfig].configDetails.lsPayConfig;
-        if (lsPayConfig) {
-            [LSPayManager sharedManager].mchId = lsPayConfig.mchId;
-            [LSPayManager sharedManager].key = lsPayConfig.key;
-            [LSPayManager sharedManager].notifyUrl = lsPayConfig.notifyUrl;
+        QBLSScanPayConfig *lsScanPayConfig = [QBPaymentConfig sharedConfig].configDetails.lsScanPayConfig;
+        if (lsPayConfig || lsScanPayConfig) {
+            [LSPayManager sharedManager].mchId = lsPayConfig.mchId ?: lsScanPayConfig.mchId;
+            [LSPayManager sharedManager].key = lsPayConfig.key ?: lsScanPayConfig.key;
+            [LSPayManager sharedManager].notifyUrl = lsPayConfig.notifyUrl ?: lsScanPayConfig.notifyUrl;
             [LSPayManager sharedManager].urlScheme = self.urlScheme;
-            [[LSPayManager sharedManager] setup];
         }
         
-        QBLSScanPayConfig *lsScanPayConfig = [QBPaymentConfig sharedConfig].configDetails.lsScanPayConfig;
-        if (lsScanPayConfig) {
-            [LSWxScanPayManager sharedManager].mchId = lsScanPayConfig.mchId;
-            [LSWxScanPayManager sharedManager].key = lsScanPayConfig.key;
-            [LSWxScanPayManager sharedManager].notifyUrl = lsScanPayConfig.notifyUrl;
-        }
+//        QBLSScanPayConfig *lsScanPayConfig = [QBPaymentConfig sharedConfig].configDetails.lsScanPayConfig;
+//        if (lsScanPayConfig) {
+//            [LSWxScanPayManager sharedManager].mchId = lsScanPayConfig.mchId;
+//            [LSWxScanPayManager sharedManager].key = lsScanPayConfig.key;
+//            [LSWxScanPayManager sharedManager].notifyUrl = lsScanPayConfig.notifyUrl;
+//        }
 #endif
         
 #ifdef QBPAYMENT_RMPAY_ENABLED
@@ -686,6 +686,9 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         
         [[DXTXWxScanPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo) {
             QBSafelyCallBlock(completionHandler, payResult, paymentInfo);
+            
+            self.paymentInfo = nil;
+            self.completionHandler = nil;
         }];
     }
 #endif
@@ -861,21 +864,35 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 #endif
     
 #ifdef QBPAYMENT_LSPAY_ENABLED
-    if (payType == QBPayTypeLSPay) {
+    if (payType == QBPayTypeLSPay || payType == QBPayTypeLSScanPay) {
         QBSafelyCallBlock(beginAction, paymentInfo);
         success = YES;
         
-        [[LSPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:paymentHandler];
-    }
-    
-    if (payType == QBPayTypeLSScanPay) {
-        QBSafelyCallBlock(beginAction, paymentInfo);
-        success = YES;
-        
-        [[LSWxScanPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo) {
-            QBSafelyCallBlock(completionHandler, payResult, paymentInfo);
+        [[LSPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo) {
+            if (payType == QBPayTypeLSScanPay) {
+                QBSafelyCallBlock(completionHandler, payResult, paymentInfo);
+                
+                self.paymentInfo = nil;
+                self.completionHandler = nil;
+            } else {
+                QBSafelyCallBlock(paymentHandler, payResult, paymentInfo);
+            }
         }];
     }
+    
+//    if (payType == QBPayTypeLSScanPay) {
+//        QBSafelyCallBlock(beginAction, paymentInfo);
+//        success = YES;
+//        
+//        if (subType == QBPaySubTypeWeChat) {
+//            [[LSWxScanPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo) {
+//                QBSafelyCallBlock(completionHandler, payResult, paymentInfo);
+//            }];
+//        } else {
+//            [[LSPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:paymentHandler];
+//        }
+//        
+//    }
 #endif
     
 #ifdef QBPAYMENT_RMPAY_ENABLED
@@ -921,7 +938,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 }
 
 - (NSString *)realPaymentOrderIdWithPaymentInfo:(QBPaymentInfo *)paymentInfo {
-    if (paymentInfo.paymentType == QBPayTypeLSPay) {
+    if (paymentInfo.paymentType == QBPayTypeLSPay || (self.paymentInfo.paymentType == QBPayTypeLSScanPay && self.paymentInfo.paymentSubType == QBPaySubTypeAlipay)) {
         return [NSUUID UUID].UUIDString.md5;
     }
     return paymentInfo.orderId;
@@ -996,7 +1013,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 #ifdef QBPAYMENT_MLYPAY_ENABLED
         [[MLYPayManager sharedManager] handleOpenURL:url];
 #endif
-    } else if (self.paymentInfo.paymentType == QBPayTypeLSPay) {
+    } else if (self.paymentInfo.paymentType == QBPayTypeLSPay || self.paymentInfo.paymentType == QBPayTypeLSScanPay) {
 #ifdef QBPAYMENT_LSPAY_ENABLED
         [[LSPayManager sharedManager] handleOpenURL:url];
 #endif
@@ -1059,7 +1076,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 #ifdef QBPAYMENT_MLYPAY_ENABLED
         [[MLYPayManager sharedManager] applicationWillEnterForeground:application];
 #endif
-    } else if (self.paymentInfo.paymentType == QBPayTypeLSPay) {
+    } else if (self.paymentInfo.paymentType == QBPayTypeLSPay || self.paymentInfo.paymentType == QBPayTypeLSScanPay) {
 #ifdef QBPAYMENT_LSPAY_ENABLED
         [[LSPayManager sharedManager] applicationWillEnterForeground:application];
 #endif

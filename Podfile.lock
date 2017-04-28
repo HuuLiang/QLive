@@ -44,47 +44,47 @@ PODS:
   - QBNetworking (0.0.19):
     - AFNetworking (~> 3.1.0)
     - QBExtensions (~> 0.0.3)
-  - QBPayment/Core (115):
+  - QBPayment/Core (122):
     - Aspects (~> 1.4.1)
     - MBProgressHUD (~> 0.9.2)
     - QBExtensions (~> 0.0.6)
     - QBNetworking (~> 0.0.4)
-  - QBPayment/CorePay (115):
+  - QBPayment/CorePay (122):
     - OpenSSL (~> 1.0.208)
-  - QBPayment/CoreUI (115):
+  - QBPayment/CoreUI (122):
     - MBProgressHUD (~> 0.9.2)
     - QBExtensions (~> 0.0.6)
-  - QBPayment/DXTXPay (115):
+  - QBPayment/DXTXPay (122):
     - QBPayment/Core
     - QBPayment/CorePay
     - QBPayment/CoreUI
     - QBPayment/WFTPay
-  - QBPayment/IappPay (115):
+  - QBPayment/IappPay (122):
     - QBPayment/Core
     - QBPayment/CorePay
-  - QBPayment/LSPay (115):
+  - QBPayment/LSPay (122):
     - QBPayment/Core
     - QBPayment/CorePay
     - QBPayment/CoreUI
-  - QBPayment/MingPay (115):
+  - QBPayment/MingPay (122):
     - QBPayment/Core
-    - QBPayment/CoreUI
-    - QBPayment/WFTPay
-  - QBPayment/RMPay (115):
-    - QBPayment/Core
-    - QBPayment/CorePay
     - QBPayment/CoreUI
     - QBPayment/WFTPay
-  - QBPayment/WFTPay (115):
+  - QBPayment/RMPay (122):
+    - QBPayment/Core
+    - QBPayment/CorePay
+    - QBPayment/CoreUI
+    - QBPayment/WFTPay
+  - QBPayment/WFTPay (122):
     - QBPayment/Core
     - QBPayment/CorePay
     - QBPayment/CoreUI
     - XMLReader-Arc (~> 1.1)
-  - QBPayment/WJPay (115):
+  - QBPayment/WJPay (122):
     - QBPayment/Core
     - QBPayment/CoreUI
     - QBPayment/WFTPay
-  - QBPayment/YiPay (115):
+  - QBPayment/YiPay (122):
     - QBPayment/Core
     - QBPayment/CorePay
     - QBPayment/CoreUI
@@ -93,7 +93,7 @@ PODS:
     - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
   - SIAlertView (1.3)
-  - SSZipArchive (1.7)
+  - SSZipArchive (1.8.1)
   - SVProgressHUD (2.0.3)
   - XMLReader-Arc (1.1)
   - YLProgressBar (3.10.1)
@@ -136,10 +136,10 @@ SPEC CHECKSUMS:
   OpenSSL: b187269d386b07452f56af273764ea0636dd5da8
   QBExtensions: 02e2121ad8cfbcb9770a1627bc6edf4a6a92fd09
   QBNetworking: e9521a25ec83f6e1cc29f0d88da9fa3713078170
-  QBPayment: d230eaea4b6917b71657d560edf566bb869c2452
+  QBPayment: 49618e9999e1a88dc3332a300a963bc7c3ccbf92
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SIAlertView: 20c794b55eaf44d888773ea51647cf8907723919
-  SSZipArchive: 63f8e11cfcc33e03e4cd666b4359ea8bd6facd0c
+  SSZipArchive: 04547dfa448be5ed7ecbaf7eaf8a6e9eb9b42997
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   XMLReader-Arc: 7832c527346fc26511fd6c05ebcee18008c34d6d
   YLProgressBar: 763ad9be70b8de5ab98a3fab27953f3771869e3d
