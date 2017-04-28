@@ -38,6 +38,7 @@
 
 - (void)dealloc {
     QBLog(@"%@ dealloc", [self class]);
+    [[self class] cancelPreviousPerformRequestsWithTarget:self];
 }
 
 - (instancetype)init {
@@ -187,4 +188,5 @@
         }];
     }
 }
+
 @end

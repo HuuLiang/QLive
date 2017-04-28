@@ -401,7 +401,7 @@ QBSynthesizeSingletonMethod(sharedManager)
 #else
     orderInfo.orderPrice = payPoint.fee.unsignedIntegerValue; //payType == QBOrderPayTypeAlipay ? 200 : 1;//
 #endif
-//        orderInfo.orderPrice = 200;
+//    orderInfo.orderPrice = 200;
     orderInfo.orderDescription = payPoint.pointDesc;
     orderInfo.payType = payType;
     orderInfo.reservedData = [NSString stringWithFormat:@"%@$%@", kQLRESTAppId, kQLChannelNo];
@@ -426,7 +426,6 @@ QBSynthesizeSingletonMethod(sharedManager)
                                                     beginAction:nil
                                               completionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo)
      {
-         payResult = QBPayResultSuccess;
          if (payResult == QBPayResultSuccess) {
              [[QLHUDManager sharedManager] showSuccess:@"支付成功"];
              
