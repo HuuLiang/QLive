@@ -426,6 +426,7 @@ QBSynthesizeSingletonMethod(sharedManager)
                                                     beginAction:nil
                                               completionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo)
      {
+         
          if (payResult == QBPayResultSuccess) {
              [[QLHUDManager sharedManager] showSuccess:@"支付成功"];
              

@@ -79,7 +79,17 @@
         }
         
         @weakify(self);
-        [self.player seekToTime:targetTime completionHandler:^(BOOL finished) {
+        //        [self.player seekToTime:targetTime completionHandler:^(BOOL finished) {
+        //            @strongify(self);
+        //            if (finished) {
+        //                [self.player play];
+        //                QBSafelyCallBlock(self.eventAction, QLVideoPlayerEventReadyToPlay, self);
+        //            } else {
+        //                QBSafelyCallBlock(self.eventAction, QLVideoPlayerEventFailed, self);
+        //            }
+        //
+        //        }];
+        [self.player seekToTime:targetTime toleranceBefore:CMTimeMake(2, self.currentPlayerItem.asset.duration.timescale) toleranceAfter:CMTimeMake(2, self.currentPlayerItem.asset.duration.timescale) completionHandler:^(BOOL finished) {
             @strongify(self);
             if (finished) {
                 [self.player play];
@@ -87,7 +97,6 @@
             } else {
                 QBSafelyCallBlock(self.eventAction, QLVideoPlayerEventFailed, self);
             }
-            
         }];
     } else {
         [self.player play];

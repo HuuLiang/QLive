@@ -189,6 +189,7 @@ QBDefineLazyPropertyInitialization(QLLiveGiftPlayer, giftPlayer)
     
 }
 
+
 - (void)showGiftPanel {
     @weakify(self);
     
