@@ -41,7 +41,7 @@
     self = [super init];
     if (self) {
         self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.75];
-
+        
         _avatarImageView = [[UIImageView alloc] init];
         _avatarImageView.contentMode = UIViewContentModeScaleAspectFill;
         _avatarImageView.forceRoundCorner = YES;
@@ -179,7 +179,8 @@
     _charmLabel.attributedText = [self attributedStringWithTitle:@"魅力值" numbers:self.anchor.numberOfCharm.unsignedIntegerValue];
     
     [_followButton setTitle:self.anchor.followingTime ? @"取消关注" : @"+ 关注" forState:UIControlStateNormal];
-    [_followButton setTitleColor:self.anchor.followingTime ? [UIColor redColor] : [UIColor colorWithHexString:@"#333333"] forState:UIControlStateNormal];
+    [_followButton setTitleColor:self.anchor.followingTime ? [UIColor redColor] : [UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
+    [_followButton setBackgroundImage:[UIImage imageWithColor:self.anchor.followingTime ? [UIColor whiteColor] : [QLTheme defaultTheme].themeColor] forState:UIControlStateNormal];
 }
 
 - (NSAttributedString *)attributedStringWithTitle:(NSString *)title numbers:(NSUInteger)numbers {

@@ -22,7 +22,7 @@
     
     _button = [[UIButton alloc] init];
     [_button setBackgroundImage:[UIImage imageWithColor:[QLTheme defaultTheme].themeColor] forState:UIControlStateNormal];
-    [_button setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:UIControlStateNormal];
+    [_button setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
     _button.layer.cornerRadius = 5;
     _button.layer.masksToBounds = YES;
     _button.titleLabel.font = kMediumFont;

@@ -15,7 +15,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _defaultTheme = [[self alloc] init];
-        _defaultTheme.themeColor = [UIColor colorWithHexString:@"#f5c117"];
+        _defaultTheme.themeColor = [UIColor colorWithHexString:@"#5AC8FA"];
     });
     return _defaultTheme;
 }
