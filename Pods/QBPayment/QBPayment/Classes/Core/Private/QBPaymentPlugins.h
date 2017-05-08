@@ -78,4 +78,8 @@
 #import "YiPayManager.h"
 #endif
 
+#ifdef QBPAYMENT_LEPAY_ENABLED
+#import "LePayManager.h"
+#endif
+
 #endif /* QBPaymentPlugins_h */

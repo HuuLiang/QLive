@@ -6,11 +6,11 @@
 	<dict>
 		<key>Headers/FFLPayClient.h</key>
 		<data>
-		3ohtbvoY6AmwSsNhFhFAKbngr34=
+		fFgtVLL6tdzWrNnrMCW9qi6gv7g=
 		</data>
 		<key>Headers/FFLPayHeader.h</key>
 		<data>
-		QpjuuHF5ea16mNX3e05l+05o6SY=
+		j23TkNUvqjFkxGDpz8/XnTZg5Qo=
 		</data>
 		<key>Headers/FFLPaySDK.h</key>
 		<data>
@@ -18,7 +18,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		uCl0cREJlx45DpioOPoEgWADOfw=
+		SY9eajAgr2S39QiPv1ePbTiVCVY=
 		</data>
 		<key>LICENSE</key>
 		<data>
@@ -39,22 +39,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			3ohtbvoY6AmwSsNhFhFAKbngr34=
+			fFgtVLL6tdzWrNnrMCW9qi6gv7g=
 			</data>
 			<key>hash2</key>
 			<data>
-			mlstgkxD7cUyc+LyfNi2DXzfK5siQgGgApzrR75JLHQ=
+			r/x//OW+YTGf5QWtEQrgXbWJ+ggRaRmfThCFMm48+20=
 			</data>
 		</dict>
 		<key>Headers/FFLPayHeader.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			QpjuuHF5ea16mNX3e05l+05o6SY=
+			j23TkNUvqjFkxGDpz8/XnTZg5Qo=
 			</data>
 			<key>hash2</key>
 			<data>
-			poZm5ckarHsI7hQigyUQME5MpySof1St0xvSYugVFK0=
+			HD0joFBW9cjNkbLHikqdwlx6H0jECqQmLm2TX4/eZvw=
 			</data>
 		</dict>
 		<key>Headers/FFLPaySDK.h</key>

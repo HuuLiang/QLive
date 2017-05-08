@@ -39,7 +39,7 @@
     }
     
     NSDictionary *postInfo = [[FFLPayClient sharedInstance] makePayForm:self.mchId
-                                                              PayTypeId:@"wechat_app"
+                                                              PayTypeId:__FFLPAY_PAYTYPE_WXSDK
                                                              MchTradeNo:paymentInfo.orderId
                                                            TradeContent:paymentInfo.orderDescription//[paymentInfo.orderDescription stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]
                                                             TradeAttach:paymentInfo.reservedData//[paymentInfo.reservedData stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]
@@ -60,7 +60,7 @@
             return ;
         }
         
-        [[FFLPayClient sharedInstance] fflpay_wechatAppPay:[QBPaymentUtil viewControllerForPresentingPayment]
+        [[FFLPayClient sharedInstance] fflpay_wechatSdkPay:[QBPaymentUtil viewControllerForPresentingPayment]
                                                    payinfo:payInfo
                                                    finish:^(NSDictionary *payInfo)
         {

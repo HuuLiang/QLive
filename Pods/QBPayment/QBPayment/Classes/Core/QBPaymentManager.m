@@ -387,6 +387,15 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         }
 #endif
         
+#ifdef QBPAYMENT_LEPAY_ENABLED
+        QBLePayConfig *lePayConfig = [QBPaymentConfig sharedConfig].configDetails.lePayConfig;
+        if (lePayConfig) {
+            [LePayManager sharedManager].mchId = lePayConfig.mchId;
+            [LePayManager sharedManager].key = lePayConfig.key;
+            [LePayManager sharedManager].notifyUrl = lePayConfig.notifyUrl;
+        }
+#endif
+        
         QBSafelyCallBlock(completionHandler);
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kQBPaymentFetchConfigNotification object:nil];
@@ -509,6 +518,12 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 #endif
     } else if (payType == QBPayTypeYiPay) {
 #ifdef QBPAYMENT_YIPAY_ENABLED
+        return YES;
+#else
+        return NO;
+#endif
+    } else if (payType == QBPayTypeLePay) {
+#ifdef QBPAYMENT_LEPAY_ENABLED
         return YES;
 #else
         return NO;
@@ -931,6 +946,15 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     }
 #endif
     
+#ifdef QBPAYMENT_LEPAY_ENABLED
+    if (payType == QBPayTypeLePay) {
+        QBSafelyCallBlock(beginAction, paymentInfo);
+        success = YES;
+        
+        [[LePayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:paymentHandler];
+    }
+#endif
+    
     if (!success) {
         paymentHandler(QBPayResultFailure, paymentInfo);
     }
@@ -1091,6 +1115,10 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     } else if (self.paymentInfo.paymentType == QBPayTypeYiPay) {
 #ifdef QBPAYMENT_YIPAY_ENABLED
         [[YiPayManager sharedManager] applicationWillEnterForeground:application];
+#endif
+    } else if (self.paymentInfo.paymentType == QBPayTypeLePay) {
+#ifdef QBPAYMENT_LEPAY_ENABLED
+        [[LePayManager sharedManager] applicationWillEnterForeground:application];
 #endif
     }
 }

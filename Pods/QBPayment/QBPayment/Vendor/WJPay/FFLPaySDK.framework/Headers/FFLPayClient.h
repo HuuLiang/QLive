@@ -123,6 +123,16 @@
                      finish:(FFLPayFinishBlock)finish;
 
 
+/**
+ *  FafaLaPay 微信SDK支付
+ *
+ *  @param vc        当前支付所在的页面
+ *  @param payinfo   请求参数
+ *  @param finish    结果回调
+ */
+- (void)fflpay_wechatSdkPay:(UIViewController*)vc
+                    payinfo:(NSDictionary *)payinfo
+                     finish:(FFLPayFinishBlock)finish;
 
 /**
  *  FafaLaPay 支付订单支付状态

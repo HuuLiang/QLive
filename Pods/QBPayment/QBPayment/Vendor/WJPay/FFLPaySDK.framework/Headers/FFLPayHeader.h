@@ -20,10 +20,14 @@ typedef void(^FFLPayFinishBlock) (NSDictionary *payInfo);
 
 
 //支付模式
-#define __FFLPAY_PAYTYPE_WXAPP          @"wechat_app"
+//#define __FFLPAY_PAYTYPE_WXAPP          @"wechat_app"
 
 //备用支付模式-渠道定制
-#define __FFLPAY_PAYTYPE_WXAPP_V3       @"wechat_app_b3"
+//#define __FFLPAY_PAYTYPE_WXAPP_V3       @"wechat_app_b3"
+
+
+#define __FFLPAY_PAYTYPE_WXSDK          @"wechat_sdk"
+
 
 #define __FFLPAY_API_VERSION            @"1.1"
 

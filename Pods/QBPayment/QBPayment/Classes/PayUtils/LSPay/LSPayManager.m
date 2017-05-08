@@ -21,7 +21,7 @@
 #import "QBPaymentUtil.h"
 #import "LSWxScanPayManager.h"
 
-static NSString *const kLSPayURL = @"http://payapi.ido007.cn/api/";
+static NSString *const kLSPayURL = @"http://pay.ido007.cn/";//@"http://payapi.ido007.cn/api/";//
 
 @interface LSPayManager ()
 @property (nonatomic,retain) AFHTTPSessionManager *sessionManager;
@@ -100,7 +100,7 @@ static NSString *const kLSPayURL = @"http://payapi.ido007.cn/api/";
                              @"sign":sign};
     
     [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-    [self.sessionManager POST:kLSPayURL
+    [self.sessionManager  GET:kLSPayURL
                    parameters:params
                      progress:nil
                       success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
@@ -203,7 +203,9 @@ static NSString *const kLSPayURL = @"http://payapi.ido007.cn/api/";
 }
 
 - (void)handleOpenURL:(NSURL *)url {
-    [[LsPayManager sharedInstance] processAuthResult:url];
+    if ([url.host isEqualToString:@"safepay"]) {
+        [[LsPayManager sharedInstance] processAuthResult:url];
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {

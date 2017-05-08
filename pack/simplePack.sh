@@ -6,7 +6,7 @@ ABS_DIR="`cd $CURRENT_DIR;pwd`"
 CODESIGN_EXEC="/usr/bin/codesign"
 PLIST_BUDDY_EXEC="/usr/libexec/PlistBuddy"
 SIGNING_IDENTITY="iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd."
-PROVISIONING_PROFILE="$ABS_DIR/../ProvisioningProfile/HoneyLive33InHouseProvisioningProfile.mobileprovision"
+PROVISIONING_PROFILE="$ABS_DIR/../ProvisioningProfile/HoneyLive42InHouseProvisioningProfile.mobileprovision"
 
 PROJECT_NAME=$1
 MIN_PKG_NO=$2

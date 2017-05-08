@@ -30,6 +30,7 @@ NSString *const kQBLSScanPayConfigName = @"LSSAN";
 NSString *const kQBRMPayConfigName = @"RONGM";
 NSString *const kQBZRPayConfigName = @"ZRF";
 NSString *const kQBYiPayConfigName = @"YFPAY";
+NSString *const kQBLePayConfigName = @"LEPAY";
 
 @implementation QBPaymentConfigDetail
 
@@ -72,6 +73,8 @@ NSString *const kQBYiPayConfigName = @"YFPAY";
         return [QBZRPayConfig class];
     } else if ([propName isEqualToString:NSStringFromSelector(@selector(yiPayConfig))]) {
         return [QBYiPayConfig class];
+    } else if ([propName isEqualToString:NSStringFromSelector(@selector(lePayConfig))]) {
+        return [QBLePayConfig class];
     }
     return nil;
 }
@@ -115,6 +118,8 @@ NSString *const kQBYiPayConfigName = @"YFPAY";
         return NSStringFromSelector(@selector(zrPayConfig));
     } else if ([parsingName hasSuffix:[@"-" stringByAppendingString:kQBYiPayConfigName]]) {
         return NSStringFromSelector(@selector(yiPayConfig));
+    } else if ([parsingName hasSuffix:[@"-" stringByAppendingString:kQBLePayConfigName]]) {
+        return NSStringFromSelector(@selector(lePayConfig));
     }
     return nil;
 }
@@ -321,5 +326,9 @@ NSString *const kQBYiPayConfigName = @"YFPAY";
 @end
 
 @implementation QBYiPayConfig
+
+@end
+
+@implementation QBLePayConfig
 
 @end
