@@ -8,7 +8,7 @@
 
 #import "QLAppDelegate.h"
 #import "QLLaunchViewController.h"
-#import <UMMobClick/MobClick.h>
+//#import <UMMobClick/MobClick.h>
 #import "QLActivateModel.h"
 
 @interface QLAppDelegate ()
@@ -30,7 +30,7 @@
     };
     [[QBNetworkInfo sharedInfo] startMonitoring];
     
-    [[QLPaymentManager sharedManager] setup];
+//    [[QLPaymentManager sharedManager] setup];
     [self setupMobAnalytics];
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -43,18 +43,18 @@
 
 - (void)setupMobAnalytics {
     
-#ifdef DEBUG
-    [MobClick setLogEnabled:YES];
-#endif
-    NSString *bundleVersion = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
-    if (bundleVersion) {
-        [MobClick setAppVersion:bundleVersion];
-    }
-    
-    UMConfigInstance.appKey = @"58d226f0f43e4865af0000fc";
-    UMConfigInstance.secret = nil;
-    UMConfigInstance.channelId = kQLChannelNo;
-    [MobClick startWithConfigure:UMConfigInstance];
+//#ifdef DEBUG
+//    [MobClick setLogEnabled:YES];
+//#endif
+//    NSString *bundleVersion = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
+//    if (bundleVersion) {
+//        [MobClick setAppVersion:bundleVersion];
+//    }
+//    
+//    UMConfigInstance.appKey = @"58d226f0f43e4865af0000fc";
+//    UMConfigInstance.secret = nil;
+//    UMConfigInstance.channelId = kQLChannelNo;
+//    [MobClick startWithConfigure:UMConfigInstance];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -71,7 +71,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-    [[QLPaymentManager sharedManager] applicationWillEnterForeground:application];
+//    [[QLPaymentManager sharedManager] applicationWillEnterForeground:application];
 }
 
 
@@ -85,17 +85,17 @@
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    [[QLPaymentManager sharedManager] handleOpenUrl:url];
+//    [[QLPaymentManager sharedManager] handleOpenUrl:url];
     return YES;
 }
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
-    [[QLPaymentManager sharedManager] handleOpenUrl:url];
+//    [[QLPaymentManager sharedManager] handleOpenUrl:url];
     return YES;
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    [[QLPaymentManager sharedManager] handleOpenUrl:url];
+//    [[QLPaymentManager sharedManager] handleOpenUrl:url];
     return YES;
 }
 @end

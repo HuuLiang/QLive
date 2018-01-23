@@ -7,7 +7,7 @@
 //
 
 #import "NSError+QLError.h"
-#import <NSMutableDictionary+SafeCoding.h>
+#import "NSMutableDictionary+SafeCoding.h"
 #import <objc/runtime.h>
 
 NSString *const kQLErrorMessageKeyName = @"com.qlive.errordomian.errormessage";

@@ -76,8 +76,9 @@ SynthesizeContainerPropertyElementClassMethod(ticketInfos, QLLiveShowTicketInfo)
 }
 
 - (BOOL)isPaidPublicShow {
-    return [[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(self.liveId.integerValue) contentType:QLPaymentContentTypeBookThisTicket]
-    || [[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(self.liveId.integerValue) contentType:QLPaymentContentTypeBookMonthlyTicket];
+//    return [[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(self.liveId.integerValue) contentType:QLPaymentContentTypeBookThisTicket]
+//    || [[QLPaymentManager sharedManager] contentIsPaidWithContentId:@(self.liveId.integerValue) contentType:QLPaymentContentTypeBookMonthlyTicket];
+    return NO;
 }
 @end
 

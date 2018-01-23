@@ -1,1 +1,0 @@
-../../../QBPayment/QBPayment/Vendor/RMPay/RMPayManager.h

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <QBOrderInfo.h>
+#import "QBOrderInfo.h"
 
 typedef void (^QLPaymentSheetSelectionAction)(QBOrderPayType payType, id obj);
 

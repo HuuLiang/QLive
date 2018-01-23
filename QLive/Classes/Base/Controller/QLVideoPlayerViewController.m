@@ -51,7 +51,7 @@ QBDefineLazyPropertyInitialization(QLLiveGiftPlayer, giftPlayer)
             QBSafelyCallBlock(self.didBeginPlayingAction, self.player.currentSeconds, self);
             return ;
         }
-        
+
         [[QLHUDManager sharedManager] hide];
         if (event == QLVideoPlayerEventFailed) {
             [[QLAlertManager sharedManager] alertWithTitle:@"错误" message:@"主播暂时不在服务区，请稍后再来~" action:^(id obj) {

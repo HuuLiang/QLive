@@ -7,7 +7,7 @@
 //
 
 #import "QLActivateModel.h"
-#import <QBNetworkingConfiguration.h>
+#import "QBNetworkingConfiguration.h"
 
 static NSString *const kSuccessResponse = @"SUCCESS";
 

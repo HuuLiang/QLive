@@ -21,6 +21,9 @@ case "${TARGETED_DEVICE_FAMILY}" in
   3)
     TARGET_DEVICE_ARGS="--target-device tv"
     ;;
+  4)
+    TARGET_DEVICE_ARGS="--target-device watch"
+    ;;
   *)
     TARGET_DEVICE_ARGS="--target-device mac"
     ;;
@@ -78,17 +81,11 @@ EOM
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "MJRefresh/MJRefresh/MJRefresh.bundle"
-  install_resource "QBPayment/QBPayment/Vendor/AlipaySDK/AlipaySDK.bundle"
-  install_resource "QBPayment/QBPayment/Vendor/IappPay/IapppayAlphaResource.bundle"
-  install_resource "QBPayment/QBPayment/Vendor/SPaySDK/SPaySDKResource.bundle"
   install_resource "SIAlertView/SIAlertView/SIAlertView.bundle"
   install_resource "SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "MJRefresh/MJRefresh/MJRefresh.bundle"
-  install_resource "QBPayment/QBPayment/Vendor/AlipaySDK/AlipaySDK.bundle"
-  install_resource "QBPayment/QBPayment/Vendor/IappPay/IapppayAlphaResource.bundle"
-  install_resource "QBPayment/QBPayment/Vendor/SPaySDK/SPaySDKResource.bundle"
   install_resource "SIAlertView/SIAlertView/SIAlertView.bundle"
   install_resource "SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle"
 fi

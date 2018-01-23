@@ -6,7 +6,7 @@
 //  Copyright © 2016年 Liang. All rights reserved.
 //
 
-#import <QBEncryptedURLRequest.h>
+#import "QBEncryptedURLRequest.h"
 
 typedef void (^QLActivateHandler)(BOOL success, NSString *userId);
 

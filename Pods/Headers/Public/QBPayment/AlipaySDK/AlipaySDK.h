@@ -1,1 +1,0 @@
-../../../../QBPayment/QBPayment/Vendor/AlipaySDK/AlipaySDK.framework/Headers/AlipaySDK.h

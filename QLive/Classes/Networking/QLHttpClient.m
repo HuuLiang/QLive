@@ -7,8 +7,8 @@
 //
 
 #import "QLHttpClient.h"
-#import <NSString+md5.h>
-#import <NSString+crypt.h>
+#import "NSString+md5.h"
+#import "NSString+crypt.h"
 #import <AFNetworking.h>
 
 NSString *const kQLHttpClientArgErrorDomain = @"com.qlive.errordomain.arg";

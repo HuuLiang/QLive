@@ -1,1 +1,0 @@
-../../../QBPayment/QBPayment/Vendor/MingPay/MPGYWetChatSDK.h

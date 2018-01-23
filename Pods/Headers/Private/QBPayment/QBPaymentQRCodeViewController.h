@@ -1,1 +1,0 @@
-../../../QBPayment/QBPayment/Classes/CoreUI/QBPaymentQRCodeViewController.h

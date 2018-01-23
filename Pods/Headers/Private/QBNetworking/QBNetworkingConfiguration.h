@@ -1,1 +1,0 @@
-../../../QBNetworking/QBNetworking/Classes/QBNetworkingConfiguration.h

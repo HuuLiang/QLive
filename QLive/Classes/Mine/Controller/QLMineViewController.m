@@ -15,6 +15,7 @@
 #import "QLCustomerServiceViewController.h"
 #import "QLDebugViewController.h"
 #import "QLMineAvatarCell.h"
+#import "QLVideoPlayerViewController.h"
 
 typedef NS_ENUM(NSUInteger, MineSection) {
     ProfileSection,
@@ -196,7 +197,9 @@ static NSString *const kMineCellReusableIdentifier = @"MineCellReusableIdentifie
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+//    QLVideoPlayerViewController *plvc = [[QLVideoPlayerViewController alloc] initWithURL:[NSURL URLWithString:@"https://m.mp4pa.com/ck3/down.php/3ec633842f09fed6a844e834f2c21f5b.mp4"]];
+//    [self.navigationController pushViewController:plvc animated:YES];
+//    return;
     if (indexPath.section == ProfileSection) {
         [self.navigationController pushViewController:[[QLMineProfileViewController alloc] init] animated:YES];
     } else if (indexPath.section == ZoneSection) {

@@ -207,7 +207,8 @@
                     @strongify(self);
                     [self prepareData];
                 } cancelAction:^(id obj) {
-                    exit(1);
+//                    exit(1);
+                     self.view.window.rootViewController = [QLTabBarController sharedController];
                 }];
             }
         });

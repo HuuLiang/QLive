@@ -13,7 +13,7 @@
 #import "QLMineVIPHeaderView.h"
 #import "QLCustomerServiceViewController.h"
 #import "QLPaymentActionSheet.h"
-#import <NSString+md5.h>
+#import "NSString+md5.h"
 
 typedef NS_ENUM(NSUInteger, ThisSection) {
     GoldSection,

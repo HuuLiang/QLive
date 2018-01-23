@@ -8,10 +8,10 @@
 
 #import "QLPaymentManager.h"
 #import "QLPaymentActionSheet.h"
-#import <QBPaymentManager.h>
-#import <QBPaymentInfo.h>
-#import <QBPaymentConfig.h>
-#import <NSString+md5.h>
+//#import "QBPaymentManager.h"
+//#import "QBPaymentInfo.h"
+//#import "QBPaymentConfig.h"
+#import "NSString+md5.h"
 #import "QLMineVIPViewController.h"
 #import "QLPaymentUIElement.h"
 #import "QLPaymentViewController.h"
@@ -24,9 +24,9 @@ NSString *const kQLPaymentLiveShowUserInfo = @"LIVE_SHOW";
 QBSynthesizeSingletonMethod(sharedManager)
 
 - (void)setup {
-    QBPaymentConfig *config = [[QBPaymentConfig alloc] init];
-    
-    QBPaymentConfigDetail *configDetails = [[QBPaymentConfigDetail alloc] init];
+//    QBPaymentConfig *config = [[QBPaymentConfig alloc] init];
+//    
+//    QBPaymentConfigDetail *configDetails = [[QBPaymentConfigDetail alloc] init];
     //爱贝默认配置
     //    QBIAppPayConfig * iAppPayConfig = [[QBIAppPayConfig alloc] init];
     //    iAppPayConfig.appid = @"3006339410";
@@ -45,34 +45,34 @@ QBSynthesizeSingletonMethod(sharedManager)
     //    configDetails.dxtxPayConfig = dxtxPayConfig;
     
     //雷胜
-    QBLSPayConfig *lsPayConfig = [[QBLSPayConfig alloc] init];
-    lsPayConfig.key = @"5a5259202a1863eb6c2f7d2b26a11e68";
-    lsPayConfig.mchId = @"1031";
-    lsPayConfig.notifyUrl = @"http://phas.ayyygs.com/pd-has/notifyLsPay.json";
-    configDetails.lsPayConfig = lsPayConfig;
-    
-    QBYiPayConfig *yiPayConfig = [[QBYiPayConfig alloc] init];
-    yiPayConfig.appId = @"1065";
-    yiPayConfig.key = @"ZLZTS9tpMk03gCPFMlf7WU2j";
-    yiPayConfig.mchId = @"QBKJ";
-    configDetails.yiPayConfig = yiPayConfig;
-    
-    //支付方式
-    QBPaymentConfigSummary *payConfig = [[QBPaymentConfigSummary alloc] init];
-    payConfig.wechat = kQBLSPayConfigName;
-    payConfig.alipay = kQBYiPayConfigName;
-    
-    config.configDetails = configDetails;
-    config.payConfig = payConfig;
-    config.contact = @"QQ:3324615224";
-    [config setAsCurrentConfig];
-    
-    [[QBPaymentManager sharedManager] registerPaymentWithAppId:kQLRESTAppId
-                                                     paymentPv:@(kQLPaymentPv)
-                                                     channelNo:kQLChannelNo
-                                                     urlScheme:kQLPaymentURLScheme
-                                                 defaultConfig:config
-                                                defaultTimeOut:5];
+//    QBLSPayConfig *lsPayConfig = [[QBLSPayConfig alloc] init];
+//    lsPayConfig.key = @"5a5259202a1863eb6c2f7d2b26a11e68";
+//    lsPayConfig.mchId = @"1031";
+//    lsPayConfig.notifyUrl = @"http://phas.ayyygs.com/pd-has/notifyLsPay.json";
+//    configDetails.lsPayConfig = lsPayConfig;
+//    
+//    QBYiPayConfig *yiPayConfig = [[QBYiPayConfig alloc] init];
+//    yiPayConfig.appId = @"1065";
+//    yiPayConfig.key = @"ZLZTS9tpMk03gCPFMlf7WU2j";
+//    yiPayConfig.mchId = @"QBKJ";
+//    configDetails.yiPayConfig = yiPayConfig;
+//    
+//    //支付方式
+//    QBPaymentConfigSummary *payConfig = [[QBPaymentConfigSummary alloc] init];
+//    payConfig.wechat = kQBLSPayConfigName;
+//    payConfig.alipay = kQBYiPayConfigName;
+//    
+//    config.configDetails = configDetails;
+//    config.payConfig = payConfig;
+//    config.contact = @"QQ:3324615224";
+//    [config setAsCurrentConfig];
+//    
+//    [[QBPaymentManager sharedManager] registerPaymentWithAppId:kQLRESTAppId
+//                                                     paymentPv:@(kQLPaymentPv)
+//                                                     channelNo:kQLChannelNo
+//                                                     urlScheme:kQLPaymentURLScheme
+//                                                 defaultConfig:config
+//                                                defaultTimeOut:5];
 }
 
 - (void)showPaymnetViewControllerInViewController:(UIViewController *)viewController
@@ -352,25 +352,25 @@ QBSynthesizeSingletonMethod(sharedManager)
 - (void)showPaymentActionSheetWithPayPoint:(QLPayPoint *)payPoint
                                  contentId:(NSNumber *)contentId
                                  completed:(void (^)(BOOL success))completed {
-    if (!payPoint) {
-        QBSafelyCallBlock(completed, QBPayResultUnknown);
-        return ;
-    }
+//    if (!payPoint) {
+//        QBSafelyCallBlock(completed, QBPayResultUnknown);
+//        return ;
+//    }
+//    
+//    NSMutableArray *payTypes = [NSMutableArray array];
+//    if ([[QBPaymentManager sharedManager] isOrderPayTypeAvailable:QBOrderPayTypeWeChatPay]) {
+//        [payTypes addObject:@(QBOrderPayTypeWeChatPay)];
+//    }
+//    if ([[QBPaymentManager sharedManager] isOrderPayTypeAvailable:QBOrderPayTypeAlipay]) {
+//        [payTypes addObject:@(QBOrderPayTypeAlipay)];
+//    }
+//    
+//    if (payTypes.count == 0) {
+//        [[QLAlertManager sharedManager] alertWithTitle:@"错误" message:@"无可用支付方式"];
+//        return ;
+//    }
     
-    NSMutableArray *payTypes = [NSMutableArray array];
-    if ([[QBPaymentManager sharedManager] isOrderPayTypeAvailable:QBOrderPayTypeWeChatPay]) {
-        [payTypes addObject:@(QBOrderPayTypeWeChatPay)];
-    }
-    if ([[QBPaymentManager sharedManager] isOrderPayTypeAvailable:QBOrderPayTypeAlipay]) {
-        [payTypes addObject:@(QBOrderPayTypeAlipay)];
-    }
-    
-    if (payTypes.count == 0) {
-        [[QLAlertManager sharedManager] alertWithTitle:@"错误" message:@"无可用支付方式"];
-        return ;
-    }
-    
-    QLPaymentActionSheet *paymentSheet = [[QLPaymentActionSheet alloc] initWithAvailablePayTypes:payTypes payPoint:payPoint];
+    QLPaymentActionSheet *paymentSheet = [[QLPaymentActionSheet alloc] initWithAvailablePayTypes:nil payPoint:payPoint];
     @weakify(self);
     paymentSheet.selectionAction = ^(QBOrderPayType payType, id obj) {
         @strongify(self);
@@ -416,42 +416,42 @@ QBSynthesizeSingletonMethod(sharedManager)
     } else if ([payPoint.pointType isEqualToString:kQLAnchorPayPointType]) {
         orderInfo.targetPayPointType = 3;
     }
-    
-    QBContentInfo *contentInfo = [[QBContentInfo alloc] init];
-    contentInfo.contentId = contentId;
-    contentInfo.contentType = @([self contentTypeFromPayPoint:payPoint]);
-    
-    [[QBPaymentManager sharedManager] startPaymentWithOrderInfo:orderInfo
-                                                    contentInfo:contentInfo
-                                                    beginAction:nil
-                                              completionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo)
-     {
-         
-         if (payResult == QBPayResultSuccess) {
-             [[QLHUDManager sharedManager] showSuccess:@"支付成功"];
-             
-             if ([payPoint.pointType isEqualToString:kQLVIPPayPointType]) {
-                 [QLUser currentUser].isVIP = @1;
-                 if (payType == QBOrderPayTypeWeChatPay) {
-                     [[QLUser currentUser] addGoldCount:500];
-                 }
-                 [[QLUser currentUser] saveAsCurrentUser];
-             } else if (payPoint.goldCount.unsignedIntegerValue > 0) {
-                 NSUInteger goldCount = payPoint.goldCount.unsignedIntegerValue;
-                 if (payType == QBOrderPayTypeWeChatPay) {
-                     goldCount += 500;
-                 }
-                 [[QLUser currentUser] addGoldCount:goldCount];
-                 [[QLUser currentUser] saveAsCurrentUser];
-             }
-         } else if (payResult == QBPayResultCancelled) {
-             [[QLHUDManager sharedManager] showInfo:@"支付取消"];
-         } else {
-             [[QLHUDManager sharedManager] showError:@"支付失败"];
-         }
-         
-         QBSafelyCallBlock(completed, payResult == QBPayResultSuccess);
-     }];
+//    
+//    QBContentInfo *contentInfo = [[QBContentInfo alloc] init];
+//    contentInfo.contentId = contentId;
+//    contentInfo.contentType = @([self contentTypeFromPayPoint:payPoint]);
+//    
+//    [[QBPaymentManager sharedManager] startPaymentWithOrderInfo:orderInfo
+//                                                    contentInfo:contentInfo
+//                                                    beginAction:nil
+//                                              completionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo)
+//     {
+//         
+//         if (payResult == QBPayResultSuccess) {
+//             [[QLHUDManager sharedManager] showSuccess:@"支付成功"];
+//             
+//             if ([payPoint.pointType isEqualToString:kQLVIPPayPointType]) {
+//                 [QLUser currentUser].isVIP = @1;
+//                 if (payType == QBOrderPayTypeWeChatPay) {
+//                     [[QLUser currentUser] addGoldCount:500];
+//                 }
+//                 [[QLUser currentUser] saveAsCurrentUser];
+//             } else if (payPoint.goldCount.unsignedIntegerValue > 0) {
+//                 NSUInteger goldCount = payPoint.goldCount.unsignedIntegerValue;
+//                 if (payType == QBOrderPayTypeWeChatPay) {
+//                     goldCount += 500;
+//                 }
+//                 [[QLUser currentUser] addGoldCount:goldCount];
+//                 [[QLUser currentUser] saveAsCurrentUser];
+//             }
+//         } else if (payResult == QBPayResultCancelled) {
+//             [[QLHUDManager sharedManager] showInfo:@"支付取消"];
+//         } else {
+//             [[QLHUDManager sharedManager] showError:@"支付失败"];
+//         }
+//         
+//         QBSafelyCallBlock(completed, payResult == QBPayResultSuccess);
+//     }];
 }
 
 - (QLPaymentContentType)contentTypeFromPayPoint:(QLPayPoint *)payPoint {
@@ -475,36 +475,37 @@ QBSynthesizeSingletonMethod(sharedManager)
 }
 
 - (BOOL)contentIsPaidWithContentId:(NSNumber *)contentId contentType:(QLPaymentContentType)contentType {
-    return [[QBPaymentInfo allPaymentInfos] bk_any:^BOOL(QBPaymentInfo *obj) {
-        return obj.paymentResult == QBPayResultSuccess && obj.contentType.unsignedIntegerValue == contentType && [contentId isEqualToNumber:obj.contentId];
-    }];
+    return YES;
+//    [[QBPaymentInfo allPaymentInfos] bk_any:^BOOL(QBPaymentInfo *obj) {
+//        return obj.paymentResult == QBPayResultSuccess && obj.contentType.unsignedIntegerValue == contentType && [contentId isEqualToNumber:obj.contentId];
+//    }];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    [[QBPaymentManager sharedManager] applicationWillEnterForeground:application];
+//    [[QBPaymentManager sharedManager] applicationWillEnterForeground:application];
 }
 
 - (void)handleOpenUrl:(NSURL *)url {
-    [[QBPaymentManager sharedManager] handleOpenUrl:url];
+//    [[QBPaymentManager sharedManager] handleOpenUrl:url];
 }
 
 - (void)activateUnsuccessfulPayments {
     [[QLHUDManager sharedManager] showLoading];
+//    
+//    NSArray<QBPaymentInfo *> *unsuccessfulPaymentInfos = [[QBPaymentInfo allPaymentInfos] bk_select:^BOOL(QBPaymentInfo *obj) {
+//        return obj.paymentResult != QBPayResultSuccess;
+//    }];
     
-    NSArray<QBPaymentInfo *> *unsuccessfulPaymentInfos = [[QBPaymentInfo allPaymentInfos] bk_select:^BOOL(QBPaymentInfo *obj) {
-        return obj.paymentResult != QBPayResultSuccess;
-    }];
+//    [[QBPaymentManager sharedManager] activatePaymentInfos:unsuccessfulPaymentInfos withCompletionHandler:^(BOOL success, id obj) {
+//        [[QLHUDManager sharedManager] hide];
+//        
+//        if (success) {
+//            
+//            QBPaymentInfo *successfulPaymentInfo = obj;
+//            
+//            const NSUInteger contentId = successfulPaymentInfo.contentId.unsignedIntegerValue;
+//            const QLPaymentContentType contentType = successfulPaymentInfo.contentType.unsignedIntegerValue;
     
-    [[QBPaymentManager sharedManager] activatePaymentInfos:unsuccessfulPaymentInfos withCompletionHandler:^(BOOL success, id obj) {
-        [[QLHUDManager sharedManager] hide];
-        
-        if (success) {
-            
-            QBPaymentInfo *successfulPaymentInfo = obj;
-            
-            const NSUInteger contentId = successfulPaymentInfo.contentId.unsignedIntegerValue;
-            const QLPaymentContentType contentType = successfulPaymentInfo.contentType.unsignedIntegerValue;
-            
             //            QLPaymentContentTypeVIP,
             //            QLPaymentContentTypeCharge,
             //            QLPaymentContentTypePrivateCast, //私播
@@ -515,51 +516,51 @@ QBSynthesizeSingletonMethod(sharedManager)
             //            QLPaymentContentTypeBookThisTicket, //本场观看，上车
             //            QLPaymentContentTypeBookMonthlyTicket //包月观看，上车
             
-            if (contentType == QLPaymentContentTypeVIP) {
-                [QLUser currentUser].isVIP = @1;
-                if (successfulPaymentInfo.paymentSubType == QBPaySubTypeWeChat) {
-                    [[QLUser currentUser] addGoldCount:500];
-                }
-                [[QLUser currentUser] saveAsCurrentUser];
-            } else if (contentType == QLPaymentContentTypeCharge) {
-                QLPayPoint *payPoint = [[QLPayPoints sharedPayPoints].DEPOSIT bk_match:^BOOL(QLPayPoint *obj) {
-                    return obj.id.unsignedIntegerValue == contentId;
-                }];
-                NSUInteger goldCount = payPoint.goldCount.unsignedIntegerValue;
-                if (successfulPaymentInfo.paymentSubType == QBPaySubTypeWeChat) {
-                    goldCount += 500;
-                }
-                [[QLUser currentUser] addGoldCount:goldCount];
-                [[QLUser currentUser] saveAsCurrentUser];
-            } else if (contentType != QLPaymentContentTypeNone) {
-                QLPayPoint *payPoint = [[QLPayPoints sharedPayPoints].ANCHOR bk_match:^BOOL(QLPayPoint *obj) {
-                    return obj.id.unsignedIntegerValue == contentId;
-                }];
-                
-                if (payPoint) {
-                    NSUInteger goldCount = payPoint.goldCount.unsignedIntegerValue;
-                    if (successfulPaymentInfo.paymentSubType == QBPaySubTypeWeChat) {
-                        goldCount += 500;
-                    }
-                    [[QLUser currentUser] addGoldCount:goldCount];
-                    [[QLUser currentUser] saveAsCurrentUser];
-                }
-            }
-            
-            NSDictionary *payTypeStrings = @{@(QLPaymentContentTypeVIP):@"开通VIP类型",
-                                             @(QLPaymentContentTypeCharge):@"充值金币",
-                                             @(QLPaymentContentTypePrivateCast):@"私播",
-                                             @(QLPaymentContentTypeLightThisCast):@"主播本场点亮",
-                                             @(QLPaymentContentTypeLightMonthlyCast):@"主播本月点亮",
-                                             @(QLPaymentContentTypePrivateShow):@"私秀",
-                                             @(QLPaymentContentTypeJumpQueue):@"秀场插队",
-                                             @(QLPaymentContentTypeBookThisTicket):@"秀场本场车票",
-                                             @(QLPaymentContentTypeBookMonthlyTicket):@"秀场包月车票"};
-            
-            [[QLAlertManager sharedManager] alertWithTitle:@"激活成功" message:[NSString stringWithFormat:@"激活的支付类型为：%@", payTypeStrings[successfulPaymentInfo.contentType]]];
-        } else {
-            [[QLAlertManager sharedManager] alertWithTitle:@"激活失败" message:@"未找到支付成功的订单"];
-        }
-    }];
+//            if (contentType == QLPaymentContentTypeVIP) {
+//                [QLUser currentUser].isVIP = @1;
+//                if (successfulPaymentInfo.paymentSubType == QBPaySubTypeWeChat) {
+//                    [[QLUser currentUser] addGoldCount:500];
+//                }
+//                [[QLUser currentUser] saveAsCurrentUser];
+//            } else if (contentType == QLPaymentContentTypeCharge) {
+//                QLPayPoint *payPoint = [[QLPayPoints sharedPayPoints].DEPOSIT bk_match:^BOOL(QLPayPoint *obj) {
+//                    return obj.id.unsignedIntegerValue == contentId;
+//                }];
+//                NSUInteger goldCount = payPoint.goldCount.unsignedIntegerValue;
+//                if (successfulPaymentInfo.paymentSubType == QBPaySubTypeWeChat) {
+//                    goldCount += 500;
+//                }
+//                [[QLUser currentUser] addGoldCount:goldCount];
+//                [[QLUser currentUser] saveAsCurrentUser];
+//            } else if (contentType != QLPaymentContentTypeNone) {
+//                QLPayPoint *payPoint = [[QLPayPoints sharedPayPoints].ANCHOR bk_match:^BOOL(QLPayPoint *obj) {
+//                    return obj.id.unsignedIntegerValue == contentId;
+//                }];
+//                
+//                if (payPoint) {
+//                    NSUInteger goldCount = payPoint.goldCount.unsignedIntegerValue;
+//                    if (successfulPaymentInfo.paymentSubType == QBPaySubTypeWeChat) {
+//                        goldCount += 500;
+//                    }
+//                    [[QLUser currentUser] addGoldCount:goldCount];
+//                    [[QLUser currentUser] saveAsCurrentUser];
+//                }
+//            }
+//    
+//            NSDictionary *payTypeStrings = @{@(QLPaymentContentTypeVIP):@"开通VIP类型",
+//                                             @(QLPaymentContentTypeCharge):@"充值金币",
+//                                             @(QLPaymentContentTypePrivateCast):@"私播",
+//                                             @(QLPaymentContentTypeLightThisCast):@"主播本场点亮",
+//                                             @(QLPaymentContentTypeLightMonthlyCast):@"主播本月点亮",
+//                                             @(QLPaymentContentTypePrivateShow):@"私秀",
+//                                             @(QLPaymentContentTypeJumpQueue):@"秀场插队",
+//                                             @(QLPaymentContentTypeBookThisTicket):@"秀场本场车票",
+//                                             @(QLPaymentContentTypeBookMonthlyTicket):@"秀场包月车票"};
+//            
+//            [[QLAlertManager sharedManager] alertWithTitle:@"激活成功" message:[NSString stringWithFormat:@"激活的支付类型为：%@", payTypeStrings[successfulPaymentInfo.contentType]]];
+//        } else {
+//            [[QLAlertManager sharedManager] alertWithTitle:@"激活失败" message:@"未找到支付成功的订单"];
+//        }
+//    }];
 }
 @end

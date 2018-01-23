@@ -15,8 +15,8 @@
 #import "QLLiveAvatarPanel.h"
 //#import <JHChainableAnimations.h>
 
-#import "QLPaymentViewController.h"
-#import "QLPaymentActionSheet.h"
+//#import "QLPaymentViewController.h"
+//#import "QLPaymentActionSheet.h"
 //#import "QLMineVIPViewController.h"
 
 @interface QLLiveCastViewController ()
